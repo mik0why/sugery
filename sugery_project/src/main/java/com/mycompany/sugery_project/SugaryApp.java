@@ -27,6 +27,7 @@ class User{
     String first;
     int age;
     int goal;
+    int score = 0;
     
     public User(String name, int age, int goal){
         this.first = name;
@@ -34,18 +35,24 @@ class User{
         this.goal = goal;
     }
     
-    public void getName(){
-        
+    public void setScore(int todayScore){
+        this.score = todayScore;
+    }
+    
+    public int getScore(){
+        return score;
+    }
+    
+    public String getName(){
+        return first;
     }
     
     public int getAge(){
-        
-        return 0;
+        return age;
     }
     
     public int getGoal(){
-        
-        return 0;
+        return goal;
     }
     
     
