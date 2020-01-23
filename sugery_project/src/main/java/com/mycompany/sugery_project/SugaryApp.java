@@ -31,6 +31,8 @@ class User{
     int age;
     int goal;
     int score = 0;
+       
+    int scoreArr[]; 
     
     public User(String name, int age, int goal){
         this.first = name;
@@ -38,7 +40,7 @@ class User{
         this.goal = goal;
     }
     
-    public void setScore(int todayScore){
+    public void setScore(int todayScore){ // need to specify which score in the array
         this.score = todayScore;
     }
     

@@ -42,7 +42,7 @@ public class configJFrame extends javax.swing.JFrame {
         createUsrButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         nameArea = new javax.swing.JTextArea();
-        jScrollPane5 = new javax.swing.JScrollPane();
+        goalField = new javax.swing.JScrollPane();
         goalArea = new javax.swing.JTextArea();
         jScrollPane6 = new javax.swing.JScrollPane();
         ageArea = new javax.swing.JTextArea();
@@ -59,23 +59,48 @@ public class configJFrame extends javax.swing.JFrame {
                 createUsrButtonActionPerformed(evt);
             }
         });
+        createUsrButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                createUsrButtonKeyPressed(evt);
+            }
+        });
 
         jScrollPane3.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
 
         nameArea.setColumns(10);
         nameArea.setRows(1);
+        nameArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nameAreaKeyPressed(evt);
+            }
+        });
         jScrollPane3.setViewportView(nameArea);
 
-        jScrollPane5.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        goalField.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        goalField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                goalFieldKeyPressed(evt);
+            }
+        });
 
         goalArea.setColumns(10);
         goalArea.setRows(1);
-        jScrollPane5.setViewportView(goalArea);
+        goalArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                goalAreaKeyPressed(evt);
+            }
+        });
+        goalField.setViewportView(goalArea);
 
         jScrollPane6.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
 
         ageArea.setColumns(10);
         ageArea.setRows(1);
+        ageArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ageAreaKeyPressed(evt);
+            }
+        });
         jScrollPane6.setViewportView(ageArea);
 
         entryText.setEditable(false);
@@ -133,7 +158,7 @@ public class configJFrame extends javax.swing.JFrame {
                             .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(goalField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addComponent(createUsrButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,7 +180,7 @@ public class configJFrame extends javax.swing.JFrame {
                     .addComponent(createUsrButton))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(goalField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(93, 93, 93))
         );
@@ -165,21 +190,25 @@ public class configJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void createUsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUsrButtonActionPerformed
+    private void tryCreatingUser(){
         try{
-            username = nameArea.getText();
-        
-        age = Integer.parseInt(ageArea.getText());
-        goal = Integer.parseInt(goalArea.getText());        
-        userCreate();
-        mf = new mainFrame(); // TODO get to the other screen
-        mf.setVisible(true);
-        mf.displayUserData(usArr, 0);
-        
+            username = nameArea.getText().replaceAll("\\s+", "");
+            age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
+            goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));        
+            userCreate();
+            mf = new mainFrame(); // TODO get to the other screen
+            mf.setVisible(true);
+            mf.displayUserData(usArr, 0);
+
         }catch(Exception e){
             entryText.setText(null);
-            entryText.setText("missing info!");
+            entryText.setText("missing info!" + e);
         }
+    }
+    
+    
+    private void createUsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUsrButtonActionPerformed
+            tryCreatingUser(); // not entirely sure this is correct
 
     }//GEN-LAST:event_createUsrButtonActionPerformed
 
@@ -198,6 +227,41 @@ public class configJFrame extends javax.swing.JFrame {
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void nameAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameAreaKeyPressed
+        // TODO add your handling code here:
+        
+        //TODO create one method once this is working (field.reqfocus + this.setText)
+        if (evt.getKeyCode()==9){
+            ageArea.requestFocus();
+        }
+        // also should do sth so it doesn't actually move in the field by TAB
+    }//GEN-LAST:event_nameAreaKeyPressed
+
+    private void ageAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageAreaKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode()==9){
+            goalArea.requestFocus();
+        }
+    }//GEN-LAST:event_ageAreaKeyPressed
+
+    private void goalFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_goalFieldKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_goalFieldKeyPressed
+
+    private void createUsrButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_createUsrButtonKeyPressed
+        // TODO add your handling code here:
+        if (this.hasFocus() && evt.getKeyCode()==13){
+                tryCreatingUser(); 
+        }
+    }//GEN-LAST:event_createUsrButtonKeyPressed
+
+    private void goalAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_goalAreaKeyPressed
+        // TODO add your handling code here:
+                if (evt.getKeyCode()==9){
+                    createUsrButton.requestFocus();
+        }
+    }//GEN-LAST:event_goalAreaKeyPressed
 
     
     void userCreate(){ //usr, age, goal are global
@@ -254,8 +318,8 @@ public class configJFrame extends javax.swing.JFrame {
     private javax.swing.JButton createUsrButton;
     private javax.swing.JTextField entryText;
     private javax.swing.JTextArea goalArea;
+    private javax.swing.JScrollPane goalField;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
