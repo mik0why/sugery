@@ -24,6 +24,9 @@ public class SugaryApp {
 //1. When to make classes public?
 
 class User{
+    
+    // score should be an integer array, so then can easily operate on it
+    
     String first;
     int age;
     int goal;
