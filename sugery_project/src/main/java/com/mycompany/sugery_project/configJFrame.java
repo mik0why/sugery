@@ -106,6 +106,7 @@ public class configJFrame extends javax.swing.JFrame {
         entryText.setEditable(false);
         entryText.setBackground(new java.awt.Color(238, 238, 238));
         entryText.setText("First, tell us about yourself.");
+        entryText.setBorder(null);
         entryText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 entryTextActionPerformed(evt);
@@ -169,7 +170,7 @@ public class configJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(entryText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -196,11 +197,11 @@ public class configJFrame extends javax.swing.JFrame {
             age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
             goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));        
             userCreate();
-            mf = new mainFrame(); // TODO get to the other screen
+            mf = new mainFrame(usArr.get(usArr.size()-1)); // or size -1?
             mf.setVisible(true);
-            mf.displayUserData(usArr, 0);
+            mf.displayUserData(usArr, usArr.size()-1); // the most recent one
 
-        }catch(Exception e){
+        }catch(Exception e){ // TODO more detailed exceptions
             entryText.setText(null);
             entryText.setText("missing info!" + e);
         }
