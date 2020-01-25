@@ -10,7 +10,7 @@ package com.mycompany.sugery_project;
  * @author mikowhy
  */
 public class SugaryApp {
-
+    
     /**
      * @param args the command line arguments
      */
