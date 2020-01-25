@@ -5,6 +5,9 @@
  */
 package com.mycompany.sugery_project;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  *
  * @author mikowhy
@@ -30,22 +33,17 @@ class User{
     String first;
     int age;
     int goal;
-    int score = 0;
-       
+    ArrayList<Score> usArr = new ArrayList<Score>();
+
+/*    int score = 0;    
     int scoreArr[]; 
     
+    Score scorArr[]; 
+*/    
     public User(String name, int age, int goal){
         this.first = name;
         this.age = age;
         this.goal = goal;
-    }
-    
-    public void setScore(int todayScore){ // need to specify which score in the array
-        this.score = todayScore;
-    }
-    
-    public int getScore(){
-        return score;
     }
     
     public String getName(){
@@ -58,6 +56,49 @@ class User{
     
     public int getGoal(){
         return goal;
+    }
+    
+    /*
+        public void setScore(int todayScore){ // need to specify which score in the array
+        this.score = todayScore;
+    }
+    
+    public int getScore(){
+        return score;
+    }
+*/
+    
+}
+
+class Score{
+    
+    int result;
+    Date date;
+    
+    
+    public Score(int res, Date dt){
+            this.result = res;
+            this.date = dt;
+    }
+    
+    public int getScoreValue(){
+        return result;
+    }
+    
+    public Date getScoreDate(){
+        return date;
+    }
+    
+    public void setScoreValue(int val){
+        this.result = val;
+    }
+    
+    public void setDateAdd(Date dt){
+        this.date = dt;
+    }
+    
+    public Integer toString(Score sc){
+        return sc.getScoreValue();
     }
     
     

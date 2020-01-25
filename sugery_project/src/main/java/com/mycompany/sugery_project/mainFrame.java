@@ -48,6 +48,7 @@ public class mainFrame extends javax.swing.JFrame {
         entryText.setBackground(new java.awt.Color(238, 138, 238));
         entryText.setText("jTextField1");
 
+        scoreField.setEditable(false);
         scoreField.setFont(new java.awt.Font("Lucida Grande", 0, 48)); // NOI18N
         scoreField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         scoreField.setText("n/a");
@@ -179,11 +180,22 @@ public class mainFrame extends javax.swing.JFrame {
     public void displayUserData(ArrayList<User> al, int idx){
         //TODO display different stuff based on what time it is
         entryText.setText("Welcome, " + al.get(idx).getName() + ".\n");
-        if(al.get(idx).getScore()<0){ // not set
-            scoreField.setText(Integer.toString(al.get(idx).getScore()));
-            //based on what the score is, and how much off from the goal
+        int scoreArrSize = al.get(idx).usArr.size();
+        //entryText.setText((al.get(idx).usArr.get(al.get(idx).usArr.size()-1)));
+         //if(al.get(idx).usArr.get(al.get(idx).usArr.size()-1) != null){ // there is some score
+         if (scoreArrSize > 0){
+            scoreField.setText(Integer.toString(al.get(idx).usArr.get(al.get(idx).usArr.size()-1).getScoreValue()));
+            jTextField1.setText(null);
+            jTextField1.setText("most recent score (registered on " +
+                    al.get(idx).usArr.get(al.get(idx).usArr.size()-1).date
+                    + " )" );
+
+
+        //based on what the score is, and how much off from the goal
             //display the score differently
-        }
+        }else{
+             feedbackField.setText("no score yet :(");
+         }
     }
     
     
