@@ -7,6 +7,7 @@ package com.mycompany.sugery_project;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Observable;
 
 /**
  *
@@ -17,16 +18,18 @@ public class SugaryApp {
     /**
      * @param args the command line arguments
      */
+
+/*
     public static void main(String[] args) {
         // TODO code application logic here
     }
-    
+  */  
 }
 
 
 //1. When to make classes public?
 
-class User{
+class User extends Observable{
     
     // score should be an integer array, so then can easily operate on it
     
@@ -58,6 +61,12 @@ class User{
         return goal;
     }
     
+    public void addScore(int result){ //ZMI when else should notifyObservers be called?
+        this.usArr.add(new Score(result, new Date()));
+        setChanged(); //ZMI what it do?
+        notifyObservers();
+    }
+    
     /*
         public void setScore(int todayScore){ // need to specify which score in the array
         this.score = todayScore;
@@ -70,7 +79,7 @@ class User{
     
 }
 
-class Score{
+class Score extends Observable{
     
     int result;
     Date date;
@@ -91,6 +100,7 @@ class Score{
     
     public void setScoreValue(int val){
         this.result = val;
+
     }
     
     public void setDateAdd(Date dt){

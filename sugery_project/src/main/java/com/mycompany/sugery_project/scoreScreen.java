@@ -8,12 +8,13 @@ package com.mycompany.sugery_project;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Observable;
 
 /**
  *
  * @author mikowhy
  */
-public class scoreScreen extends javax.swing.JFrame {
+public class scoreScreen extends javax.swing.JFrame  {
 
     /**
      * Creates new form scoreScreen
@@ -26,10 +27,12 @@ public class scoreScreen extends javax.swing.JFrame {
         this.user = usr;
     }
 
+    /*
     public void addScore(int result){
         Score sc = new Score(result, new Date());
         user.usArr.add(sc);
     }
+    */
     
     public void modifyScore(){
         
@@ -154,13 +157,19 @@ public class scoreScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jScrollPane1KeyPressed
 
     private void scoreFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreFieldKeyPressed
-        // TODO no new line on enter
         
         
             if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-                this.addScore(Integer.parseInt(scoreField.getText()));
-                jTextField1.setText(scoreField.getText() + " set as the score");
+                this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
+               
+                //notifyObservers();
                 
+                
+                
+                
+                        // TODO no new line on enter
+
                 // add same for tab
                 
                 //this.setVisible(false);

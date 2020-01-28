@@ -6,12 +6,14 @@
 package com.mycompany.sugery_project;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author mikowhy
  */
-public class mainFrame extends javax.swing.JFrame {
+public class mainFrame extends javax.swing.JFrame implements Observer {
 
     /**
      * Creates new form mainFrame
@@ -22,6 +24,7 @@ public class mainFrame extends javax.swing.JFrame {
     public mainFrame(User usr) {
         initComponents();
         this.user = usr;
+        
     }
 
     /**
@@ -59,6 +62,11 @@ public class mainFrame extends javax.swing.JFrame {
         scoreField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         scoreField.setText("n/a");
         scoreField.setToolTipText("");
+        scoreField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                scoreFieldPropertyChange(evt);
+            }
+        });
 
         jTextField1.setEditable(false);
         jTextField1.setText("Your Score Today: ");
@@ -85,7 +93,6 @@ public class mainFrame extends javax.swing.JFrame {
         });
 
         jButton1.setText("All Scores");
-        jButton1.setActionCommand("All Scores");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -165,6 +172,7 @@ public class mainFrame extends javax.swing.JFrame {
         // show screen for inputting the data
         scoreScreen sc = new scoreScreen(user, 0); //TODO not sure
         sc.setVisible(true);
+        
         if(!sc.isVisible()){
             scoreField.setText(Integer.toString(sc.user.usArr.get(0).result));
         }
@@ -190,6 +198,10 @@ public class mainFrame extends javax.swing.JFrame {
         sa.displayScores();
         
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void scoreFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_scoreFieldPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scoreFieldPropertyChange
 
     /**
      * @param args the command line arguments
@@ -222,19 +234,24 @@ public class mainFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                // new mainFrame().setVisible(true);
-               
-               
             }
         });
     }
 
     public void displayUserData(ArrayList<User> al, int idx){
         //TODO display different stuff based on what time it is
+        
+        this.user.addObserver(this);
+        
         entryText.setText("Welcome, " + al.get(idx).getName() + ".\n");
         int scoreArrSize = al.get(idx).usArr.size();
         //entryText.setText((al.get(idx).usArr.get(al.get(idx).usArr.size()-1)));
          //if(al.get(idx).usArr.get(al.get(idx).usArr.size()-1) != null){ // there is some score
-         if (scoreArrSize > 0){
+            if (scoreArrSize > 0){
+            scoreField.setText("testing11");
+            }else{
+            feedbackField.setText("no score yet :(");
+            }
             scoreField.setText(Integer.toString(al.get(idx).usArr.get(al.get(idx).usArr.size()-1).getScoreValue()));
             jTextField1.setText(null);
             jTextField1.setText("most recent score (registered on " +
@@ -242,12 +259,15 @@ public class mainFrame extends javax.swing.JFrame {
                     + " )" );
 
 
+
+            
+            
         //based on what the score is, and how much off from the goal
             //display the score differently
-        }else{
-             feedbackField.setText("no score yet :(");
-         }
-    }
+
+        }
+   // }
+    
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -259,4 +279,22 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField scoreField;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o == this.user){ // checking if it's one from many im assuming
+            scoreField.setText(Integer.toString(this.user.usArr.get(0).result)); // ZMI the most recent one
+            jTextField1.setText("Your score updated at : " +  this.user.usArr.get(0).date);
+            // evaluateScore(score, goal)
+        }
+        
+        //ZMI not done yet bc still causes an exception
+           
+        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void evaluateScore(int score, int goal){
+        // ZMI display the score based on how off from the goal
+    }
 }
