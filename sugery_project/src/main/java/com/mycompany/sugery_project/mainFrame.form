@@ -142,7 +142,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="See All Scores"/>
+        <Property name="text" type="java.lang.String" value="All Scores"/>
+        <Property name="actionCommand" type="java.lang.String" value="All Scores"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>

@@ -160,7 +160,7 @@ public class scoreScreen extends javax.swing.JFrame {
             if(evt.getKeyCode()==KeyEvent.VK_ENTER){
                 this.addScore(Integer.parseInt(scoreField.getText()));
                 jTextField1.setText(scoreField.getText() + " set as the score");
-
+                
                 // add same for tab
                 
                 //this.setVisible(false);
@@ -191,6 +191,7 @@ public class scoreScreen extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
+        
     }//GEN-LAST:event_jButton2MouseClicked
 
     /**

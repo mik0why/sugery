@@ -84,7 +84,8 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("See All Scores");
+        jButton1.setText("All Scores");
+        jButton1.setActionCommand("All Scores");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -164,7 +165,9 @@ public class mainFrame extends javax.swing.JFrame {
         // show screen for inputting the data
         scoreScreen sc = new scoreScreen(user, 0); //TODO not sure
         sc.setVisible(true);
-        
+        if(!sc.isVisible()){
+            scoreField.setText(Integer.toString(sc.user.usArr.get(0).result));
+        }
       
         
     }//GEN-LAST:event_addScoreButtonActionPerformed
