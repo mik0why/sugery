@@ -5,6 +5,7 @@
  */
 package com.mycompany.sugery_project;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -283,18 +284,31 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if(o == this.user){ // checking if it's one from many im assuming
-            scoreField.setText(Integer.toString(this.user.usArr.get(0).result)); // ZMI the most recent one
-            jTextField1.setText("Your score updated at : " +  this.user.usArr.get(0).date);
-            // evaluateScore(score, goal)
-        }
+            int recentScore = this.user.usArr.get(this.user.usArr.size()-1).result;
+            scoreField.setText(Integer.toString(this.user.usArr.get(this.user.usArr.size()-1).result)); // ZMI the most recent one
+            jTextField1.setText("Your score updated at : " +  this.user.usArr.get(this.user.usArr.size()-1).date);
+            evaluateScore(recentScore, this.user.goal);
+        }else{
         
         //ZMI not done yet bc still causes an exception
            
         
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
     
     public void evaluateScore(int score, int goal){
         // ZMI display the score based on how off from the goal
+        
+        if(score <= goal){
+            feedbackField.setText("LETS GO!!!");
+            feedbackField.setBackground(Color.GREEN);
+        }else{
+            feedbackField.setText("too high dawg.");
+            feedbackField.setBackground(Color.red);
+        }
+        
+        
+        
     }
 }
