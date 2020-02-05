@@ -21,6 +21,12 @@ public class scoreScreen extends javax.swing.JFrame  {
      */
     User user;
     int index; // not sure if necessary
+    boolean focusTraversalKeysEnabled = false;
+
+    @Override
+    public void setFocusTraversalKeysEnabled(boolean focusTraversalKeysEnabled) {
+        super.setFocusTraversalKeysEnabled(focusTraversalKeysEnabled); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public scoreScreen(User usr, int idx) {
         initComponents();
@@ -54,33 +60,22 @@ public class scoreScreen extends javax.swing.JFrame  {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        scoreField = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         textAr = new javax.swing.JTextArea();
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        scoreSet = new javax.swing.JButton();
+        scoreField = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jScrollPane1.addKeyListener(new java.awt.event.KeyAdapter() {
+        addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jScrollPane1KeyPressed(evt);
+                formKeyPressed(evt);
             }
         });
-
-        scoreField.setColumns(1);
-        scoreField.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        scoreField.setRows(1);
-        scoreField.setAutoscrolls(false);
-        scoreField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                scoreFieldKeyPressed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(scoreField);
 
         jScrollPane2.setBorder(null);
 
@@ -112,82 +107,81 @@ public class scoreScreen extends javax.swing.JFrame  {
             }
         });
 
+        scoreSet.setText("set");
+        scoreSet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                scoreSetMouseClicked(evt);
+            }
+        });
+        scoreSet.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                scoreSetKeyPressed(evt);
+            }
+        });
+
+        scoreField.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        scoreField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        scoreField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                scoreFieldKeyPressed(evt);
+            }
+        });
+
+        jButton3.setText("close");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+        jButton3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton3KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTextField1)
-                .addGap(14, 14, 14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(115, 115, 115))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
+                    .addComponent(scoreField))
+                .addContainerGap(66, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(scoreSet, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(47, 47, 47)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addComponent(scoreField, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(scoreSet)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addGap(501, 501, 501)
                 .addComponent(jButton2)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jScrollPane1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane1KeyPressed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jScrollPane1KeyPressed
-
-    private void scoreFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreFieldKeyPressed
-        
-        
-            if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-                this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
-                jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
-               
-                //notifyObservers();
-                
-                
-                
-                
-                        // TODO no new line on enter
-
-                // add same for tab
-                
-                //this.setVisible(false);
-                
-                /*
-                try{
-                    jTextField1.setText(scoreField.getText() + " set as the score");
-
-                    Thread.sleep(3000);
-                    this.setVisible(false);
-                }catch(Exception e){
-
-                }
-                */
-        }
-        
-        
-    }//GEN-LAST:event_scoreFieldKeyPressed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -202,6 +196,40 @@ public class scoreScreen extends javax.swing.JFrame  {
         this.setVisible(false);
         
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void scoreSetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scoreSetMouseClicked
+                this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
+    }//GEN-LAST:event_scoreSetMouseClicked
+
+    private void scoreFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreFieldKeyPressed
+            if (evt.getKeyCode()==13){
+                //this should be made a function bc used twice
+                this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
+            }
+    }//GEN-LAST:event_scoreFieldKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+          if (evt.getKeyCode()==27){
+              this.setVisible(false);
+          }
+    }//GEN-LAST:event_formKeyPressed
+
+    private void scoreSetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreSetKeyPressed
+                this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scoreSetKeyPressed
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+                   this.setVisible(false);
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton3KeyPressed
+                   this.setVisible(false);
+    }//GEN-LAST:event_jButton3KeyPressed
 
     /**
      * @param args the command line arguments
@@ -241,10 +269,11 @@ public class scoreScreen extends javax.swing.JFrame  {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextArea scoreField;
+    private javax.swing.JTextField scoreField;
+    private javax.swing.JButton scoreSet;
     private javax.swing.JTextArea textAr;
     // End of variables declaration//GEN-END:variables
 

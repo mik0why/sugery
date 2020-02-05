@@ -193,12 +193,14 @@ public class configJFrame extends javax.swing.JFrame {
 
     private void tryCreatingUser(){
         try{
+            //TODO text area displays out of bounds
             username = nameArea.getText().replaceAll("\\s+", "");
             age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
             goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));        
             userCreate();
             mf = new mainFrame(usArr.get(usArr.size()-1)); // or size -1?
             mf.setVisible(true);
+            this.setVisible(false);
             mf.displayUserData(usArr, usArr.size()-1); // the most recent one
 
         }catch(Exception e){ // TODO more detailed exceptions
@@ -307,6 +309,8 @@ public class configJFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                //TODO add the main screen?
+                //TODO the login screen should be here?
                 new configJFrame().setVisible(true);
             }
         });
