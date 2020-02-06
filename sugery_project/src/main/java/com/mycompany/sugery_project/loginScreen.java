@@ -17,8 +17,8 @@ public class loginScreen extends javax.swing.JFrame {
     /**
      * Creates new form loginScreen
      */
-    mainFrame mf;
-    configJFrame jf; 
+    mainFrame mf; // TODO needs to be fixed
+    configJFrame jf = new configJFrame(); 
     ArrayList<User>al = new ArrayList<User>(); // temporal?
 
 
@@ -118,6 +118,11 @@ public class loginScreen extends javax.swing.JFrame {
                 newUserButtonMouseClicked(evt);
             }
         });
+        newUserButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                newUserButtonKeyPressed(evt);
+            }
+        });
 
         logErrorField.setBackground(new java.awt.Color(238, 238, 238));
         logErrorField.setColumns(20);
@@ -205,7 +210,6 @@ public class loginScreen extends javax.swing.JFrame {
 
     private void newUserButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newUserButtonMouseClicked
         // TODO add your handling code here:
-        jf = new configJFrame();
         jf.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_newUserButtonMouseClicked
@@ -248,6 +252,13 @@ public class loginScreen extends javax.swing.JFrame {
             loginAttempt(username, password);
         }     
     }//GEN-LAST:event_loginButtonKeyPressed
+
+    private void newUserButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_newUserButtonKeyPressed
+        if(evt.getKeyCode()==13){
+            jf.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_newUserButtonKeyPressed
 
     /**
      * @param args the command line arguments
