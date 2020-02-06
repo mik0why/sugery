@@ -33,6 +33,11 @@ public class scoreScreen extends javax.swing.JFrame  {
         this.user = usr;
     }
 
+    private void keyPressed(java.awt.event.KeyEvent e){
+        if (e.getKeyCode() == 27){
+            this.setVisible(false);
+        }
+    }
     /*
     public void addScore(int result){
         Score sc = new Score(result, new Date());
@@ -211,15 +216,17 @@ public class scoreScreen extends javax.swing.JFrame  {
     }//GEN-LAST:event_scoreFieldKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-          if (evt.getKeyCode()==27){
-              this.setVisible(false);
-          }
+
     }//GEN-LAST:event_formKeyPressed
 
     private void scoreSetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreSetKeyPressed
-                this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
-                jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
-
+                if(evt.getKeyCode()==27){
+                    this.setVisible(false);
+                }
+                else{
+                    this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                    jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
+                }
         // TODO add your handling code here:
     }//GEN-LAST:event_scoreSetKeyPressed
 

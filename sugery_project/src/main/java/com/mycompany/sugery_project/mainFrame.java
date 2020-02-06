@@ -21,7 +21,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
      */
     
     User user;
-    
+    scoreArchive sa = new scoreArchive(this.user);
+
     public mainFrame(User usr) {
         initComponents();
         this.user = usr;
@@ -102,6 +103,11 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
             }
         });
 
@@ -199,7 +205,6 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        scoreArchive sa = new scoreArchive(this.user);
         sa.setVisible(true);
         sa.displayScores();
         
@@ -208,6 +213,13 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     private void scoreFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_scoreFieldPropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_scoreFieldPropertyChange
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        if(evt.getKeyCode() == 13){ // not working?
+            sa.setVisible(true);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1KeyPressed
 
     /**
      * @param args the command line arguments

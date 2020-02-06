@@ -233,6 +233,8 @@ public class loginScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(evt.getKeyCode()==9){
             passField.requestFocus();
+        }else if(evt.getKeyCode()==13){
+            passField.requestFocusInWindow();
         }
     }//GEN-LAST:event_userFieldKeyPressed
 
