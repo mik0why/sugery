@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author mikowhy
  */
 public class loginScreen extends javax.swing.JFrame {
-
+    //TODO needs a fix:  pressing the "Enter" button
     /**
      * Creates new form loginScreen
      */
@@ -124,6 +124,7 @@ public class loginScreen extends javax.swing.JFrame {
             }
         });
 
+        logErrorField.setEditable(false);
         logErrorField.setBackground(new java.awt.Color(238, 238, 238));
         logErrorField.setColumns(20);
         logErrorField.setRows(1);
