@@ -5,7 +5,10 @@
  */
 package com.mycompany.sugery_project;
 
+import java.util.ArrayList;
 import javafx.scene.control.TableColumn;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,20 +20,35 @@ public class scoreArchive extends javax.swing.JFrame {
      * Creates new form scoreArchive
      */
     User user;
+
+    /**
+     *
+     * @param usr
+     */
     public scoreArchive(User usr) {
+   //     this.model = (DefaultTableModel) jTable1.getModel();
         this.user = usr; 
         initComponents();
     }
     
     TableColumn date = new TableColumn("date");
+    String[] cols = {"Date", "Score"};
+    Object[][] data = {{"test", 1}, {"test2", 2}};
+   // String data = this.user.usArr.get(0).toString();
 
-    public void displayScores(){
-   /*
-        this.user.usArr.forEach((sc)
-                -> jTable1.addColumn(date));
+    DefaultTableModel model;
+
         
+    
+    public void displayScores(){
+        model.addRow(data);
+        
+        /*
+        this.user.usArr.forEach((sc)
+                -> jTable1.addColumn(new TableColumn("date")));
+        */
         //TODO display buttons so the user can modify scores
-    */
+   
         
     }
     
@@ -61,13 +79,13 @@ public class scoreArchive extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Date", "Score"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -77,21 +95,19 @@ public class scoreArchive extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(34, 34, 34))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addContainerGap(289, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(34, 34, 34))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
+                .addGap(55, 55, 55)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -138,11 +154,11 @@ public class scoreArchive extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-               // new scoreArchive().setVisible(true);
+        /*java.awt.EventQueue.invokeLater(new Runnable() {            
+            /*public void run() {
+                
             }
-        });
+        }); */
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -150,4 +166,6 @@ public class scoreArchive extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+
 }
