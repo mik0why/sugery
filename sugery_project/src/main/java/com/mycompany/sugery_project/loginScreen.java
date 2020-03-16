@@ -118,6 +118,11 @@ public class loginScreen extends javax.swing.JFrame {
                 newUserButtonMouseClicked(evt);
             }
         });
+        newUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newUserButtonActionPerformed(evt);
+            }
+        });
         newUserButton.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 newUserButtonKeyPressed(evt);
@@ -260,6 +265,11 @@ public class loginScreen extends javax.swing.JFrame {
             this.setVisible(false);
         }
     }//GEN-LAST:event_newUserButtonKeyPressed
+
+    private void newUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newUserButtonActionPerformed
+            jf.setVisible(true);
+            this.setVisible(false);
+    }//GEN-LAST:event_newUserButtonActionPerformed
 
     /**
      * @param args the command line arguments

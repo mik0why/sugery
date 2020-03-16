@@ -42,7 +42,8 @@ public class scoreArchive extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
 
         for(int i = 0; i < this.user.usArr.size(); i++){
-        tablemodel.addRow(new Object[]{this.user.usArr.get(i).getScoreDate(), this.user.usArr.get(i).getScoreValue()});
+       // tablemodel.addRow(new Object[]{this.user.usArr.get(i).getScoreDate(), this.user.usArr.get(i).getScoreValue()});
+        tablemodel.insertRow(0, new Object[]{this.user.usArr.get(i).getScoreDate(), this.user.usArr.get(i).getScoreValue()});
         }
     }
     
@@ -68,6 +69,11 @@ public class scoreArchive extends javax.swing.JFrame {
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton1MouseEntered(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -121,6 +127,10 @@ public class scoreArchive extends javax.swing.JFrame {
            this.setVisible(false);
 
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
