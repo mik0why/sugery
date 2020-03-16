@@ -32,28 +32,18 @@ public class scoreArchive extends javax.swing.JFrame {
         System.out.println("initializing new user: ");
         System.err.println(this.user.getName());
     }
-        //this.model = (DefaultTableModel) jTable1.getModel();    
-    /*
-    String header[] = new String[] { "Prority", "Task Title", "Start",
-            "Pause", "Stop", "Statulses" };
-    TableColumn date = new TableColumn("date");
-    String[] cols = {"Date", "Score"};
-    Object[][] data = {{"test", 1}, {"test2", 2}};
-   // String data = this.user.usArr.get(0).toString();
-    */
-    
-      
-    
+
+          
     public void displayScores(){
-          // arraylist to vector conversion
         //TODO display buttons so the user can modify scores
-        //TODO for loop
-        
-        //commit now
         
         DefaultTableModel tablemodel = (DefaultTableModel) jTable1.getModel();
-        tablemodel.addRow(new Object[]{"1", "2"});
-        tablemodel.addRow(new Object[]{this.user.usArr.get(0).getScoreDate(), this.user.usArr.get(0).getScoreValue()});
+        tablemodel.setRowCount(0); // no initial rows
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
+
+        for(int i = 0; i < this.user.usArr.size(); i++){
+        tablemodel.addRow(new Object[]{this.user.usArr.get(i).getScoreDate(), this.user.usArr.get(i).getScoreValue()});
+        }
     }
     
     /**
@@ -92,6 +82,7 @@ public class scoreArchive extends javax.swing.JFrame {
                 "Date", "Score"
             }
         ));
+        jTable1.setFocusable(false);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -99,19 +90,20 @@ public class scoreArchive extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(289, Short.MAX_VALUE)
+                .addContainerGap(302, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(34, 34, 34))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addGap(65, 65, 65)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

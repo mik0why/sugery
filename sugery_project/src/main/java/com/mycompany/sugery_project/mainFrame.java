@@ -44,7 +44,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         jTextField1 = new javax.swing.JTextField();
         feedbackField = new javax.swing.JTextField();
         addScoreButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        allScBut = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,20 +95,20 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }
         });
 
-        jButton1.setText("All Scores");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        allScBut.setText("All Scores");
+        allScBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                allScButMouseClicked(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        allScBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                allScButActionPerformed(evt);
             }
         });
-        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+        allScBut.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton1KeyPressed(evt);
+                allScButKeyPressed(evt);
             }
         });
 
@@ -127,7 +127,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(allScBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,7 +158,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                     .addComponent(addScoreButton)
                     .addComponent(feedbackField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
-                .addComponent(jButton1)
+                .addComponent(allScBut)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addGap(0, 62, Short.MAX_VALUE))
@@ -195,32 +195,34 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         }
     }//GEN-LAST:event_formMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void allScButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allScButActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
-            scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
-
+        scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
         sa.setVisible(true);
         sa.displayScores();
         
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_allScButActionPerformed
+
+    private void allScButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_allScButMouseClicked
+        // TODO add your handling code here:
+            scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
+        sa.setVisible(true);
+        sa.displayScores();
+        
+    }//GEN-LAST:event_allScButMouseClicked
 
     private void scoreFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_scoreFieldPropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_scoreFieldPropertyChange
 
-    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+    private void allScButKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_allScButKeyPressed
         if(evt.getKeyCode() == 13){ // not working?
                 scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
-
             sa.setVisible(true);
             sa.displayScores();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1KeyPressed
+    }//GEN-LAST:event_allScButKeyPressed
 
     /**
      * @param args the command line arguments
@@ -260,27 +262,20 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     public void displayUserData(ArrayList<User> al, int idx){
         //TODO display different stuff based on what time it is
         //TODO neet to display stuff based on which user is logged in
-        this.user.addObserver(this);
-        
+        this.user.addObserver(this); // TODO: what's this?
         entryText.setText("Welcome, " + al.get(idx).getName() + ".\n");
         int scoreArrSize = al.get(idx).usArr.size();
-        //entryText.setText((al.get(idx).usArr.get(al.get(idx).usArr.size()-1)));
-         //if(al.get(idx).usArr.get(al.get(idx).usArr.size()-1) != null){ // there is some score
-            if (scoreArrSize > 0){
-            scoreField.setText("testing11");
-            }else{
-            feedbackField.setText("no score yet :(");
-            }
+           if (scoreArrSize > 0){
             scoreField.setText(Integer.toString(al.get(idx).usArr.get(al.get(idx).usArr.size()-1).getScoreValue()));
             jTextField1.setText(null);
             jTextField1.setText("most recent score (registered on " +
-                    al.get(idx).usArr.get(al.get(idx).usArr.size()-1).date
-                    + " )" );
+            al.get(idx).usArr.get(al.get(idx).usArr.size()-1).date
+            + " )" );            
+            }else{
+                feedbackField.setText("no score yet :(");
+            }
 
-
-
-            
-            
+     
         //based on what the score is, and how much off from the goal
             //display the score differently
 
@@ -291,9 +286,9 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addScoreButton;
+    private javax.swing.JButton allScBut;
     private javax.swing.JTextField entryText;
     private javax.swing.JTextField feedbackField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField scoreField;
