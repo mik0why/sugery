@@ -24,32 +24,36 @@ public class scoreArchive extends javax.swing.JFrame {
     /**
      *
      * @param usr
+     * @param model
      */
     public scoreArchive(User usr) {
-   //     this.model = (DefaultTableModel) jTable1.getModel();
         this.user = usr; 
         initComponents();
+        System.out.println("initializing new user: ");
+        System.err.println(this.user.getName());
     }
-    
+        //this.model = (DefaultTableModel) jTable1.getModel();    
+    /*
+    String header[] = new String[] { "Prority", "Task Title", "Start",
+            "Pause", "Stop", "Statulses" };
     TableColumn date = new TableColumn("date");
     String[] cols = {"Date", "Score"};
     Object[][] data = {{"test", 1}, {"test2", 2}};
    // String data = this.user.usArr.get(0).toString();
-
-    DefaultTableModel model;
-
-        
+    */
+    
+      
     
     public void displayScores(){
-        model.addRow(data);
-        
-        /*
-        this.user.usArr.forEach((sc)
-                -> jTable1.addColumn(new TableColumn("date")));
-        */
+          // arraylist to vector conversion
         //TODO display buttons so the user can modify scores
-   
+        //TODO for loop
         
+        //commit now
+        
+        DefaultTableModel tablemodel = (DefaultTableModel) jTable1.getModel();
+        tablemodel.addRow(new Object[]{"1", "2"});
+        tablemodel.addRow(new Object[]{this.user.usArr.get(0).getScoreDate(), this.user.usArr.get(0).getScoreValue()});
     }
     
     /**

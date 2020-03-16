@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,12 +22,12 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
      */
     
     User user;
-    scoreArchive sa = new scoreArchive(this.user);
+    // where to move this?
+//    scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
 
     public mainFrame(User usr) {
         initComponents();
         this.user = usr;
-        
     }
 
     /**
@@ -200,6 +201,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
+            scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
+
         sa.setVisible(true);
         sa.displayScores();
         
@@ -211,7 +214,10 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
         if(evt.getKeyCode() == 13){ // not working?
+                scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
+
             sa.setVisible(true);
+            sa.displayScores();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1KeyPressed

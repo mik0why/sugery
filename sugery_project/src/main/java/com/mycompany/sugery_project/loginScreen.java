@@ -301,9 +301,9 @@ public class loginScreen extends javax.swing.JFrame {
         // condition to check if login and password match entries in db
         if(usrFound){
             al.add(new User(login, 22, 100)); // get rid of
-            mf = new mainFrame(al.get(0)); //get user from db
+            mf = new mainFrame(al.get(0)); //get user from db (TODO change which one)
             mf.setVisible(true);
-            mf.displayUserData(al, 0); // replace with proper arguments
+            mf.displayUserData(al, 0); // replace with proper arguments (TODO change the parameter)
             this.setVisible(false);
         }else{ // if they don't
             
