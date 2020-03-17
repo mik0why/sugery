@@ -230,9 +230,14 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_allScButKeyPressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        scoreAnalizerApp scAn = new scoreAnalizerApp(this.user);
-        scAn.start(new Stage());
+        scoreAnalizer scAn = new scoreAnalizer(this.user); // changed score to scores
+        System.out.println(this.user.usArr);
+        scAn.createAndShowGui();
+        
+        
+        
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
