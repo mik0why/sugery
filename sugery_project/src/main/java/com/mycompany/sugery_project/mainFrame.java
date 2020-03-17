@@ -73,6 +73,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         });
 
         jTextField1.setEditable(false);
+        jTextField1.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jTextField1.setText("Your Score Today: ");
         jTextField1.setToolTipText("");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {

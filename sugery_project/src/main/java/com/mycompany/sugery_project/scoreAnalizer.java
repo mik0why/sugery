@@ -12,6 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class scoreAnalizer extends JPanel {
            System.out.println(sc.result);
        }
    }
-   //TODO close on escape
+   //TODO scaling problem
    //TODO needs at least 2 points
    //TODO add score metrics 
    
@@ -60,8 +61,13 @@ public class scoreAnalizer extends JPanel {
          int x1 = (int) (i * xScale + BORDER_GAP);
          int y1 = (int) ((MAX_SCORE - scores.get(i).result) * yScale + BORDER_GAP);
 
+         System.out.print("y value: " + y1);
+         y1 = (y1 < 0) ? MAX_SCORE : y1;
+         y1 = (y1 > 300) ? MAX_SCORE : y1;
+         
          graphPoints.add(new Point(x1, y1));
-         System.out.println("added points:  " + x1 + " " + y1);
+
+         System.out.println("added points (y change?)  " + x1 + " " + y1);
       }
 
       // create x and y axes 
@@ -108,14 +114,6 @@ public class scoreAnalizer extends JPanel {
       }
    }
 
-   public void keyPressed(KeyEvent e){
-       System.out.println("key pressed...");
-    if( e.getKeyCode() == KeyEvent.VK_ESCAPE ) {
-        System.out.println("escape pressed");
-        this.setVisible(false);
-      System.exit(0); //change to close
-    }
-   }
     
    @Override
    public Dimension getPreferredSize() {
@@ -138,6 +136,16 @@ public class scoreAnalizer extends JPanel {
       frame.pack();
       frame.setLocationByPlatform(true);
       frame.setVisible(true);
+      frame.addKeyListener(new KeyAdapter() {
+        public void keyPressed(KeyEvent ke) {  // handler
+        if(ke.getKeyCode() == ke.VK_ESCAPE) {
+            System.out.println("escaped ?");     
+            frame.setVisible(false);
+        }else{
+            System.out.println("not escaped");
+        }
+        } 
+            });
    }
 
 
