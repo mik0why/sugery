@@ -55,12 +55,14 @@ public class scoreAnalizer extends JPanel {
 
       double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (scores.size() - 1);
       double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_SCORE - 1);
-
+      yScale/=2;
+      yScale/=1.2;
       List<Point> graphPoints = new ArrayList<Point>();
       for (int i = 0; i < scores.size(); i++) {
          int x1 = (int) (i * xScale + BORDER_GAP);
          int y1 = (int) ((MAX_SCORE - scores.get(i).result) * yScale + BORDER_GAP);
-
+         System.out.print("YSCALE : " + yScale);
+         System.out.print("score : " + scores.get(i).result);
          System.out.print("y value: " + y1);
          y1 = (y1 < 0) ? MAX_SCORE : y1;
          y1 = (y1 > 300) ? MAX_SCORE : y1;
@@ -139,10 +141,8 @@ public class scoreAnalizer extends JPanel {
       frame.addKeyListener(new KeyAdapter() {
         public void keyPressed(KeyEvent ke) {  // handler
         if(ke.getKeyCode() == ke.VK_ESCAPE) {
-            System.out.println("escaped ?");     
             frame.setVisible(false);
         }else{
-            System.out.println("not escaped");
         }
         } 
             });
