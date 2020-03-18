@@ -6,10 +6,12 @@
 package com.mycompany.sugery_project;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-/**
- *
+ /*
  * @author mikowhy
  */
 public class loginScreen extends javax.swing.JFrame {
@@ -307,8 +309,70 @@ public class loginScreen extends javax.swing.JFrame {
     }
 
     private void loginAttempt(String login, char[] password){
-        boolean usrFound = true; // should be modifed to false
+        boolean usrFound = false; // should be modifed to false
+        Scanner x; 
+        String currUs; 
+        String currPass;
         // condition to check if login and password match entries in db
+        // validate - check if reasonable, verify - check if accurate
+        // convert password to string
+        String pass = String.copyValueOf(password);
+        //check if the doc with passwords exist, if not - create it
+        File passArch = new File("data.txt");
+        if(!passArch.exists()){ // the file doesn't exist - first login
+            System.out.println("the file doesn't exist");
+            try{
+                if(passArch.createNewFile()){
+                    System.out.println("made it");
+                }else{
+                    System.out.println("not done");
+                }
+            }catch(IOException e){
+                System.out.println("An error occured");
+            }
+        }else{ // the actual verification
+            System.out.println("the file exists");
+            
+            try{
+                x = new Scanner(passArch);
+                x.useDelimiter("[,\n"); // hmm idk if we gonna use this one
+                while(x.hasNext() && !usrFound){
+                    currUs = x.next();
+                    currPass = x.next();
+                    if(currUs.trim().equals(login) && currPass.trim().equals(pass)){
+                        usrFound = true; 
+                    }
+                }
+                if(!usrFound){
+                    // incorrect password
+                    logErrorField.setText("incorrect password :(");
+                    System.out.println("INC");
+                }else{
+                    logErrorField.setText("correct!");
+                    System.out.println("AIGHT");
+                }
+            
+            
+            
+            
+            
+            }catch(Exception e){
+                   
+            }
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         if(usrFound){
             al.add(new User(login, 22, 100)); // get rid of
             mf = new mainFrame(al.get(0)); //get user from db (TODO change which one)
