@@ -307,10 +307,9 @@ public class loginScreen extends javax.swing.JFrame {
             }
         });
     }
-
     private void loginAttempt(String login, char[] password){
         boolean usrFound = false; // should be modifed to false
-        Scanner x; 
+       // Scanner x; 
         String currUs; 
         String currPass;
         // condition to check if login and password match entries in db
@@ -334,9 +333,10 @@ public class loginScreen extends javax.swing.JFrame {
             System.out.println("the file exists");
             
             try{
-                x = new Scanner(passArch);
-                x.useDelimiter("[,\n"); // hmm idk if we gonna use this one
+                Scanner x = new Scanner(passArch);
+                x.useDelimiter("[,\n]"); // hmm idk if we gonna use this one
                 while(x.hasNext() && !usrFound){
+                    System.out.println("scanning...");
                     currUs = x.next();
                     currPass = x.next();
                     if(currUs.trim().equals(login) && currPass.trim().equals(pass)){
@@ -346,31 +346,14 @@ public class loginScreen extends javax.swing.JFrame {
                 if(!usrFound){
                     // incorrect password
                     logErrorField.setText("incorrect password :(");
-                    System.out.println("INC");
                 }else{
                     logErrorField.setText("correct!");
-                    System.out.println("AIGHT");
+                    usrFound = true; 
                 }
-            
-            
-            
-            
-            
             }catch(Exception e){
-                   
+                   System.out.println("Exception : " + e);
             }
-            
-            
-            
         }
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         if(usrFound){
