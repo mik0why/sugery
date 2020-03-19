@@ -5,9 +5,14 @@
  */
 package com.mycompany.sugery_project;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observable;
+import java.io.Serializable;
 
 /**
  *
@@ -29,7 +34,7 @@ public class SugaryApp {
 
 //1. When to make classes public?
 
-class User extends Observable{
+class User extends Observable implements Serializable{
     
     // score should be an integer array, so then can easily operate on it
     
@@ -61,10 +66,18 @@ class User extends Observable{
         return goal;
     }
     
-    public void addScore(int result){ //ZMI when else should notifyObservers be called?
+    public void addScore(int result) throws FileNotFoundException, IOException{ //ZMI when else should notifyObservers be called?
         this.usArr.add(new Score(result, new Date()));
         setChanged(); //ZMI what it do?
         notifyObservers();
+        
+        FileOutputStream fos = new FileOutputStream("t.tmp");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(usArr);
+        oos.close();
+        
+        //here operate on the usArr?
+        
     }
     
     /*

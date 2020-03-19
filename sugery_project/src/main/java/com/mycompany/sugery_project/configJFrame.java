@@ -25,7 +25,7 @@ public class configJFrame extends javax.swing.JFrame {
     String username = "";
     int age = -1;
     int goal = -1;
-    ArrayList<User> usArr = new ArrayList<User>();
+    ArrayList<User> usArr = new ArrayList<User>(); // idt it should be new
     mainFrame mf ;
     
     public configJFrame() {

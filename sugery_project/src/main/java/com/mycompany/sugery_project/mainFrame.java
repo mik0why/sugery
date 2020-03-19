@@ -278,7 +278,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
     public void displayUserData(ArrayList<User> al, int idx){
         //TODO display different stuff based on what time it is
-        //TODO neet to display stuff based on which user is logged in
+        //TODO should the arrayList be also saved to a file?
+            // when the program is closed (spot that moment)
         this.user.addObserver(this); // TODO: what's this?
         entryText.setText("Welcome, " + al.get(idx).getName() + ".\n");
         int scoreArrSize = al.get(idx).usArr.size();

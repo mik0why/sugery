@@ -6,9 +6,12 @@
 package com.mycompany.sugery_project;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -203,14 +206,22 @@ public class scoreScreen extends javax.swing.JFrame  {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void scoreSetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scoreSetMouseClicked
-                this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+        try {
+            this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+        } catch (IOException ex) {
+            Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
     }//GEN-LAST:event_scoreSetMouseClicked
 
     private void scoreFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreFieldKeyPressed
             if (evt.getKeyCode()==13){
-                //this should be made a function bc used twice
-                this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                try {
+                    //this should be made a function bc used twice
+                    this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                } catch (IOException ex) {
+                    Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
             }
     }//GEN-LAST:event_scoreFieldKeyPressed
@@ -224,7 +235,11 @@ public class scoreScreen extends javax.swing.JFrame  {
                     this.setVisible(false);
                 }
                 else{
-                    this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                    try {
+                        this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                    } catch (IOException ex) {
+                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
                 }
         // TODO add your handling code here:

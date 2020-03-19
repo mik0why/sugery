@@ -14,14 +14,35 @@ import java.util.Scanner;
  /*
  * @author mikowhy
  */
+
+/*
+    0. check if the login, password combination is OK - that's basically done
+    1. if it is, retrieve the usArr from the tmp file
+        figure out the serialization problem
+    2. save to .tmp file whenever there is a new score added/removed?
+        have a function scModified
+
+    but how many of those .tmp files should be there?
+        1 - assuming we can only modify score (add/delete) - for now
+
+    how to retrieve the appropriate array from the tmp file?
+    should there be any sort of indexing? 
+    is the UsData array even necessary?
+
+
+
+*/
+
 public class loginScreen extends javax.swing.JFrame {
     //TODO needs a fix:  pressing the "Enter" button
     /**
      * Creates new form loginScreen
      */
-    mainFrame mf; // TODO needs to be fixed
+    mainFrame mf; // TODO needs to be fixed (what exactly?)
     configJFrame jf = new configJFrame(); 
-    ArrayList<User>al = new ArrayList<User>(); // temporal?
+    
+    // how to check if usData already exists? 
+    ArrayList<User> usData = new ArrayList<User>(); // TODO: temporal?
 
 
     boolean focusTraversalKeysEnabled = false;
@@ -308,17 +329,16 @@ public class loginScreen extends javax.swing.JFrame {
         });
     }
     private void loginAttempt(String login, char[] password){
-        boolean usrFound = false; // should be modifed to false
-       // Scanner x; 
+        boolean usrFound = false;
         String currUs; 
         String currPass;
+        int usrIdx = 0; //TODO: 0 for now, might be changed 
         // condition to check if login and password match entries in db
         // validate - check if reasonable, verify - check if accurate
         // convert password to string
         String pass = String.copyValueOf(password);
-        //check if the doc with passwords exist, if not - create it
-        File passArch = new File("data.txt");
-        if(!passArch.exists()){ // the file doesn't exist - first login
+        File passArch = new File("data.txt"); // check if the file with docs exists
+        if(!passArch.exists()){ // the file doesn't exist - first login (so create it)
             System.out.println("the file doesn't exist");
             try{
                 if(passArch.createNewFile()){
@@ -343,8 +363,7 @@ public class loginScreen extends javax.swing.JFrame {
                         usrFound = true; 
                     }
                 }
-                if(!usrFound){
-                    // incorrect password
+                if(!usrFound){ // incorrect password
                     logErrorField.setText("incorrect password :(");
                 }else{
                     logErrorField.setText("correct!");
@@ -357,10 +376,33 @@ public class loginScreen extends javax.swing.JFrame {
         
         
         if(usrFound){
-            al.add(new User(login, 22, 100)); // get rid of
-            mf = new mainFrame(al.get(0)); //get user from db (TODO change which one)
+            // retrieve the relevant usArr from the tmp file
+            // https://stackoverflow.com/questions/16111496/java-how-can-i-write-my-arraylist-to-a-file-and-read-load-that-file-to-the
+            // lowkey confused with the data retrieval
+            // https://crunchify.com/java-saving-and-loading-data-from-a-file-simple-production-ready-utility-for-file-readwrite-operation/  
+            // this ^^ looks very useful
+            
+            usData.add(new User(login, 22, 100)); // get rid of
+            
+            
+            
+            
+            // find the user in the al 
+            /* TODO: commented for now, might be used
+            for (User us : usData){ // need to always access the same al
+                System.out.println(us.first);
+                if(login.equals(us.first)){ //todo one user with one name
+                    usrIdx = usData.indexOf(login); 
+                    System.out.println(usrIdx); 
+                    // check if name already exists
+                }
+                // find the corresponding user
+                
+            }*/
+            
+            mf = new mainFrame(usData.get(usrIdx)); //get user from db (TODO change which one)
             mf.setVisible(true);
-            mf.displayUserData(al, 0); // replace with proper arguments (TODO change the parameter)
+            mf.displayUserData(usData, usrIdx); // replace with proper arguments (TODO change the parameter)
             this.setVisible(false);
         }else{ // if they don't
             
