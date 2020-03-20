@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.*; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
  /*
  * @author mikowhy
  */
@@ -234,7 +236,13 @@ public class loginScreen extends javax.swing.JFrame {
         if(username.isEmpty() || password.length == 0){
             logErrorField.setText("no login / password entered!"); // can extend to show which one
         }else{
-            loginAttempt(username, password);
+            try {
+                loginAttempt(username, password);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_loginButtonMouseClicked
 
@@ -279,7 +287,13 @@ public class loginScreen extends javax.swing.JFrame {
         if(username.isEmpty() || password.length == 0){
             logErrorField.setText("no login / password entered!"); // can extend to show which one
         }else{
-            loginAttempt(username, password);
+               try {
+                   loginAttempt(username, password);
+               } catch (ClassNotFoundException ex) {
+                   Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
+               } catch (SQLException ex) {
+                   Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
+               }
         }     
     }//GEN-LAST:event_loginButtonKeyPressed
 
@@ -329,7 +343,8 @@ public class loginScreen extends javax.swing.JFrame {
             }
         });
     }
-    private void loginAttempt(String login, char[] password){
+    private void loginAttempt(String login, char[] password) throws ClassNotFoundException, SQLException{
+        // TODO database for username, password
         boolean usrFound = false;
         String currUs; 
         String currPass;
@@ -339,7 +354,47 @@ public class loginScreen extends javax.swing.JFrame {
         // validate - check if reasonable, verify - check if accurate
         // convert password to string
         String pass = String.copyValueOf(password);
-        File passArch = new File("data.txt"); // check if the file with docs exists
+       try{
+        Class.forName("com.mysql.cj.jdbc.Driver"); // may not be necessary?
+        String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
+        Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
+        Statement st = conn.createStatement();
+        String sql;
+        sql = "SELECT username, password FROM LoginData";
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            //int id  = rs.getInt("username");
+            String username = rs.getString("username");
+            String us_pass = rs.getString("password");
+            //Display values
+        /*    System.out.print("ID: " + id);
+            System.out.print(", Age: " + age);
+          */  
+            if(username.equals(login) && us_pass.equals(pass)){
+                usrFound = true; 
+            }
+            
+        }
+                
+                
+                System.out.println("after connection..");
+            }catch(Exception e){
+                System.out.println("Exception: " + e);
+            }
+            
+
+        
+                    
+
+        
+                    
+
+        
+                    
+
+        
+        
+        /*
         if(!passArch.exists()){ // the file doesn't exist - first login (so create it)
             System.out.println("the file doesn't exist");
             try{
@@ -375,51 +430,16 @@ public class loginScreen extends javax.swing.JFrame {
                    System.out.println("Exception : " + e);
             }
         }
-        
+        */
         
         if(usrFound){
-            // retrieve the relevant usArr from the tmp file
-            // https://stackoverflow.com/questions/16111496/java-how-can-i-write-my-arraylist-to-a-file-and-read-load-that-file-to-the
-            // lowkey confused with the data retrieval
-             // this ^^ looks very useful
-            /******************/
-            
-             
             usData.add(new User(login, 22, 100)); // get rid of
-            /* make a connection here
-            im not sure what user, password refer to 
-            
-            */
             try{
                 System.out.println("connecting..");
-                Class.forName("com.mysql.cj.jdbc.Driver"); // may not be necessary?
-                 String url = "jdbc:mysql://localhost/EMP?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
-                Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
-                Statement st = conn.createStatement();
-                String sql;
-                sql = "SELECT id, first, last, age FROM Employees";
-                ResultSet rs = st.executeQuery(sql);
-                while(rs.next()){
-                    int id  = rs.getInt("id");
-                    int age = rs.getInt("age");
-                    String first = rs.getString("first");
-                    String last = rs.getString("last");
-
-                    //Display values
-                    System.out.print("ID: " + id);
-                    System.out.print(", Age: " + age);
-                    System.out.print(", First: " + first);
-                    System.out.println(", Last: " + last);
-                }
-                
-                
-                System.out.println("after connection..");
+                            
             }catch(Exception e){
-                System.out.println("Exception: " + e);
+                System.out.println("Exception : " + e) ;
             }
-            
-            
-            
             
             
             
@@ -440,8 +460,10 @@ public class loginScreen extends javax.swing.JFrame {
             mf.setVisible(true);
             mf.displayUserData(usData, usrIdx); // replace with proper arguments (TODO change the parameter)
             this.setVisible(false);
-        }else{ // if they don't
-            
+        }else{
+                // if they don't
+                logErrorField.setText("incorrect password :(");
+
         }
     }
     
