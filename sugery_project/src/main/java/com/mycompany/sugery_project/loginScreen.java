@@ -8,9 +8,10 @@ package com.mycompany.sugery_project;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.sql.*; 
  /*
  * @author mikowhy
  */
@@ -332,6 +333,7 @@ public class loginScreen extends javax.swing.JFrame {
         boolean usrFound = false;
         String currUs; 
         String currPass;
+        String dbURL; // TODO 
         int usrIdx = 0; //TODO: 0 for now, might be changed 
         // condition to check if login and password match entries in db
         // validate - check if reasonable, verify - check if accurate
@@ -379,10 +381,44 @@ public class loginScreen extends javax.swing.JFrame {
             // retrieve the relevant usArr from the tmp file
             // https://stackoverflow.com/questions/16111496/java-how-can-i-write-my-arraylist-to-a-file-and-read-load-that-file-to-the
             // lowkey confused with the data retrieval
-            // https://crunchify.com/java-saving-and-loading-data-from-a-file-simple-production-ready-utility-for-file-readwrite-operation/  
-            // this ^^ looks very useful
+             // this ^^ looks very useful
+            /******************/
             
+             
             usData.add(new User(login, 22, 100)); // get rid of
+            /* make a connection here
+            im not sure what user, password refer to 
+            
+            */
+            try{
+                System.out.println("connecting..");
+                Class.forName("com.mysql.cj.jdbc.Driver"); // may not be necessary?
+                 String url = "jdbc:mysql://localhost/EMP?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
+                Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
+                Statement st = conn.createStatement();
+                String sql;
+                sql = "SELECT id, first, last, age FROM Employees";
+                ResultSet rs = st.executeQuery(sql);
+                while(rs.next()){
+                    int id  = rs.getInt("id");
+                    int age = rs.getInt("age");
+                    String first = rs.getString("first");
+                    String last = rs.getString("last");
+
+                    //Display values
+                    System.out.print("ID: " + id);
+                    System.out.print(", Age: " + age);
+                    System.out.print(", First: " + first);
+                    System.out.println(", Last: " + last);
+                }
+                
+                
+                System.out.println("after connection..");
+            }catch(Exception e){
+                System.out.println("Exception: " + e);
+            }
+            
+            
             
             
             

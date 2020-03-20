@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observable;
 import java.io.Serializable;
+import java.sql.* ; 
 
 /**
  *
@@ -36,18 +37,27 @@ public class SugaryApp {
 
 class User extends Observable implements Serializable{
     
-    // score should be an integer array, so then can easily operate on it
+    /*
+        When should the database be used?
+    
+    SELECT: retrieve a particular user from the database
+            no need to use it for getters? once the user is retrieved
+                can simply operate on the getters
+    UPDATE: ? change in users data (idk as now of when would that be)
+                eg modifying goal/age (next stage)
+    INSERT: new user added
+            new score added (unlike getters this should be inserted into SQL)
+    DELETE: delete particular score
+            delete particular user
+        
+    */
+    
     
     String first;
     int age;
     int goal;
     ArrayList<Score> usArr = new ArrayList<Score>();
 
-/*    int score = 0;    
-    int scoreArr[]; 
-    
-    Score scorArr[]; 
-*/    
     public User(String name, int age, int goal){
         this.first = name;
         this.age = age;
@@ -68,13 +78,18 @@ class User extends Observable implements Serializable{
     
     public void addScore(int result) throws FileNotFoundException, IOException{ //ZMI when else should notifyObservers be called?
         this.usArr.add(new Score(result, new Date()));
-        setChanged(); //ZMI what it do?
+        setChanged(); //TODO: what it do?
         notifyObservers();
+        //TODO: need to modify the DB
         
+        
+        
+        /*
         FileOutputStream fos = new FileOutputStream("t.tmp");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(usArr);
         oos.close();
+        */
         
         //here operate on the usArr?
         
