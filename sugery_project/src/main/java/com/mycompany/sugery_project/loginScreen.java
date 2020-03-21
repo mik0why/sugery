@@ -138,7 +138,8 @@ public class loginScreen extends javax.swing.JFrame {
             }
         });
 
-        newUserButton.setText("new user");
+        newUserButton.setActionCommand("add new user");
+        newUserButton.setLabel("create new user");
         newUserButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 newUserButtonMouseClicked(evt);
@@ -366,10 +367,6 @@ public class loginScreen extends javax.swing.JFrame {
             //int id  = rs.getInt("username");
             String username = rs.getString("username");
             String us_pass = rs.getString("password");
-            //Display values
-        /*    System.out.print("ID: " + id);
-            System.out.print(", Age: " + age);
-          */  
             if(username.equals(login) && us_pass.equals(pass)){
                 usrFound = true; 
             }
@@ -380,58 +377,8 @@ public class loginScreen extends javax.swing.JFrame {
                 System.out.println("after connection..");
             }catch(Exception e){
                 System.out.println("Exception: " + e);
-            }
-            
-
-        
-                    
-
-        
-                    
-
-        
-                    
-
-        
-        
-        /*
-        if(!passArch.exists()){ // the file doesn't exist - first login (so create it)
-            System.out.println("the file doesn't exist");
-            try{
-                if(passArch.createNewFile()){
-                    System.out.println("made it");
-                }else{
-                    System.out.println("not done");
-                }
-            }catch(IOException e){
-                System.out.println("An error occured");
-            }
-        }else{ // the actual verification
-            System.out.println("the file exists");
-            
-            try{
-                Scanner x = new Scanner(passArch);
-                x.useDelimiter("[,\n]"); // hmm idk if we gonna use this one
-                while(x.hasNext() && !usrFound){
-                    System.out.println("scanning...");
-                    currUs = x.next();
-                    currPass = x.next();
-                    if(currUs.trim().equals(login) && currPass.trim().equals(pass)){
-                        usrFound = true; 
-                    }
-                }
-                if(!usrFound){ // incorrect password
-                    logErrorField.setText("incorrect password :(");
-                }else{
-                    logErrorField.setText("correct!");
-                    usrFound = true; 
-                }
-            }catch(Exception e){
-                   System.out.println("Exception : " + e);
-            }
         }
-        */
-        
+                    
         if(usrFound){
             usData.add(new User(login, 22, 100)); // get rid of
             try{

@@ -11,7 +11,14 @@ package com.mycompany.sugery_project;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JPasswordField;
 
 //how to invoke the other screen once all data gathered?
 
@@ -20,7 +27,8 @@ import java.util.ArrayList;
  * @author mikowhy
  */
 public class configJFrame extends javax.swing.JFrame {
-
+//TODO Description of Methods
+    //TODO change these to other values? e.g. Integer.MIN_VALUE (?)
     BufferedWriter writer; 
     String username = "";
     int age = -1;
@@ -56,6 +64,8 @@ public class configJFrame extends javax.swing.JFrame {
         nameArea1 = new javax.swing.JTextArea();
         jTextField8 = new javax.swing.JTextField();
         passField = new javax.swing.JPasswordField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        errorArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -162,6 +172,11 @@ public class configJFrame extends javax.swing.JFrame {
             }
         });
 
+        errorArea.setBackground(new java.awt.Color(238, 238, 238));
+        errorArea.setColumns(20);
+        errorArea.setRows(5);
+        jScrollPane1.setViewportView(errorArea);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -187,9 +202,15 @@ public class configJFrame extends javax.swing.JFrame {
                         .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addComponent(createUsrButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(createUsrButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,13 +230,16 @@ public class configJFrame extends javax.swing.JFrame {
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(goalField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(goalField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49))
         );
 
@@ -302,27 +326,49 @@ public class configJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_passFieldActionPerformed
 
     
-    void userCreate(){ //usr, age, goal are global
+    void userCreate(){ //usr, age, goal are global (?)
+        //adding new entries to two tables: LoginData & UserData
+        //TODO: re-do tables(id not necessary?)
         if(!username.equals("") && age > -1 && goal > -1 && passField.getPassword().length > 0){
-            // this check should be more precise
-            //e.g. define the range for age
+            //TODO: this check should be more precise (e.g. define the range for age)
             try{
-                File passArch = new File("data.txt");
-                if(!passArch.exists()){
-                    passArch.createNewFile();
+            Class.forName("com.mysql.cj.jdbc.Driver"); // may not be necessary?
+            String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
+            Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
+                if(!checkEntries(conn, username)){ // check if the username already exists
+                    usCr(conn, username, passField, age, goal); // add user to login table
+                    //TODO: add user to UserData table
+                }else{
+                    errorArea.append("The username already exists!");
                 }
-                writer = new BufferedWriter(new FileWriter(passArch, true)); // true for append mode
-                writer.newLine();
-                writer.write(username + "," + new String(passField.getPassword()));// .toString()); //TODO safety (encode)
-                writer.close();
-                System.out.println("username: " + username);
-                usArr.add(new User(username, age, goal));
             }catch(Exception e){
-                System.out.println("Exception : " + e);
+                System.out.println("Exception: " + e);
             }
         }   
     }
+    boolean checkEntries(Connection conn, String user) throws SQLException{
+        Statement st = conn.createStatement();
+        String sql = "SELECT username, password FROM LoginData";
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            if(rs.getString("username").equals(user)){
+                return true; 
+            }
+        }
+        return false; 
+    }
     
+    void usCr(Connection conn, String user, JPasswordField passField, int age, int goal) throws SQLException{
+        Statement st = conn.createStatement();
+        char[] password = passField.getPassword();
+        ResultSet rs; // not even sure if needed 
+        String sql = "INSERT user, password INTO LoginTable";
+        String sql_2 = "INSERT user, age, goal INTO UserData";
+        st.executeQuery(sql); // should be executeUpdate in both cases?
+        st.execute(sql_2); 
+        System.out.println("Succesful insert"); 
+    }
+   
     
     
     
@@ -370,8 +416,10 @@ public class configJFrame extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton createUsrButton;
     private javax.swing.JTextField entryText;
+    private javax.swing.JTextArea errorArea;
     private javax.swing.JTextArea goalArea;
     private javax.swing.JScrollPane goalField;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextField jTextField5;
