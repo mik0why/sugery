@@ -341,7 +341,6 @@ public class loginScreen extends javax.swing.JFrame {
                 String us_pass = rs.getString("password");
                 if(username.equals(login) && us_pass.equals(String.copyValueOf(password))){
                     usrFound = true; 
-                    //TODO: can get age and goal too so then we construct a user
                     }
                 }
             }catch(Exception e){

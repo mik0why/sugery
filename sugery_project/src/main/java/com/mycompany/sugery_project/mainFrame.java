@@ -6,7 +6,11 @@
 package com.mycompany.sugery_project;
 
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -292,19 +296,22 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         });
     }
 
-    public void displayUserData(ArrayList<User> al, int idx){ //TODO change parameters
+    public void displayUserData(ArrayList<User> al, int idx) throws ClassNotFoundException, SQLException{ //TODO change parameters
         //TODO display different stuff based on what time it is
         //TODO should the arrayList be also saved to a file?
             // when the program is closed (spot that moment)
         this.user.addObserver(this); // TODO: what's this?
         entryText.setText("Welcome, " + this.user.getName() + ".\n"); // why can i access .first?
         ageField.setText("age : " + this.user.getAge());
-        System.out.println("GOAL : " + this.user.getGoal());
         goalField.setText("goal : " + this.user.getGoal()); //not working?
+        if(getResults(1).next()){ // the result set isn't empty, so display the most recent score
+            getResults(2).next();
+            System.out  .println("the most REC Score: " + getResults(2).getString("score"));
+        }
         /*ResultSet allUserScores = getResults(); //here: get the result set for the particular user
         if(allUserScores.size > 0){
             
-        } */
+        } the code below is to be commented out once the code above is done */
         int scoreArrSize = al.get(idx).usArr.size();
            if (scoreArrSize > 0){ // TODO not sure yet how to modify it
             scoreField.setText(Integer.toString(al.get(idx).usArr.get(al.get(idx).usArr.size()-1).getScoreValue()));
@@ -346,7 +353,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             evaluateScore(recentScore, this.user.goal);
         }else{
         
-        //ZMI not done yet bc still causes an exception
+        //TODO not done yet bc still causes an exception
            
         
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -364,7 +371,20 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             feedbackField.setBackground(Color.red);
         }
     }
-    private void getResults(){ //TODO change to ResultSet
-        ResultSet rs ;
+    private ResultSet getResults(int mode) throws ClassNotFoundException, SQLException{ //TODO change to ResultSet
+        Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
+        String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
+        Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
+        Statement st = conn.createStatement();
+        String sql = "SELECT * FROM Scores"; 
+        if(mode == 2){
+            sql = "SELECT * FROM Scores WHERE `username` = " + "'" + this.user.getName() + "' ORDER BY date DESC LIMIT  1;";
+        }
+        return st.executeQuery(sql);
+
+
+    
+    
     }
+    
 }
