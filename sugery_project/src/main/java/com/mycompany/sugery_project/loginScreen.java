@@ -409,7 +409,7 @@ public class loginScreen extends javax.swing.JFrame {
             this.setVisible(false);
         }else{
                 // if they don't
-                logErrorField.setText("incorrect password :(");
+                logErrorField.setText("incorrect name or password :(");
 
         }
     }

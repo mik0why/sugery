@@ -329,24 +329,23 @@ public class configJFrame extends javax.swing.JFrame {
     void userCreate(){ //usr, age, goal are global (?)
         //adding new entries to two tables: LoginData & UserData
         //TODO: re-do tables(id not necessary?)
-        if(!username.equals("") && age > -1 && goal > -1 && passField.getPassword().length > 0){
-            //TODO: this check should be more precise (e.g. define the range for age)
+        if(validEntriesCheck()){
             try{
             Class.forName("com.mysql.cj.jdbc.Driver"); // may not be necessary?
             String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
             Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
                 if(!checkEntries(conn, username)){ // check if the username already exists
-                    usCr(conn, username, passField, age, goal); // add user to login table
-                    //TODO: add user to UserData table
+                    usCr(conn, username, passField, age, goal); // add user to login & data tables
                 }else{
                     errorArea.append("The username already exists!");
                 }
             }catch(Exception e){
                 System.out.println("Exception: " + e);
             }
-        }   
+        }  
     }
     boolean checkEntries(Connection conn, String user) throws SQLException{
+        //TODO Password Encryption?
         Statement st = conn.createStatement();
         String sql = "SELECT username, password FROM LoginData";
         ResultSet rs = st.executeQuery(sql);
@@ -361,16 +360,30 @@ public class configJFrame extends javax.swing.JFrame {
     void usCr(Connection conn, String user, JPasswordField passField, int age, int goal) throws SQLException{
         Statement st = conn.createStatement();
         char[] password = passField.getPassword();
-        ResultSet rs; // not even sure if needed 
-        String sql = "INSERT user, password INTO LoginTable";
-        String sql_2 = "INSERT user, age, goal INTO UserData";
-        st.executeQuery(sql); // should be executeUpdate in both cases?
-        st.execute(sql_2); 
-        System.out.println("Succesful insert"); 
+        String sql = "INSERT INTO `LoginData` (`username`, `password`) VALUES ('" + user
+               + '\'' + "," + '\'' + String.valueOf(password) + "');" ;
+        String sql_2 = "INSERT INTO `UserData` (`username`, `age`,`goal`) VALUES ('" + user
+                + '\'' + ","  + age + ',' + goal + ");";
+        try{
+            st.executeUpdate(sql); 
+            st.executeUpdate(sql_2); 
+            System.out.println("Succesful insert"); 
+        }catch(SQLException e){
+            System.out.println("Insert unsucessful: " + e);
+        }
     }
-   
     
-    
+    boolean validEntriesCheck(){
+                    //TODO: this check should be more precise (e.g. define the range for age)
+        boolean retVal = (!username.equals("") && age > -1 && goal > -1 && passField.getPassword().length> 0) 
+                ?  true :  false; 
+        if(retVal) return true;
+        else{
+            // check which entry is not correct
+            // output in the form
+        }
+        return false; 
+    }
     
     
     /**
