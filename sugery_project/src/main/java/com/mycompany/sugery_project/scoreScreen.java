@@ -12,8 +12,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.lang.Object;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -236,14 +241,18 @@ public class scoreScreen extends javax.swing.JFrame  {
     }//GEN-LAST:event_formKeyPressed
 
     private void scoreSetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreSetKeyPressed
-                if(evt.getKeyCode()==27){
+                if(evt.getKeyCode()==27){ //TODO hmm?
                     this.setVisible(false);
                 }
                 else{
                     try {
-                        //addScore(user);
+                        addScore();
                         this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
                     } catch (IOException ex) {
+                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
                         Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
@@ -309,14 +318,16 @@ public class scoreScreen extends javax.swing.JFrame  {
     // need to register the day of the input
 
     void addScore() throws ClassNotFoundException, SQLException{
-        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
         String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
         Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
         Statement st = conn.createStatement();
-        String sql = "INSERT INTO `Scores` ('username', 'score', 'date') VALUES ('"
-                + this.user.getName() ;
-        ResultSet rs = st.executeQuery(sql);
+        String sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
+                + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
+        + ","+ '\'' +  dateFormat.format(new Date())  +  "');" ; 
+        
+        st.executeUpdate(sql);
         
         
     }

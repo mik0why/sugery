@@ -6,6 +6,7 @@
 package com.mycompany.sugery_project;
 
 import java.awt.Color;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -47,6 +48,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         addScoreButton = new javax.swing.JButton();
         allScBut = new javax.swing.JButton();
         scAnalyze = new javax.swing.JButton();
+        ageField = new javax.swing.JTextField();
+        goalField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(238, 138, 238));
@@ -58,7 +61,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         });
 
         entryText.setEditable(false);
-        entryText.setBackground(new java.awt.Color(238, 138, 238));
+        entryText.setBackground(new java.awt.Color(100, 218, 98));
         entryText.setText("jTextField1");
 
         scoreField.setEditable(false);
@@ -74,7 +77,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
         jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jTextField1.setText("Your Score Today: ");
+        jTextField1.setText("Most Recent Score:");
         jTextField1.setToolTipText("");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +124,14 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }
         });
 
+        ageField.setBackground(new java.awt.Color(238, 238, 238));
+        ageField.setText("age: ");
+        ageField.setToolTipText("");
+
+        goalField.setBackground(new java.awt.Color(238, 238, 238));
+        goalField.setText("goal: ");
+        goalField.setToolTipText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,37 +139,42 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(feedbackField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(addScoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(63, 63, 63)
-                        .addComponent(entryText, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ageField, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(88, 88, 88)
+                                .addComponent(goalField))
+                            .addComponent(entryText, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(scAnalyze, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(allScBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(scoreField, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(scoreField, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(scAnalyze, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(allScBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(feedbackField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(addScoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(entryText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(entryText, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(goalField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scoreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scoreField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addScoreButton)
@@ -167,7 +183,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                 .addComponent(allScBut)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scAnalyze)
-                .addGap(0, 62, Short.MAX_VALUE))
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
         pack();
@@ -282,8 +298,13 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             // when the program is closed (spot that moment)
         this.user.addObserver(this); // TODO: what's this?
         entryText.setText("Welcome, " + this.user.getName() + ".\n"); // why can i access .first?
-        //getRecentScore
-        
+        ageField.setText("age : " + this.user.getAge());
+        System.out.println("GOAL : " + this.user.getGoal());
+        goalField.setText("goal : " + this.user.getGoal()); //not working?
+        /*ResultSet allUserScores = getResults(); //here: get the result set for the particular user
+        if(allUserScores.size > 0){
+            
+        } */
         int scoreArrSize = al.get(idx).usArr.size();
            if (scoreArrSize > 0){ // TODO not sure yet how to modify it
             scoreField.setText(Integer.toString(al.get(idx).usArr.get(al.get(idx).usArr.size()-1).getScoreValue()));
@@ -294,7 +315,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }else{
                 feedbackField.setText("no score yet :(");
             }
-
+        //
      
         //based on what the score is, and how much off from the goal
             //display the score differently
@@ -306,9 +327,11 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addScoreButton;
+    private javax.swing.JTextField ageField;
     private javax.swing.JButton allScBut;
     private javax.swing.JTextField entryText;
     private javax.swing.JTextField feedbackField;
+    private javax.swing.JTextField goalField;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton scAnalyze;
     private javax.swing.JTextField scoreField;
@@ -340,8 +363,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             feedbackField.setText("too high dawg.");
             feedbackField.setBackground(Color.red);
         }
-        
-        
-        
+    }
+    private void getResults(){ //TODO change to ResultSet
+        ResultSet rs ;
     }
 }
