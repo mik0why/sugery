@@ -46,7 +46,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         feedbackField = new javax.swing.JTextField();
         addScoreButton = new javax.swing.JButton();
         allScBut = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        scAnalyze = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(238, 138, 238));
@@ -114,10 +114,10 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }
         });
 
-        jButton2.setText("Score Analysis");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        scAnalyze.setText("Score Analysis");
+        scAnalyze.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                scAnalyzeActionPerformed(evt);
             }
         });
 
@@ -138,7 +138,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(scAnalyze, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(allScBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -166,7 +166,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                 .addGap(24, 24, 24)
                 .addComponent(allScBut)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(scAnalyze)
                 .addGap(0, 62, Short.MAX_VALUE))
         );
 
@@ -211,7 +211,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
     private void allScButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_allScButMouseClicked
         // TODO add your handling code here:
-            scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
+        scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
         sa.setVisible(true);
         sa.displayScores();
         
@@ -230,7 +230,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
     }//GEN-LAST:event_allScButKeyPressed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void scAnalyzeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scAnalyzeActionPerformed
         scoreAnalizer scAn = new scoreAnalizer(this.user); // changed score to scores
         System.out.println(this.user.usArr);
         scAn.createAndShowGui();
@@ -239,7 +239,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         
         
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_scAnalyzeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -276,14 +276,16 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         });
     }
 
-    public void displayUserData(ArrayList<User> al, int idx){
+    public void displayUserData(ArrayList<User> al, int idx){ //TODO change parameters
         //TODO display different stuff based on what time it is
         //TODO should the arrayList be also saved to a file?
             // when the program is closed (spot that moment)
         this.user.addObserver(this); // TODO: what's this?
-        entryText.setText("Welcome, " + al.get(idx).getName() + ".\n");
+        entryText.setText("Welcome, " + this.user.getName() + ".\n"); // why can i access .first?
+        //getRecentScore
+        
         int scoreArrSize = al.get(idx).usArr.size();
-           if (scoreArrSize > 0){
+           if (scoreArrSize > 0){ // TODO not sure yet how to modify it
             scoreField.setText(Integer.toString(al.get(idx).usArr.get(al.get(idx).usArr.size()-1).getScoreValue()));
             jTextField1.setText(null);
             jTextField1.setText("most recent score (registered on " +
@@ -307,8 +309,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton allScBut;
     private javax.swing.JTextField entryText;
     private javax.swing.JTextField feedbackField;
-    private javax.swing.JButton jButton2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton scAnalyze;
     private javax.swing.JTextField scoreField;
     // End of variables declaration//GEN-END:variables
 

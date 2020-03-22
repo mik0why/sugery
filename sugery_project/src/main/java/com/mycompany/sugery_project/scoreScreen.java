@@ -7,6 +7,11 @@ package com.mycompany.sugery_project;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observable;
@@ -23,7 +28,7 @@ public class scoreScreen extends javax.swing.JFrame  {
      * Creates new form scoreScreen
      */
     User user;
-    int index; // not sure if necessary
+    int index; //Not necessary 
     boolean focusTraversalKeysEnabled = false;
 
     @Override
@@ -236,6 +241,7 @@ public class scoreScreen extends javax.swing.JFrame  {
                 }
                 else{
                     try {
+                        //addScore(user);
                         this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
                     } catch (IOException ex) {
                         Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -302,7 +308,18 @@ public class scoreScreen extends javax.swing.JFrame  {
 
     // need to register the day of the input
 
-
+    void addScore() throws ClassNotFoundException, SQLException{
+        
+        Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
+        String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
+        Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
+        Statement st = conn.createStatement();
+        String sql = "INSERT INTO `Scores` ('username', 'score', 'date') VALUES ('"
+                + this.user.getName() ;
+        ResultSet rs = st.executeQuery(sql);
+        
+        
+    }
 
 
 }

@@ -30,7 +30,7 @@ public class scoreArchive extends javax.swing.JFrame {
         this.user = usr; 
         initComponents();
         System.out.println("initializing new user: ");
-        System.err.println(this.user.getName());
+        System.err.println(this.user);
     }
 
           
@@ -57,12 +57,14 @@ public class scoreArchive extends javax.swing.JFrame {
         tablemodel.setRowCount(0); // no initial rows
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
 
+        // do this ^ here
         
-        
+        /*
         for(int i = 0; i < this.user.usArr.size(); i++){
        // tablemodel.addRow(new Object[]{this.user.usArr.get(i).getScoreDate(), this.user.usArr.get(i).getScoreValue()});
         tablemodel.insertRow(0, new Object[]{this.user.usArr.get(i).getScoreDate(), this.user.usArr.get(i).getScoreValue()});
         }
+        */
     }
     
     /**

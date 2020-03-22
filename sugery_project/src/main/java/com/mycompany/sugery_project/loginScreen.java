@@ -25,9 +25,8 @@ public class loginScreen extends javax.swing.JFrame {
      */
     mainFrame mf; // TODO needs to be fixed (what exactly?)
     configJFrame jf = new configJFrame(); 
-    
-    // how to check if usData already exists? 
-    ArrayList<User> usData = new ArrayList<User>(); // TODO: temporal?
+   
+    ArrayList<User> usData = new ArrayList<User>(); // TODO: remove
 
 
     boolean focusTraversalKeysEnabled = false;
@@ -230,7 +229,7 @@ public class loginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonMouseClicked
 
     private void newUserButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newUserButtonMouseClicked
-        // TODO add your handling code here:
+        // creating a new user
         jf.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_newUserButtonMouseClicked
@@ -335,28 +334,60 @@ public class loginScreen extends javax.swing.JFrame {
             String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
             Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
             Statement st = conn.createStatement();
-            String sql;
-            sql = "SELECT username, password FROM LoginData";
+            String sql = "SELECT username, password FROM LoginData";
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
+            while(rs.next()){ // TODO shouldn't it be select from where?
                 String username = rs.getString("username");
                 String us_pass = rs.getString("password");
                 if(username.equals(login) && us_pass.equals(String.copyValueOf(password))){
                     usrFound = true; 
+                    //TODO: can get age and goal too so then we construct a user
                     }
                 }
             }catch(Exception e){
                 System.out.println("Exception: " + e);
         }
-        if(usrFound){ // TODO these methods below should be changed bc now they're using SQL
-            usData.add(new User(login, 22, 100)); // get rid of
+        if(usrFound){ 
+            mf = new mainFrame(fetchUser(userField.getText())); // instead of user; TODO change the method definition; old: get user from db (TODO change which one)
+            this.setVisible(false);
+            mf.setVisible(true);
+            mf.displayUserData(usData, usrIdx); // replace with proper arguments (TODO change the parameter)
+            
+            
+           /* usData.add(new User(login, 22, 100)); // get rid of
             mf = new mainFrame(usData.get(usrIdx)); //TODO change the method definition; old: get user from db (TODO change which one)
             mf.setVisible(true);
             mf.displayUserData(usData, usrIdx); // replace with proper arguments (TODO change the parameter)
-            this.setVisible(false);
+            this.setVisible(false); */
+            
+            
+            
         }else{ // no user found in the database
-                logErrorField.setText("incorrect name or password :(");
+                logErrorField.setText("incorrect username or password :(");
         }
+    }
+    
+    public User fetchUser(String username){ // Connect to the Database.  Fetch the details relevant to the user
+     String user = ""; 
+     int age = Integer.MIN_VALUE; 
+     int goal = Integer.MIN_VALUE;
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
+            String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
+            Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
+            Statement st = conn.createStatement();
+            String sql = "SELECT * FROM UserData WHERE username = '" + username + "';";
+            ResultSet rs = st.executeQuery(sql);
+            rs.next();
+            user = rs.getString("username");
+            age = rs.getInt("age");
+            goal = rs.getInt("goal");
+            System.out.println("User-2 : " + user + " age: " + age + " goal : " + goal);
+            }catch(Exception e){
+                System.out.println("Exception: " + e);
+        }
+        
+        return new User(user, age, goal); // TODO change
     }
     
     

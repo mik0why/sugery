@@ -255,7 +255,7 @@ public class configJFrame extends javax.swing.JFrame {
             age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
             goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));        
               if(userCreate()){ // successful creation
-                mf = new mainFrame(usArr.get(usArr.size()-1)); // or size -1?
+                mf = new mainFrame(new User(username, age, goal)); // TODO should there be a new user statement?
                 mf.setVisible(true);
                 this.setVisible(false);
                 mf.displayUserData(usArr, usArr.size()-1); // the most recent one
