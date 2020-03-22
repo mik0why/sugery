@@ -25,7 +25,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     User user;
     // where to move this?
 //    scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
-
+// TODO : rethink the display (maybe should also show goal etc?)
     public mainFrame(User usr) {
         initComponents();
         this.user = usr;
@@ -329,7 +329,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     }
     
     public void evaluateScore(int score, int goal){
-        // ZMI display the score based on how off from the goal
+        // TODO: display the score differently based on how much off from the goal
         
         if(score <= goal){
             feedbackField.setText("LETS GO!!!");

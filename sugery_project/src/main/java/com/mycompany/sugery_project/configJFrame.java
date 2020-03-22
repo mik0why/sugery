@@ -254,11 +254,15 @@ public class configJFrame extends javax.swing.JFrame {
             username = nameArea1.getText().replaceAll("\\s+", "");
             age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
             goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));        
-            userCreate();
-            mf = new mainFrame(usArr.get(usArr.size()-1)); // or size -1?
-            mf.setVisible(true);
-            this.setVisible(false);
-            mf.displayUserData(usArr, usArr.size()-1); // the most recent one
+              if(userCreate()){ // successful creation
+                mf = new mainFrame(usArr.get(usArr.size()-1)); // or size -1?
+                mf.setVisible(true);
+                this.setVisible(false);
+                mf.displayUserData(usArr, usArr.size()-1); // the most recent one
+            }
+             
+          
+            
 
         }catch(Exception e){ // TODO more detailed exceptions
             entryText.setText(null);
@@ -309,12 +313,15 @@ public class configJFrame extends javax.swing.JFrame {
     private void goalAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_goalAreaKeyPressed
         // TODO add your handling code here:
                 if (evt.getKeyCode()==9){
-                    createUsrButton.requestFocus();
+                    passField.requestFocus();
         }
     }//GEN-LAST:event_goalAreaKeyPressed
 
     private void nameArea1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameArea1KeyPressed
-        // TODO add your handling code here:
+            if (evt.getKeyCode()==9){
+                   ageArea.requestFocus();
+            }
+
     }//GEN-LAST:event_nameArea1KeyPressed
 
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
@@ -322,11 +329,13 @@ public class configJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField8ActionPerformed
 
     private void passFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passFieldActionPerformed
-        // TODO add your handling code here:
+            //TODO move focus
+        
     }//GEN-LAST:event_passFieldActionPerformed
 
     
-    void userCreate(){ //usr, age, goal are global (?)
+    boolean userCreate(){ //usr, age, goal are global (?)
+        boolean success = false;
         //adding new entries to two tables: LoginData & UserData
         //TODO: re-do tables(id not necessary?)
         if(validEntriesCheck()){
@@ -336,13 +345,15 @@ public class configJFrame extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
                 if(!checkEntries(conn, username)){ // check if the username already exists
                     usCr(conn, username, passField, age, goal); // add user to login & data tables
+                    success = true; 
                 }else{
                     errorArea.append("The username already exists!");
                 }
             }catch(Exception e){
                 System.out.println("Exception: " + e);
             }
-        }  
+        }
+        return success;
     }
     boolean checkEntries(Connection conn, String user) throws SQLException{
         //TODO Password Encryption?
@@ -443,3 +454,10 @@ public class configJFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField passField;
     // End of variables declaration//GEN-END:variables
 }
+
+ /* old code for tryCreatingUser
+            mf = new mainFrame(usArr.get(usArr.size()-1)); // or size -1?
+            mf.setVisible(true);
+            this.setVisible(false);
+            mf.displayUserData(usArr, usArr.size()-1); // the most recent one
+            */

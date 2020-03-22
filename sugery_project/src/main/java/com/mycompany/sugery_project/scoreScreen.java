@@ -31,7 +31,7 @@ public class scoreScreen extends javax.swing.JFrame  {
         super.setFocusTraversalKeysEnabled(focusTraversalKeysEnabled); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public scoreScreen(User usr, int idx) {
+    public scoreScreen(User usr, int idx) { // change usr to string
         initComponents();
         this.user = usr;
     }
@@ -48,11 +48,11 @@ public class scoreScreen extends javax.swing.JFrame  {
     }
     */
     
-    public void modifyScore(){
+    public void modifyScore(){ // sql update (?)
         
     }
     
-    public void deleteScore(){
+    public void deleteScore(){ // sql deletion
         
     }
     

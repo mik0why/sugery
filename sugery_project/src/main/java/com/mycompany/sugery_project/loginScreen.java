@@ -18,24 +18,6 @@ import java.util.logging.Logger;
  * @author mikowhy
  */
 
-/*
-    0. check if the login, password combination is OK - that's basically done
-    1. if it is, retrieve the usArr from the tmp file
-        figure out the serialization problem
-    2. save to .tmp file whenever there is a new score added/removed?
-        have a function scModified
-
-    but how many of those .tmp files should be there?
-        1 - assuming we can only modify score (add/delete) - for now
-
-    how to retrieve the appropriate array from the tmp file?
-    should there be any sort of indexing? 
-    is the UsData array even necessary?
-
-
-
-*/
-
 public class loginScreen extends javax.swing.JFrame {
     //TODO needs a fix:  pressing the "Enter" button
     /**
@@ -283,13 +265,11 @@ public class loginScreen extends javax.swing.JFrame {
 
     private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
         // TODO rearrange bc redundant
-           String username = userField.getText();
-        char[] password = passField.getPassword();
-        if(username.isEmpty() || password.length == 0){
+        if(userField.getText().isEmpty() || passField.getPassword().length == 0){
             logErrorField.setText("no login / password entered!"); // can extend to show which one
         }else{
                try {
-                   loginAttempt(username, password);
+                   loginAttempt(userField.getText(), passField.getPassword());
                } catch (ClassNotFoundException ex) {
                    Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
                } catch (SQLException ex) {
@@ -347,72 +327,39 @@ public class loginScreen extends javax.swing.JFrame {
     private void loginAttempt(String login, char[] password) throws ClassNotFoundException, SQLException{
         // TODO database for username, password
         boolean usrFound = false;
-        String currUs; 
-        String currPass;
-        String dbURL; // TODO 
         int usrIdx = 0; //TODO: 0 for now, might be changed 
         // condition to check if login and password match entries in db
         // validate - check if reasonable, verify - check if accurate
-        // convert password to string
-        String pass = String.copyValueOf(password);
-       try{
-        Class.forName("com.mysql.cj.jdbc.Driver"); // may not be necessary?
-        String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
-        Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
-        Statement st = conn.createStatement();
-        String sql;
-        sql = "SELECT username, password FROM LoginData";
-        ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
-            //int id  = rs.getInt("username");
-            String username = rs.getString("username");
-            String us_pass = rs.getString("password");
-            if(username.equals(login) && us_pass.equals(pass)){
-                usrFound = true; 
-            }
-            
-        }
-                
-                
-                System.out.println("after connection..");
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
+            String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
+            Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
+            Statement st = conn.createStatement();
+            String sql;
+            sql = "SELECT username, password FROM LoginData";
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                String username = rs.getString("username");
+                String us_pass = rs.getString("password");
+                if(username.equals(login) && us_pass.equals(String.copyValueOf(password))){
+                    usrFound = true; 
+                    }
+                }
             }catch(Exception e){
                 System.out.println("Exception: " + e);
         }
-                    
-        if(usrFound){
+        if(usrFound){ // TODO these methods below should be changed bc now they're using SQL
             usData.add(new User(login, 22, 100)); // get rid of
-            try{
-                System.out.println("connecting..");
-                            
-            }catch(Exception e){
-                System.out.println("Exception : " + e) ;
-            }
-            
-            
-            
-            // find the user in the al 
-            /* TODO: commented for now, might be used
-            for (User us : usData){ // need to always access the same al
-                System.out.println(us.first);
-                if(login.equals(us.first)){ //todo one user with one name
-                    usrIdx = usData.indexOf(login); 
-                    System.out.println(usrIdx); 
-                    // check if name already exists
-                }
-                // find the corresponding user
-                
-            }*/
-            
-            mf = new mainFrame(usData.get(usrIdx)); //get user from db (TODO change which one)
+            mf = new mainFrame(usData.get(usrIdx)); //TODO change the method definition; old: get user from db (TODO change which one)
             mf.setVisible(true);
             mf.displayUserData(usData, usrIdx); // replace with proper arguments (TODO change the parameter)
             this.setVisible(false);
-        }else{
-                // if they don't
+        }else{ // no user found in the database
                 logErrorField.setText("incorrect name or password :(");
-
         }
     }
+    
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -428,3 +375,18 @@ public class loginScreen extends javax.swing.JFrame {
     private javax.swing.JTextArea usernameArea;
     // End of variables declaration//GEN-END:variables
 }
+            
+            
+            
+            // find the user in the al 
+            /* TODO: commented for now, might be used
+            for (User us : usData){ // need to always access the same al
+                System.out.println(us.first);
+                if(login.equals(us.first)){ //todo one user with one name
+                    usrIdx = usData.indexOf(login); 
+                    System.out.println(usrIdx); 
+                    // check if name already exists
+                }
+                // find the corresponding user
+                
+            }*/

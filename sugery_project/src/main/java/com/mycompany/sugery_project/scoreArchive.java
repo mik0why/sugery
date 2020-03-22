@@ -37,10 +37,28 @@ public class scoreArchive extends javax.swing.JFrame {
     public void displayScores(){
         //TODO display buttons so the user can modify scores
         
+        /*
+        so basically here we're gonna display all scores for the appropriate username
+        sql looks like this
+        
+        miko    123
+        mati    105
+        miko    144
+        miko    118
+        
+        so whenever there is a match
+        SELECT score FROM Scores WHERE username = "provided username"?
+            sth like this, not sure about the last part
+        */
+        
+        
+        
         DefaultTableModel tablemodel = (DefaultTableModel) jTable1.getModel();
         tablemodel.setRowCount(0); // no initial rows
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
 
+        
+        
         for(int i = 0; i < this.user.usArr.size(); i++){
        // tablemodel.addRow(new Object[]{this.user.usArr.get(i).getScoreDate(), this.user.usArr.get(i).getScoreValue()});
         tablemodel.insertRow(0, new Object[]{this.user.usArr.get(i).getScoreDate(), this.user.usArr.get(i).getScoreValue()});
