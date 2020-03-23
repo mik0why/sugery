@@ -11,11 +11,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.TableColumn;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.lang.Object;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+
 
 /**
  *
@@ -43,7 +51,7 @@ public class scoreArchive extends javax.swing.JFrame {
           
     public void displayScores() throws ClassNotFoundException, SQLException{
         //TODO display buttons so the user can modify scores
-        
+        //TODO score summary
         /*
         so basically here we're gonna display all scores for the appropriate username
         sql looks like this
@@ -69,10 +77,8 @@ public class scoreArchive extends javax.swing.JFrame {
         Statement st = conn.createStatement();
         String sql = "SELECT * FROM Scores WHERE `username` = " + "'" + this.user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
         ResultSet sq =  st.executeQuery(sql);
-        while(sq.next()){ // idk why this syntax repeated twice?
-            //tablemodel.addRow(new Object[]{sq.getString("date"), sq.getString("score")}); // this.user.usArr.get(i).getScoreDate(), this.user.usArr.get(i).getScoreValue()});
+        while(sq.next()){
             tablemodel.insertRow(0, new Object[]{sq.getString("date"), sq.getString("score")});
- 
         }
 
 
@@ -144,6 +150,7 @@ public class scoreArchive extends javax.swing.JFrame {
             }
         });
 
+        commArea.setEditable(false);
         commArea.setBackground(new java.awt.Color(238, 238, 238));
         commArea.setColumns(20);
         commArea.setRows(5);
@@ -203,48 +210,41 @@ public class scoreArchive extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void remScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remScActionPerformed
-        // TODO add your handling code here:
         if(!jTable1.getSelectionModel().isSelectionEmpty()){
+            try {
+                //TODO remove from database
+                dbRemove(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString(), jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            /*System.out.println("DATA: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn())); 
+            System.out.println("DATA-2: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1));
+            */
             ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
         }else{
             //commArea.setText("Select a row first, then click 'Delete'");
-            JOptionPane.showMessageDialog(new JFrame(), "Select a row first, then click 'Delete");
+            JOptionPane.showMessageDialog(new JFrame("No Selection"), "Select a row first, then click 'Delete'");
         }
     }//GEN-LAST:event_remScActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(scoreArchive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(scoreArchive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(scoreArchive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(scoreArchive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        /*java.awt.EventQueue.invokeLater(new Runnable() {            
-            /*public void run() {
-                
-            }
-        }); */
+      private void dbRemove(String date, String score) throws ClassNotFoundException, SQLException{
+        System.out.println("entry to remove: " + date + " : " + score);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
+        String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
+        Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
+        Statement st = conn.createStatement();
+        String sql = "DELETE FROM Scores WHERE `username` = '" + this.user.getName()
+                + "' AND `score` = " + score + " AND `date` = '" + dateFormat.format(date)  +  "';";
+        // see this: https://stackoverflow.com/questions/10649782/java-cannot-format-given-object-as-a-date
+        System.out.println("sql : " + sql);
+        st.executeUpdate(sql);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

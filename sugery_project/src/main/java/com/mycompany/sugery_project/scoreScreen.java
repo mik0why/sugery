@@ -318,6 +318,7 @@ public class scoreScreen extends javax.swing.JFrame  {
     // need to register the day of the input
 
     void addScore() throws ClassNotFoundException, SQLException{
+        //TODO only triggered on one KeyEvent?
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
         String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
@@ -326,7 +327,6 @@ public class scoreScreen extends javax.swing.JFrame  {
         String sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
                 + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
         + ","+ '\'' +  dateFormat.format(new Date())  +  "');" ; 
-        
         st.executeUpdate(sql);
         
         
