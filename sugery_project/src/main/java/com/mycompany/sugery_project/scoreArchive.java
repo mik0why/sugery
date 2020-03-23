@@ -213,7 +213,12 @@ public class scoreArchive extends javax.swing.JFrame {
         if(!jTable1.getSelectionModel().isSelectionEmpty()){
             try {
                 //TODO remove from database
+                System.out.println("Sending to dbRemove: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString());
+                System.out.println("Second-sending: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
+                                System.out.println("Third-sending: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString());
+
                 dbRemove(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString(), jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
+                ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -222,7 +227,6 @@ public class scoreArchive extends javax.swing.JFrame {
             /*System.out.println("DATA: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn())); 
             System.out.println("DATA-2: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1));
             */
-            ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
         }else{
             //commArea.setText("Select a row first, then click 'Delete'");
             JOptionPane.showMessageDialog(new JFrame("No Selection"), "Select a row first, then click 'Delete'");
@@ -234,14 +238,14 @@ public class scoreArchive extends javax.swing.JFrame {
      */
 
       private void dbRemove(String date, String score) throws ClassNotFoundException, SQLException{
-        System.out.println("entry to remove: " + date + " : " + score);
+        System.out.println("entry to remove-2: " + date + " : " + score);
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
         String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
         Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
         Statement st = conn.createStatement();
         String sql = "DELETE FROM Scores WHERE `username` = '" + this.user.getName()
-                + "' AND `score` = " + score + " AND `date` = '" + dateFormat.format(date)  +  "';";
+                + "' AND `score` = " + score + " AND `date` = '" + date  +  "';";
         // see this: https://stackoverflow.com/questions/10649782/java-cannot-format-given-object-as-a-date
         System.out.println("sql : " + sql);
         st.executeUpdate(sql);
