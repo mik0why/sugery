@@ -14,6 +14,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.stage.Stage;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,6 +33,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     // where to move this?
 //    scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
 // TODO : rethink the display (maybe should also show goal etc?)
+// TODO : LogOut Button
     public mainFrame(User usr) {
         initComponents();
         this.user = usr;
@@ -54,6 +57,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         scAnalyze = new javax.swing.JButton();
         ageField = new javax.swing.JTextField();
         goalField = new javax.swing.JTextField();
+        logoutKey = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(238, 138, 238));
@@ -67,6 +71,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         entryText.setEditable(false);
         entryText.setBackground(new java.awt.Color(100, 218, 98));
         entryText.setText("jTextField1");
+        entryText.setAlignmentX(1.0F);
 
         scoreField.setEditable(false);
         scoreField.setFont(new java.awt.Font("Lucida Grande", 0, 48)); // NOI18N
@@ -128,13 +133,22 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }
         });
 
+        ageField.setEditable(false);
         ageField.setBackground(new java.awt.Color(238, 238, 238));
         ageField.setText("age: ");
         ageField.setToolTipText("");
 
+        goalField.setEditable(false);
         goalField.setBackground(new java.awt.Color(238, 238, 238));
         goalField.setText("goal: ");
         goalField.setToolTipText("");
+
+        logoutKey.setText("Logout");
+        logoutKey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutKeyActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,9 +171,12 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(scoreField, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(scAnalyze, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(allScBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(scAnalyze, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(allScBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(54, 54, 54)
+                                .addComponent(logoutKey, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(feedbackField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(41, 41, 41)
@@ -183,11 +200,17 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addScoreButton)
                     .addComponent(feedbackField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addComponent(allScBut)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scAnalyze)
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(allScBut)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scAnalyze)
+                        .addGap(0, 32, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logoutKey)
+                        .addContainerGap())))
         );
 
         pack();
@@ -225,7 +248,13 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
         scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
         sa.setVisible(true);
-        sa.displayScores();
+        try {
+            sa.displayScores();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_allScButActionPerformed
 
@@ -233,7 +262,13 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
         scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
         sa.setVisible(true);
-        sa.displayScores();
+        try {
+            sa.displayScores();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_allScButMouseClicked
 
@@ -245,7 +280,13 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         if(evt.getKeyCode() == 13){ // not working?
                 scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
             sa.setVisible(true);
-            sa.displayScores();
+            try {
+                sa.displayScores();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_allScButKeyPressed
@@ -260,6 +301,14 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         
         
     }//GEN-LAST:event_scAnalyzeActionPerformed
+
+    private void logoutKeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutKeyActionPerformed
+            this.setVisible(false);
+            loginScreen ls = new loginScreen();
+            ls.setVisible(true);
+            // set loginframe visible
+            
+    }//GEN-LAST:event_logoutKeyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,14 +354,16 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         ageField.setText("age : " + this.user.getAge());
         goalField.setText("goal : " + this.user.getGoal()); //not working?
         if(getResults(1).next()){ // the result set isn't empty, so display the most recent score
-            getResults(2).next();
-            System.out  .println("the most REC Score: " + getResults(2).getString("score"));
+            ResultSet rs2 = getResults(2);
+            rs2.next();
+            System.out  .println("the most REC Score: " + rs2.getString("score"));
+           scoreField.setText(rs2.getString("score"));
         }
-        /*ResultSet allUserScores = getResults(); //here: get the result set for the particular user
+           /*ResultSet allUserScores = getResults(); //here: get the result set for the particular user
         if(allUserScores.size > 0){
             
         } the code below is to be commented out once the code above is done */
-        int scoreArrSize = al.get(idx).usArr.size();
+        /* int scoreArrSize = al.get(idx).usArr.size();
            if (scoreArrSize > 0){ // TODO not sure yet how to modify it
             scoreField.setText(Integer.toString(al.get(idx).usArr.get(al.get(idx).usArr.size()-1).getScoreValue()));
             jTextField1.setText(null);
@@ -322,6 +373,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }else{
                 feedbackField.setText("no score yet :(");
             }
+          */ 
         //
      
         //based on what the score is, and how much off from the goal
@@ -340,6 +392,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JTextField feedbackField;
     private javax.swing.JTextField goalField;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton logoutKey;
     private javax.swing.JButton scAnalyze;
     private javax.swing.JTextField scoreField;
     // End of variables declaration//GEN-END:variables

@@ -34,7 +34,7 @@ public class scoreAnalizer extends JPanel {
    ArrayList<Score> scores;  
    User user; 
    
-   public scoreAnalizer(User usr) {
+   public scoreAnalizer(User usr) { //TODO modify the score
        this.user = usr;
        this.scores = this.user.usArr; // handle if no scores yet
 //       this.addKeyListener(this);

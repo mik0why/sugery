@@ -5,8 +5,15 @@
  */
 package com.mycompany.sugery_project;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javafx.scene.control.TableColumn;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -34,7 +41,7 @@ public class scoreArchive extends javax.swing.JFrame {
     }
 
           
-    public void displayScores(){
+    public void displayScores() throws ClassNotFoundException, SQLException{
         //TODO display buttons so the user can modify scores
         
         /*
@@ -50,12 +57,26 @@ public class scoreArchive extends javax.swing.JFrame {
         SELECT score FROM Scores WHERE username = "provided username"?
             sth like this, not sure about the last part
         */
-        
-        
-        
+
         DefaultTableModel tablemodel = (DefaultTableModel) jTable1.getModel();
         tablemodel.setRowCount(0); // no initial rows
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
+
+
+       Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
+        String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
+        Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
+        Statement st = conn.createStatement();
+        String sql = "SELECT * FROM Scores WHERE `username` = " + "'" + this.user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
+        ResultSet sq =  st.executeQuery(sql);
+        while(sq.next()){ // idk why this syntax repeated twice?
+            //tablemodel.addRow(new Object[]{sq.getString("date"), sq.getString("score")}); // this.user.usArr.get(i).getScoreDate(), this.user.usArr.get(i).getScoreValue()});
+            tablemodel.insertRow(0, new Object[]{sq.getString("date"), sq.getString("score")});
+ 
+        }
+
+
+
 
         // do this ^ here
         
@@ -79,10 +100,14 @@ public class scoreArchive extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        remSc = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        commArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("close");
+        jButton1.setText("Close");
+        jButton1.setToolTipText("");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -111,26 +136,51 @@ public class scoreArchive extends javax.swing.JFrame {
         jTable1.setFocusable(false);
         jScrollPane1.setViewportView(jTable1);
 
+        remSc.setText("Remove Score");
+        remSc.setToolTipText("");
+        remSc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                remScActionPerformed(evt);
+            }
+        });
+
+        commArea.setBackground(new java.awt.Color(238, 238, 238));
+        commArea.setColumns(20);
+        commArea.setRows(5);
+        jScrollPane2.setViewportView(commArea);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(302, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(34, 34, 34))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(remSc, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(remSc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -151,6 +201,16 @@ public class scoreArchive extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
             this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void remScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remScActionPerformed
+        // TODO add your handling code here:
+        if(!jTable1.getSelectionModel().isSelectionEmpty()){
+            ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
+        }else{
+            //commArea.setText("Select a row first, then click 'Delete'");
+            JOptionPane.showMessageDialog(new JFrame(), "Select a row first, then click 'Delete");
+        }
+    }//GEN-LAST:event_remScActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,9 +248,12 @@ public class scoreArchive extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea commArea;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton remSc;
     // End of variables declaration//GEN-END:variables
 
 
