@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -254,6 +255,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_allScButActionPerformed
@@ -267,6 +270,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -285,6 +290,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
+                Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
                 Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -357,7 +364,9 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             ResultSet rs2 = getResults(2);
             rs2.next();
             System.out  .println("the most REC Score: " + rs2.getString("score"));
-           scoreField.setText(rs2.getString("score"));
+           scoreField.setText(rs2.getString("score")); // make sure it's still the same score
+           jTextField1.setText(rs2.getString("date"));
+           evaluateScore(Integer.parseInt(rs2.getString("score")), this.user.goal);
         }
            /*ResultSet allUserScores = getResults(); //here: get the result set for the particular user
         if(allUserScores.size > 0){

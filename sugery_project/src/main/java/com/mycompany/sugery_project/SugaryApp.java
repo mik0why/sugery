@@ -20,6 +20,7 @@ import java.sql.* ;
  * @author mikowhy
  */
 public class SugaryApp {
+    //TODO fields should be private
     
     /**
      * @param args the command line arguments
@@ -28,6 +29,7 @@ public class SugaryApp {
 /*
     public static void main(String[] args) {
         // TODO code application logic here
+    
     }
   */  
 }

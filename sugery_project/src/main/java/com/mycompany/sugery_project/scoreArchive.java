@@ -21,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.lang.Object;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
@@ -35,7 +36,7 @@ public class scoreArchive extends javax.swing.JFrame {
      * Creates new form scoreArchive
      */
     User user;
-
+    ArrayList<Score> scores; 
     /**
      *
      * @param usr
@@ -49,7 +50,8 @@ public class scoreArchive extends javax.swing.JFrame {
     }
 
           
-    public void displayScores() throws ClassNotFoundException, SQLException{
+    public void displayScores() throws ClassNotFoundException, SQLException, ParseException{
+        //TODO make private
         //TODO display buttons so the user can modify scores
         //TODO score summary
         /*
@@ -65,22 +67,34 @@ public class scoreArchive extends javax.swing.JFrame {
         SELECT score FROM Scores WHERE username = "provided username"?
             sth like this, not sure about the last part
         */
-
+        ArrayList<Score> scores = new ArrayList(); //scores or ints?
+        /*
+        think about how to go about organizing this
+        adding to this AL and then can run functions
+        like compute time of the day when added...think if it's worth it
+        def average
+        
+        */
+        
+        
         DefaultTableModel tablemodel = (DefaultTableModel) jTable1.getModel();
         tablemodel.setRowCount(0); // no initial rows
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
 
-
-       Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
+        DateFormat dateFormat = new SimpleDateFormat("yyy-mm-dd HH:mm:ss");
+        Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
         String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
         Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
         Statement st = conn.createStatement();
         String sql = "SELECT * FROM Scores WHERE `username` = " + "'" + this.user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
         ResultSet sq =  st.executeQuery(sql);
-        while(sq.next()){
+        while(sq.next()){ 
             tablemodel.insertRow(0, new Object[]{sq.getString("date"), sq.getString("score")});
+            System.out.println("date and score : " + sq.getInt("score") + ", " + dateFormat.parse(sq.getString("date")));
+            scores.add(new Score(sq.getInt("score"), dateFormat.parse(sq.getString("date"))));
         }
-
+        displayAnalysis(scores); 
+        System.out.println("Let's see the first score : " +scores.get(0).date);
 
 
 
@@ -212,13 +226,11 @@ public class scoreArchive extends javax.swing.JFrame {
     private void remScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remScActionPerformed
         if(!jTable1.getSelectionModel().isSelectionEmpty()){
             try {
-                //TODO remove from database
-                System.out.println("Sending to dbRemove: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString());
-                System.out.println("Second-sending: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
-                                System.out.println("Third-sending: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString());
-
                 dbRemove(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString(), jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
                 ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
+                //TODO: remove from usArr
+                // use this: jTable1.getSelectedRow();
+                // need to do the same with adding to the array
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -249,8 +261,26 @@ public class scoreArchive extends javax.swing.JFrame {
         // see this: https://stackoverflow.com/questions/10649782/java-cannot-format-given-object-as-a-date
         System.out.println("sql : " + sql);
         st.executeUpdate(sql);
+        //summUpdate(scores); // stuff like: morning scores 
     }
 
+    private void displayAnalysis(ArrayList<Score> sc){
+        //TODO should sc be global?
+        // so then just with each operation call displayAnalysis I guess?
+        int sum = 0, counter = 0; 
+        // can do stuff like morningCount, eveningCount etc
+        
+        for (Score s: sc){
+            sum+=s.getScoreValue();
+            counter++;
+        }
+        
+        commArea.append("There are " + counter + " scores registered. \n");
+        commArea.append("Average Value: " + sum / counter);
+        
+    }
+      
+      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea commArea;
     private javax.swing.JButton jButton1;
