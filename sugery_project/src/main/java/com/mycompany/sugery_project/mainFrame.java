@@ -232,7 +232,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         sc.setVisible(true);
         
         if(!sc.isVisible()){
-            scoreField.setText(Integer.toString(sc.user.usArr.get(0).result));
+            scoreField.setText(Integer.toString(sc.user.getUsArr().get(0).result));
         }
       
         
@@ -300,7 +300,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
     private void scAnalyzeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scAnalyzeActionPerformed
         scoreAnalizer scAn = new scoreAnalizer(this.user); // changed score to scores
-        System.out.println(this.user.usArr);
+        System.out.println(this.user.getUsArr());
         scAn.createAndShowGui();
         
         
@@ -320,37 +320,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) { // TODO is the main necessary?
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-               // new mainFrame().setVisible(true);
-            }
-        });
-    }
 
     public void displayUserData(ArrayList<User> al, int idx) throws ClassNotFoundException, SQLException{ //TODO change parameters
         //TODO display different stuff based on what time it is
@@ -366,7 +336,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             System.out  .println("the most REC Score: " + rs2.getString("score"));
            scoreField.setText(rs2.getString("score")); // make sure it's still the same score
            jTextField1.setText(rs2.getString("date"));
-           evaluateScore(Integer.parseInt(rs2.getString("score")), this.user.goal);
+           evaluateScore(Integer.parseInt(rs2.getString("score")), this.user.getGoal());
         }
            /*ResultSet allUserScores = getResults(); //here: get the result set for the particular user
         if(allUserScores.size > 0){
@@ -407,12 +377,12 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object arg) { //TODO fix (not sure if this or other method)
         if(o == this.user){ // checking if it's one from many im assuming
-            int recentScore = this.user.usArr.get(this.user.usArr.size()-1).result;
-            scoreField.setText(Integer.toString(this.user.usArr.get(this.user.usArr.size()-1).result)); // ZMI the most recent one
-            jTextField1.setText("Your score updated at : " +  this.user.usArr.get(this.user.usArr.size()-1).date);
-            evaluateScore(recentScore, this.user.goal);
+            int recentScore = this.user.getUsArr().get(this.user.getUsArr().size()-1).result;
+            scoreField.setText(Integer.toString(this.user.getUsArr().get(this.user.getUsArr().size()-1).result)); // ZMI the most recent one
+            jTextField1.setText("Your score updated at : " +  this.user.getUsArr().get(this.user.getUsArr().size()-1).date);
+            evaluateScore(recentScore, this.user.getGoal());
         }else{
         
         //TODO not done yet bc still causes an exception

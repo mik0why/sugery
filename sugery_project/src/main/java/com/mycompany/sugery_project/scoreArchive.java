@@ -36,7 +36,7 @@ public class scoreArchive extends javax.swing.JFrame {
      * Creates new form scoreArchive
      */
     User user;
-    ArrayList<Score> scores; 
+//    ArrayList<Score> scores; 
     /**
      *
      * @param usr
@@ -67,7 +67,6 @@ public class scoreArchive extends javax.swing.JFrame {
         SELECT score FROM Scores WHERE username = "provided username"?
             sth like this, not sure about the last part
         */
-        ArrayList<Score> scores = new ArrayList(); //scores or ints?
         /*
         think about how to go about organizing this
         adding to this AL and then can run functions
@@ -76,7 +75,9 @@ public class scoreArchive extends javax.swing.JFrame {
         
         */
         
-        
+             //   ArrayList<Score> scores = new ArrayList(); //scores or ints?//
+
+                
         DefaultTableModel tablemodel = (DefaultTableModel) jTable1.getModel();
         tablemodel.setRowCount(0); // no initial rows
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
@@ -91,10 +92,10 @@ public class scoreArchive extends javax.swing.JFrame {
         while(sq.next()){ 
             tablemodel.insertRow(0, new Object[]{sq.getString("date"), sq.getString("score")});
             System.out.println("date and score : " + sq.getInt("score") + ", " + dateFormat.parse(sq.getString("date")));
-            scores.add(new Score(sq.getInt("score"), dateFormat.parse(sq.getString("date"))));
+            //this.user.getUsArr().add(new Score(sq.getInt("score"), dateFormat.parse(sq.getString("date"))));
         }
-        displayAnalysis(scores); 
-        System.out.println("Let's see the first score : " +scores.get(0).date);
+        displayAnalysis(); 
+        System.out.println("Let's see the first score : " +this.user.getUsArr().get(0).date);
 
 
 
@@ -236,9 +237,6 @@ public class scoreArchive extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             }
-            /*System.out.println("DATA: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn())); 
-            System.out.println("DATA-2: " + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1));
-            */
         }else{
             //commArea.setText("Select a row first, then click 'Delete'");
             JOptionPane.showMessageDialog(new JFrame("No Selection"), "Select a row first, then click 'Delete'");
@@ -264,13 +262,15 @@ public class scoreArchive extends javax.swing.JFrame {
         //summUpdate(scores); // stuff like: morning scores 
     }
 
-    private void displayAnalysis(ArrayList<Score> sc){
-        //TODO should sc be global?
-        // so then just with each operation call displayAnalysis I guess?
-        int sum = 0, counter = 0; 
-        // can do stuff like morningCount, eveningCount etc
+    private void displayAnalysis(){
+        //TODO sc will be empty with each execution - needs to be obtained from the server
         
-        for (Score s: sc){
+        // so then just with each operation call displayAnalysis I guess?
+        // can do stuff like morningCount, eveningCount etc
+        getAllScores(); // 
+        int sum = 0, counter = 0; 
+        
+        for (Score s: this.user.getUsArr()){
             sum+=s.getScoreValue();
             counter++;
         }
@@ -279,7 +279,34 @@ public class scoreArchive extends javax.swing.JFrame {
         commArea.append("Average Value: " + sum / counter);
         
     }
-      
+    
+    private void getAllScores(){
+        ArrayList<Score> ans; 
+        String username;
+        int score;
+        Date dt; 
+            try{
+            Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
+            String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
+            Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
+            Statement st = conn.createStatement();
+            String sql = "SELECT username, score, date FROM Scores";
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){ // TODO shouldn't it be select from where?
+                username = rs.getString("username");
+                score = rs.getInt("score");
+                dt = rs.getDate("date");
+                if(username.equals(this.user.getName())){// && us_pass.equals(String.copyValueOf(password))){
+                    //TODO should check if the score isn't already in the usArr
+                    // or just use return RS
+                    this.user.getUsArr().add(new Score(score, dt));
+                    }
+                }
+            }catch(Exception e){
+                System.out.println("Exception: " + e);
+        }
+        
+    }
       
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea commArea;

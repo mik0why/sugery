@@ -18,15 +18,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.lang.Object;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.lang.String;
 
 /**
  *
  * @author mikowhy
  */
+//TODO fix the update thing
 public class scoreScreen extends javax.swing.JFrame  {
 
     /**
@@ -216,24 +219,27 @@ public class scoreScreen extends javax.swing.JFrame  {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void scoreSetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scoreSetMouseClicked
-        try {
+        /*try { TODO: Redundant
             this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
         } catch (IOException ex) {
             Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
                 jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
+        */
     }//GEN-LAST:event_scoreSetMouseClicked
 
     private void scoreFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreFieldKeyPressed
-            if (evt.getKeyCode()==13){
+        /*     
+        //this is for enter and not working?
+                if (evt.getKeyCode()==13){ //this should be made a function bc used twice
                 try {
-                    //this should be made a function bc used twice
                     this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
                 } catch (IOException ex) {
                     Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
             }
+        */
     }//GEN-LAST:event_scoreFieldKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -241,18 +247,20 @@ public class scoreScreen extends javax.swing.JFrame  {
     }//GEN-LAST:event_formKeyPressed
 
     private void scoreSetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreSetKeyPressed
-                if(evt.getKeyCode()==27){ //TODO hmm?
+        //TODO doesn't update the score in the mainFrame after adding        
+        if(evt.getKeyCode()==27){ //TODO hmm?
                     this.setVisible(false);
                 }
                 else{
                     try {
                         addScore();
-                        this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
-                    } catch (IOException ex) {
-                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+                        jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
+                        //this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
                     } catch (ClassNotFoundException ex) {
                         Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (SQLException ex) {
+                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ParseException ex) {
                         Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
@@ -287,7 +295,7 @@ public class scoreScreen extends javax.swing.JFrame  {
 
     // need to register the day of the input
 
-    void addScore() throws ClassNotFoundException, SQLException{
+    void addScore() throws ClassNotFoundException, SQLException, ParseException{
         //TODO only triggered on one KeyEvent?
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
@@ -298,7 +306,7 @@ public class scoreScreen extends javax.swing.JFrame  {
                 + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
         + ","+ '\'' +  dateFormat.format(new Date())  +  "');" ; 
         st.executeUpdate(sql);
-        
+        this.user.getUsArr().add(new Score(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")), new Date()));
         
     }
 

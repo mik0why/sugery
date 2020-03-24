@@ -324,7 +324,6 @@ public class loginScreen extends javax.swing.JFrame {
         });
     }
     private void loginAttempt(String login, char[] password) throws ClassNotFoundException, SQLException{
-        // TODO database for username, password
         boolean usrFound = false;
         int usrIdx = 0; //TODO: 0 for now, might be changed 
         // condition to check if login and password match entries in db

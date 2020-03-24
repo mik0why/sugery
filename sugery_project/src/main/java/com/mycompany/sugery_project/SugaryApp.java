@@ -55,10 +55,10 @@ class User extends Observable implements Serializable{
     */
     
     
-    String first;
-    int age;
-    int goal;
-    ArrayList<Score> usArr = new ArrayList<Score>();
+    private String first;
+    private int age;
+    private int goal;
+    private ArrayList<Score> usArr = new ArrayList<Score>();
 
     public User(String name, int age, int goal){
         this.first = name;
@@ -82,21 +82,11 @@ class User extends Observable implements Serializable{
         this.usArr.add(new Score(result, new Date()));
         setChanged(); //TODO: what it do?
         notifyObservers();
-        //TODO: need to modify the DB
-        
-        
-        
-        /*
-        FileOutputStream fos = new FileOutputStream("t.tmp");
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(usArr);
-        oos.close();
-        */
-        
-        //here operate on the usArr?
-        
     }
     
+    public ArrayList<Score> getUsArr(){
+        return this.usArr;
+    }
     /*
         public void setScore(int todayScore){ // need to specify which score in the array
         this.score = todayScore;

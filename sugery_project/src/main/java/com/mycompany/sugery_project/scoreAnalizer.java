@@ -31,12 +31,13 @@ public class scoreAnalizer extends JPanel {
    private static final Stroke GRAPH_STROKE = new BasicStroke(3f);
    private static final int GRAPH_POINT_WIDTH = 12;
    private static final int Y_HATCH_CNT = 10;
-   ArrayList<Score> scores;  
+   ArrayList<Score> scores;  //TODO: not necessary
    User user; 
    
    public scoreAnalizer(User usr) { //TODO modify the score
        this.user = usr;
-       this.scores = this.user.usArr; // handle if no scores yet
+       this.scores = this.user.getUsArr(); // handle if no scores yet
+       // TODO: should use .getUsArr;
 //       this.addKeyListener(this);
        
        for(Score sc : scores){
