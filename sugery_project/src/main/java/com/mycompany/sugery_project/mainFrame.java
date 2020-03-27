@@ -396,11 +396,23 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         // TODO: display the score differently based on how much off from the goal
         
         if(score <= goal){
-            feedbackField.setText("LETS GO!!!");
+            feedbackField.setText("Great Job!!!");
             feedbackField.setBackground(Color.GREEN);
-        }else{
-            feedbackField.setText("too high dawg.");
-            feedbackField.setBackground(Color.red);
+        }else if(score > goal * 1.5){
+            feedbackField.setText("Your sugar level is very high.");
+            feedbackField.setBackground(Color.RED);
+        }else if(score > goal * 1.3){
+            feedbackField.setText("High score - but not in a good way :(");
+            feedbackField.setBackground(Color.BLUE);
+        }else if(score > goal * 1.15){
+            feedbackField.setText("Not bad - but a little too high.");
+            feedbackField.setBackground(Color.CYAN);
+        }else if(score > goal * 1){
+            feedbackField.setText("Nice work!");
+            feedbackField.setBackground(Color.MAGENTA);
+        }
+        else{
+  
         }
     }
     private ResultSet getResults(int mode) throws ClassNotFoundException, SQLException{ //TODO change to ResultSet
