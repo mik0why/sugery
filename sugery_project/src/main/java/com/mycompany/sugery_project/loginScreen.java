@@ -216,7 +216,7 @@ public class loginScreen extends javax.swing.JFrame {
         String username = userField.getText();
         char[] password = passField.getPassword();
         if(username.isEmpty() || password.length == 0){
-            logErrorField.setText("no login / password entered!"); // can extend to show which one
+            logErrorField.setText("no login or password entered!"); // can extend to show which one
         }else{
             try {
                 loginAttempt(username, password);
@@ -361,7 +361,7 @@ public class loginScreen extends javax.swing.JFrame {
             
             
         }else{ // no user found in the database
-                logErrorField.setText("incorrect username or password :(");
+                logErrorField.setText("Incorrect username or password :(");
         }
     }
     

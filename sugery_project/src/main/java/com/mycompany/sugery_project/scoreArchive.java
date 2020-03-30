@@ -52,28 +52,11 @@ public class scoreArchive extends javax.swing.JFrame {
         //TODO make private
         //TODO display buttons so the user can modify scores
         //TODO score summary
-        /*
-        so basically here we're gonna display all scores for the appropriate username
-        sql looks like this
         
-        miko    123
-        mati    105
-        miko    144
-        miko    118
+        //TODO: remake Scores into a hashTable?
+        // find a solution to not enter the same entry twice
+
         
-        so whenever there is a match
-        SELECT score FROM Scores WHERE username = "provided username"?
-            sth like this, not sure about the last part
-        */
-        /*
-        think about how to go about organizing this
-        adding to this AL and then can run functions
-        like compute time of the day when added...think if it's worth it
-        def average
-        
-        */
-        
-             //   ArrayList<Score> scores = new ArrayList(); //scores or ints?//
 
                 
         DefaultTableModel tablemodel = (DefaultTableModel) jTable1.getModel();
