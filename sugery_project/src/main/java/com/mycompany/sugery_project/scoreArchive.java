@@ -25,6 +25,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Observable;
+import java.util.Observer;
 
 
 
@@ -209,6 +211,8 @@ public class scoreArchive extends javax.swing.JFrame {
                         jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
                 ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
        
+                
+                displayAnalysis();
                 //TODO: remove from usArr; selection problem
                 // use this: jTable1.getSelectedRow();
                 // need to do the same with adding to the array
@@ -266,8 +270,7 @@ public class scoreArchive extends javax.swing.JFrame {
         }
         
         commArea.setText(null);
-        commArea.append("sum: " + sum + "\n");
-        commArea.append("There are " + counter + " scores registered. \n");
+        commArea.append(counter + " scores registered. \n");
         commArea.append("Average Value: " + sum / counter);
         
     }
@@ -326,6 +329,7 @@ public class scoreArchive extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JButton remSc;
     // End of variables declaration//GEN-END:variables
+
 
 
 }
