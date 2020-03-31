@@ -205,7 +205,8 @@ public class scoreArchive extends javax.swing.JFrame {
         //TODO need an observable
         if(!jTable1.getSelectionModel().isSelectionEmpty()){
             try {
-                dbRemove(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString(), jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
+                dbRemove(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString(),  
+                        jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
                 ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
        
                 //TODO: remove from usArr; selection problem
