@@ -80,8 +80,10 @@ public class scoreArchive extends javax.swing.JFrame {
             //this.user.getUsArr().add(new Score(sq.getInt("score"), dateFormat.parse(sq.getString("date"))));
         }
         displayAnalysis(); 
+        /*
         System.out.println("Let's see the first score : " +this.user.getUsArr().get(0).date);
         System.out.println("also, let's see array's size: " + this.user.getUsArr().size());
+        */
     }
     
     /**
@@ -249,28 +251,29 @@ public class scoreArchive extends javax.swing.JFrame {
         
         System.out.println("HT size: " + this.user.getHM().size());
         
-        for (Score s: this.user.getUsArr()){
-            sum+=s.getScoreValue();
-            counter++;
-        }
+
         
-        
-        for(Entry e : this.user.getHM().entrySet()){
+        for(Entry<String, Integer> e : this.user.getHM().entrySet()){
             System.out.println("Key : " + e.getKey() + "Value : " + e.getValue());
+            sum+=e.getValue();
+            counter++;
+            
+          
         }
         
+        System.out.println("finished iterating");
  //       this.user.getHM().getKey("2");
  
     //System.out.println(entry.getKey() + "/" + entry.getValue());
     //}
                 
                 
-   
-                /*
+   //NEXT: remove score
+
         commArea.append("sum: " + sum + "\n");
         commArea.append("There are " + counter + " scores registered. \n");
         commArea.append("Average Value: " + sum / counter);
-        */
+        
     }
     
     private void getAllScores(){
