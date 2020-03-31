@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.Observable;
 import java.io.Serializable;
 import java.sql.* ; 
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -59,6 +61,7 @@ class User extends Observable implements Serializable{
     private int age;
     private int goal;
     private ArrayList<Score> usArr = new ArrayList<Score>();
+    private Map<String, Integer> scoreMap = new HashMap<>(); //= new HashMap<String,Integer>();
 
     public User(String name, int age, int goal){
         this.first = name;
@@ -76,6 +79,14 @@ class User extends Observable implements Serializable{
     
     public int getGoal(){
         return goal;
+    }
+    
+    Map<String, Integer> getHM(){ // should this be one method?
+        return scoreMap;
+    }
+    
+    void HM_Insert(String d, int score){
+        scoreMap.put(d, score);
     }
     
     public void addScore(int result) throws FileNotFoundException, IOException{ //ZMI when else should notifyObservers be called?

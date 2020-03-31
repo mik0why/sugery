@@ -23,6 +23,8 @@ import java.lang.Object;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Map;
+import java.util.Map.Entry;
 
 
 
@@ -243,23 +245,39 @@ public class scoreArchive extends javax.swing.JFrame {
         getAllScores(); // 
         int sum = 0;
         int counter = 0; 
+        int ct = 0 ; 
         
-        System.out.println("array size before: " + this.user.getUsArr().size() + "\n");
+        System.out.println("HT size: " + this.user.getHM().size());
+        
         for (Score s: this.user.getUsArr()){
             sum+=s.getScoreValue();
             counter++;
         }
+        
+        
+        for(Entry e : this.user.getHM().entrySet()){
+            System.out.println("Key : " + e.getKey() + "Value : " + e.getValue());
+        }
+        
+ //       this.user.getHM().getKey("2");
+ 
+    //System.out.println(entry.getKey() + "/" + entry.getValue());
+    //}
+                
+                
+   
+                /*
         commArea.append("sum: " + sum + "\n");
         commArea.append("There are " + counter + " scores registered. \n");
         commArea.append("Average Value: " + sum / counter);
-        
+        */
     }
     
     private void getAllScores(){
         ArrayList<Score> ans; 
         String username;
         int score;
-        Date dt; 
+        String dt; 
             try{
             Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
             String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
@@ -270,16 +288,29 @@ public class scoreArchive extends javax.swing.JFrame {
             while(rs.next()){ // TODO shouldn't it be select from where?
                 username = rs.getString("username");
                 score = rs.getInt("score");
-                dt = rs.getDate("date");
+                dt = rs.getString("date"); // convert to a different format?
+                
+                System.out.println("Here. Username: " + username + "this user : " + this.user.getName());
                 if(username.equals(this.user.getName())){// && us_pass.equals(String.copyValueOf(password))){
                     //TODO should check if the score isn't already in the usArr
+                    System.out.println("Date : " + dt.toString() + " " + this.user.getHM().containsKey(dt) + "\n");
+                    if(!this.user.getHM().containsKey(dt)){
+                        System.out.println("inserting : " + dt  + " " + score);
+                        this.user.HM_Insert(dt, score);
+                    }
+                    System.out.println("we out");
+                     //
+                     
+                     /*
                     Score sco = new Score(score, dt); // hmm not working, 
                     //make a HT and check this way
                     //key: date, value: score
                     if(!this.user.getUsArr().contains(sco)){ //TODO make a one-liner
-                        System.out.append("adding");
+                        //System.out.append("adding");
                         this.user.getUsArr().add(sco);
                         }
+                    
+                    */
                     }
                 }
             }catch(Exception e){
