@@ -33,8 +33,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     User user;
     // where to move this?
 //    scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
-// TODO : rethink the display (maybe should also show goal etc?)
-// TODO : LogOut Button
+// TODO usArr seems kinda tedious
+
     public mainFrame(User usr) {
         initComponents();
         this.user = usr;

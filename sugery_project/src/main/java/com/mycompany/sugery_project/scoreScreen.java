@@ -134,6 +134,11 @@ public class scoreScreen extends javax.swing.JFrame  {
                 scoreSetMouseClicked(evt);
             }
         });
+        scoreSet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scoreSetActionPerformed(evt);
+            }
+        });
         scoreSet.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 scoreSetKeyPressed(evt);
@@ -219,27 +224,30 @@ public class scoreScreen extends javax.swing.JFrame  {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void scoreSetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scoreSetMouseClicked
-        /*try { TODO: Redundant
-            this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
-        } catch (IOException ex) {
-            Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-                jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
-        */
+        //TODO: delete
     }//GEN-LAST:event_scoreSetMouseClicked
 
+    
     private void scoreFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreFieldKeyPressed
-        /*     
+            
         //this is for enter and not working?
-                if (evt.getKeyCode()==13){ //this should be made a function bc used twice
+        System.out.println("here");    
+        if (evt.getKeyCode()== KeyEvent.VK_ENTER){ //this should be made a function bc used twice
                 try {
                     this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                    addScore();
                 } catch (IOException ex) {
                     Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                } catch (ClassNotFoundException ex) {
+                Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
             }
-        */
+        
     }//GEN-LAST:event_scoreFieldKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -247,29 +255,7 @@ public class scoreScreen extends javax.swing.JFrame  {
     }//GEN-LAST:event_formKeyPressed
 
     private void scoreSetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreSetKeyPressed
-        //TODO doesn't update the score in the mainFrame after adding   
-        
-        /*
-        if(evt.getKeyCode()==27){ //TODO hmm?
-                    this.setVisible(false);
-                }
-                else{
-            
-            */
-                    try {
-                        addScore();
-                        jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
-                        //this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ParseException ex) {
-                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
-                //}
-        // TODO add your handling code here:
+//TODO del
     }//GEN-LAST:event_scoreSetKeyPressed
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
@@ -279,6 +265,29 @@ public class scoreScreen extends javax.swing.JFrame  {
     private void jButton3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton3KeyPressed
                    this.setVisible(false);
     }//GEN-LAST:event_jButton3KeyPressed
+
+    private void scoreSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoreSetActionPerformed
+        // TODO add your handling code here:
+         try {
+                        this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                        addScore();
+                        jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
+                        //this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+            Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                    jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
+        
+        
+        
+        
+    }//GEN-LAST:event_scoreSetActionPerformed
 
     /**
      * @param args the command line arguments
