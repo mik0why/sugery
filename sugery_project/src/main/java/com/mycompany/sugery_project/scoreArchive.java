@@ -79,7 +79,7 @@ public class scoreArchive extends javax.swing.JFrame {
         }
         displayAnalysis(); 
         System.out.println("Let's see the first score : " +this.user.getUsArr().get(0).date);
-
+        System.out.println("also, let's see array's size: " + this.user.getUsArr().size());
     }
     
     /**
@@ -241,13 +241,15 @@ public class scoreArchive extends javax.swing.JFrame {
         // so then just with each operation call displayAnalysis I guess?
         // can do stuff like morningCount, eveningCount etc
         getAllScores(); // 
-        int sum = 0, counter = 0; 
+        int sum = 0;
+        int counter = 0; 
         
+        System.out.println("array size before: " + this.user.getUsArr().size() + "\n");
         for (Score s: this.user.getUsArr()){
             sum+=s.getScoreValue();
             counter++;
         }
-        
+        commArea.append("sum: " + sum + "\n");
         commArea.append("There are " + counter + " scores registered. \n");
         commArea.append("Average Value: " + sum / counter);
         
@@ -271,13 +273,11 @@ public class scoreArchive extends javax.swing.JFrame {
                 dt = rs.getDate("date");
                 if(username.equals(this.user.getName())){// && us_pass.equals(String.copyValueOf(password))){
                     //TODO should check if the score isn't already in the usArr
-                    // or just use return RS
                     Score sco = new Score(score, dt); // hmm not working, 
-                    //idt it's working bc it's a new object
-                    //maybe it's better to make it a HT? but what would be the key and value?
-                    //date: key, score: value? sth to think about
-                    //maybe now just make it a query, then change the entire scoreArchive to HT?
+                    //make a HT and check this way
+                    //key: date, value: score
                     if(!this.user.getUsArr().contains(sco)){ //TODO make a one-liner
+                        System.out.append("adding");
                         this.user.getUsArr().add(sco);
                         }
                     }
