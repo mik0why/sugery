@@ -202,10 +202,12 @@ public class scoreArchive extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void remScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remScActionPerformed
+        //TODO need an observable
         if(!jTable1.getSelectionModel().isSelectionEmpty()){
             try {
                 dbRemove(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString(), jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
                 ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
+       
                 //TODO: remove from usArr; selection problem
                 // use this: jTable1.getSelectedRow();
                 // need to do the same with adding to the array
@@ -236,6 +238,7 @@ public class scoreArchive extends javax.swing.JFrame {
         // see this: https://stackoverflow.com/questions/10649782/java-cannot-format-given-object-as-a-date
         System.out.println("sql : " + sql);
         st.executeUpdate(sql);
+        this.user.getHM().remove(date);
         //summUpdate(scores); // stuff like: morning scores 
     }
 
@@ -261,15 +264,7 @@ public class scoreArchive extends javax.swing.JFrame {
           
         }
         
-        System.out.println("finished iterating");
- //       this.user.getHM().getKey("2");
- 
-    //System.out.println(entry.getKey() + "/" + entry.getValue());
-    //}
-                
-                
-   //NEXT: remove score
-
+        commArea.setText(null);
         commArea.append("sum: " + sum + "\n");
         commArea.append("There are " + counter + " scores registered. \n");
         commArea.append("Average Value: " + sum / counter);

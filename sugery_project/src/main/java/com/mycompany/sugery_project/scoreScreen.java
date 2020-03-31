@@ -247,11 +247,15 @@ public class scoreScreen extends javax.swing.JFrame  {
     }//GEN-LAST:event_formKeyPressed
 
     private void scoreSetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreSetKeyPressed
-        //TODO doesn't update the score in the mainFrame after adding        
+        //TODO doesn't update the score in the mainFrame after adding   
+        
+        /*
         if(evt.getKeyCode()==27){ //TODO hmm?
                     this.setVisible(false);
                 }
                 else{
+            
+            */
                     try {
                         addScore();
                         jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
@@ -264,7 +268,7 @@ public class scoreScreen extends javax.swing.JFrame  {
                         Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
-                }
+                //}
         // TODO add your handling code here:
     }//GEN-LAST:event_scoreSetKeyPressed
 
@@ -297,6 +301,16 @@ public class scoreScreen extends javax.swing.JFrame  {
 
     void addScore() throws ClassNotFoundException, SQLException, ParseException{
         //TODO only triggered on one KeyEvent?
+        /*TODO maybe there should be a condition that if the same score
+        was added less thatn 5/10 seconds ago then it shouldn't add it
+        or better: have a window that asks whether you want to add the same score?
+       
+        Already Added : .... Do you want to add this score again?
+        
+        BTW functionality for custom date
+    */
+        
+        
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
         String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 

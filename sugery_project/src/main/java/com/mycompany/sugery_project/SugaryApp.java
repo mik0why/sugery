@@ -16,6 +16,8 @@ import java.io.Serializable;
 import java.sql.* ; 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 /**
  *
@@ -61,8 +63,8 @@ class User extends Observable implements Serializable{
     private int age;
     private int goal;
     private ArrayList<Score> usArr = new ArrayList<Score>();
-    private Map<String, Integer> scoreMap = new HashMap<>(); //= new HashMap<String,Integer>();
-
+    //private Map<String, Integer> scoreMap = new HashMap<>(); //= new HashMap<String,Integer>();
+    private NavigableMap<String, Integer> scoreMap = new TreeMap<String, Integer>(); //= new HashMap<String,Integer>();
     public User(String name, int age, int goal){
         this.first = name;
         this.age = age;
@@ -81,8 +83,8 @@ class User extends Observable implements Serializable{
         return goal;
     }
     
-    Map<String, Integer> getHM(){ // should this be one method?
-        return scoreMap;
+    TreeMap<String, Integer> getHM(){ // should this be one method?
+        return (TreeMap<String, Integer>) scoreMap;
     }
     
     void HM_Insert(String d, int score){

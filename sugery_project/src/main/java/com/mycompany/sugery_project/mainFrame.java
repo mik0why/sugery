@@ -232,7 +232,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         sc.setVisible(true);
         
         if(!sc.isVisible()){
-            scoreField.setText(Integer.toString(sc.user.getUsArr().get(0).result));
+            //scoreField.setText(Integer.toString(sc.user.getUsArr().get(0).result));
+            scoreField.setText(this.user.getHM().lastKey());
         }
       
         
