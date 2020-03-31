@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import javax.swing.*;
 
@@ -31,18 +32,19 @@ public class scoreAnalizer extends JPanel {
    private static final Stroke GRAPH_STROKE = new BasicStroke(3f);
    private static final int GRAPH_POINT_WIDTH = 12;
    private static final int Y_HATCH_CNT = 10;
-   ArrayList<Score> scores;  //TODO: not necessary
+   ArrayList<Integer> scores = new ArrayList<Integer>();  //TODO: not necessary
    User user; 
    
    public scoreAnalizer(User usr) { //TODO modify the score
        this.user = usr;
-       this.scores = this.user.getUsArr(); // handle if no scores yet
+       for(Map.Entry e : this.user.getHM().entrySet()){
+           scores.add((Integer)e.getValue());
+       }
+
        // TODO: should use .getUsArr;
 //       this.addKeyListener(this);
        
-       for(Score sc : scores){
-           System.out.println(sc.result);
-       }
+  
    }
    //TODO scaling problem
    //TODO needs at least 2 points
@@ -61,9 +63,9 @@ public class scoreAnalizer extends JPanel {
       List<Point> graphPoints = new ArrayList<Point>();
       for (int i = 0; i < scores.size(); i++) {
          int x1 = (int) (i * xScale + BORDER_GAP);
-         int y1 = (int) ((MAX_SCORE - scores.get(i).result) * yScale + BORDER_GAP);
+         int y1 = (int) ((MAX_SCORE - scores.get(i)) * yScale + BORDER_GAP);
          System.out.print("YSCALE : " + yScale);
-         System.out.print("score : " + scores.get(i).result);
+         System.out.print("score : " + scores.get(i));
          System.out.print("y value: " + y1);
          y1 = (y1 < 0) ? MAX_SCORE : y1;
          y1 = (y1 > 300) ? MAX_SCORE : y1;
@@ -141,10 +143,9 @@ public class scoreAnalizer extends JPanel {
       frame.setVisible(true);
       frame.addKeyListener(new KeyAdapter() {
         public void keyPressed(KeyEvent ke) {  // handler
-        if(ke.getKeyCode() == ke.VK_ESCAPE) {
-            frame.setVisible(false);
-        }else{
-        }
+            if(ke.getKeyCode() == ke.VK_ESCAPE) {
+                frame.setVisible(false);
+            }
         } 
             });
    }

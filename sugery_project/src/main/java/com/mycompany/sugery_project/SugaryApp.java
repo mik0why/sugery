@@ -71,6 +71,7 @@ class User extends Observable implements Serializable{
         this.goal = goal;
     }
     
+    //TODO: get rid of 'public', other minor changes
     public String getName(){
         return first;
     }

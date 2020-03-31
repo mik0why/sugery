@@ -61,6 +61,7 @@ public class scoreScreen extends javax.swing.JFrame  {
     }
     */
     
+
     public void modifyScore(){ // sql update (?)
         
     }
@@ -244,6 +245,9 @@ public class scoreScreen extends javax.swing.JFrame  {
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
 
+            if(evt.getKeyCode() == evt.VK_ESCAPE) {
+                this.setVisible(false);
+            }
     }//GEN-LAST:event_formKeyPressed
 
     private void scoreSetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreSetKeyPressed
