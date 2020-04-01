@@ -35,8 +35,7 @@ public class scoreScreen extends javax.swing.JFrame  {
     /**
      * Creates new form scoreScreen
      */
-    User user;
-    int index; //Not necessary 
+    private User user;
     boolean focusTraversalKeysEnabled = false;
 
     @Override
@@ -54,14 +53,7 @@ public class scoreScreen extends javax.swing.JFrame  {
             this.setVisible(false);
         }
     }
-    /*
-    public void addScore(int result){
-        Score sc = new Score(result, new Date());
-        user.usArr.add(sc);
-    }
-    */
     
-
     public void modifyScore(){ // sql update (?)
         
     }

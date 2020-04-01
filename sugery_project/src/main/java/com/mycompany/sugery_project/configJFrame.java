@@ -31,12 +31,12 @@ public class configJFrame extends javax.swing.JFrame {
     //TODO change these to other values? e.g. Integer.MIN_VALUE (?)
     BufferedWriter writer; 
     String username = "";
-    int age = -1;
-    int goal = -1;
-    ArrayList<User> usArr = new ArrayList<User>(); // idt it should be new
+    private int age = -1;
+    private int goal = -1;
+    private ArrayList<User> usArr = new ArrayList<User>(); // idt it should be new
     mainFrame mf ;
     
-    public configJFrame() {
+    configJFrame() {
         initComponents();
     }
 
@@ -454,10 +454,3 @@ public class configJFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField passField;
     // End of variables declaration//GEN-END:variables
 }
-
- /* old code for tryCreatingUser
-            mf = new mainFrame(usArr.get(usArr.size()-1)); // or size -1?
-            mf.setVisible(true);
-            this.setVisible(false);
-            mf.displayUserData(usArr, usArr.size()-1); // the most recent one
-            */

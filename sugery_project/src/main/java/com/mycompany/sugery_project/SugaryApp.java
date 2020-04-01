@@ -17,6 +17,7 @@ import java.sql.* ;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -30,12 +31,7 @@ public class SugaryApp {
      * @param args the command line arguments
      */
 
-/*
-    public static void main(String[] args) {
-        // TODO code application logic here
-    
-    }
-  */  
+
 }
 
 
@@ -44,7 +40,8 @@ public class SugaryApp {
 class User extends Observable implements Serializable{
     
     /*
-        When should the database be used?
+    
+    Database Usages: 
     
     SELECT: retrieve a particular user from the database
             no need to use it for getters? once the user is retrieved
@@ -65,22 +62,22 @@ class User extends Observable implements Serializable{
     private ArrayList<Score> usArr = new ArrayList<Score>();
     //private Map<String, Integer> scoreMap = new HashMap<>(); //= new HashMap<String,Integer>();
     private NavigableMap<String, Integer> scoreMap = new TreeMap<String, Integer>(); //= new HashMap<String,Integer>();
-    public User(String name, int age, int goal){
+    User(String name, int age, int goal){
         this.first = name;
         this.age = age;
         this.goal = goal;
     }
     
     //TODO: get rid of 'public', other minor changes
-    public String getName(){
+    String getName(){
         return first;
     }
     
-    public int getAge(){
+    int getAge(){
         return age;
     }
     
-    public int getGoal(){
+    int getGoal(){
         return goal;
     }
     
@@ -92,24 +89,30 @@ class User extends Observable implements Serializable{
         scoreMap.put(d, score);
     }
     
-    public void addScore(int result) throws FileNotFoundException, IOException{ //ZMI when else should notifyObservers be called?
+    void addScore(int result) throws FileNotFoundException, IOException{ //ZMI when else should notifyObservers be called?
         this.usArr.add(new Score(result, new Date()));
         setChanged(); //TODO: what it do?
         notifyObservers();
     }
     
-    public ArrayList<Score> getUsArr(){
+    ArrayList<Score> getUsArr(){
         return this.usArr;
     }
-    /*
-        public void setScore(int todayScore){ // need to specify which score in the array
-        this.score = todayScore;
+    
+    ResultSet sqlConnect(String date, int score, int mode){
+        ResultSet rs = null ;
+        
+        //idk if the mode variable necessary since the SQL query itself determines the operation type
+        //i guess at the end bc we don't return anything at deletion?
+        if(mode == 0){ // deletion
+            return null; 
+        }
+        
+        
+        return rs; 
     }
     
-    public int getScore(){
-        return score;
-    }
-*/
+    
     
 }
 
@@ -119,30 +122,30 @@ class Score extends Observable{
     Date date;
     
     
-    public Score(int res, Date dt){
+        Score(int res, Date dt){
             this.result = res;
             this.date = dt;
     }
     
-    public int getScoreValue(){
-        return result;
+        int getScoreValue(){
+            return result;
     }
     
-    public Date getScoreDate(){
-        return date;
+        Date getScoreDate(){
+            return date;
     }
     
-    public void setScoreValue(int val){
-        this.result = val;
+        void setScoreValue(int val){
+            this.result = val;
 
     }
     
-    public void setDateAdd(Date dt){
-        this.date = dt;
+        void setDateAdd(Date dt){
+            this.date = dt;
     }
     
-    public Integer toString(Score sc){
-        return sc.getScoreValue();
+        Integer toString(Score sc){
+            return sc.getScoreValue();
     }
     
     

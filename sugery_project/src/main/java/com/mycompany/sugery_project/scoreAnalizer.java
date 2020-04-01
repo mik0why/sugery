@@ -32,8 +32,8 @@ public class scoreAnalizer extends JPanel {
    private static final Stroke GRAPH_STROKE = new BasicStroke(3f);
    private static final int GRAPH_POINT_WIDTH = 12;
    private static final int Y_HATCH_CNT = 10;
-   ArrayList<Integer> scores = new ArrayList<Integer>();  //TODO: not necessary
-   User user; 
+   private ArrayList<Integer> scores = new ArrayList<Integer>();  //TODO: not necessary
+   private User user; 
    
    public scoreAnalizer(User usr) { //TODO modify the score
        this.user = usr;

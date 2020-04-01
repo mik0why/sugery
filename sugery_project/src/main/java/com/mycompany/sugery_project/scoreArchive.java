@@ -36,23 +36,29 @@ import java.util.Observer;
  */
 public class scoreArchive extends javax.swing.JFrame {
 
+    //TODO Event Deletion
     /**
      * Creates new form scoreArchive
      */
     User user;
-//    ArrayList<Score> scores; 
+
     /**
      *
      * @param usr
      * @param model
      */
-    public scoreArchive(User usr) {
+     scoreArchive(User usr) {
         this.user = usr; 
         initComponents();
     }
 
-          
-    public void displayScores() throws ClassNotFoundException, SQLException, ParseException{
+     // @Override
+    public boolean isCellEditable(int row, int column) {     
+                return false;               
+        };      
+     
+     
+    void displayScores() throws ClassNotFoundException, SQLException, ParseException{
         //TODO make private
         //TODO display buttons so the user can modify scores
         //TODO score summary
@@ -63,21 +69,23 @@ public class scoreArchive extends javax.swing.JFrame {
         
 
                 
-        DefaultTableModel tablemodel = (DefaultTableModel) jTable1.getModel();
-        tablemodel.setRowCount(0); // no initial rows
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+        tableModel.setRowCount(0); // no initial rows
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
-        
+        // move into the SQL function
         DateFormat dateFormat = new SimpleDateFormat("yyy-mm-dd HH:mm:ss");
         Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
         String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
         Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
         Statement st = conn.createStatement();
         String sql = "SELECT * FROM Scores WHERE `username` = " + "'" + this.user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
+        //
+        
         ResultSet sq =  st.executeQuery(sql);
         while(sq.next()){ //TODO: check if entry already in the table
             Object[] score = new Object[]{sq.getString("date"), sq.getString("score")}; 
             // search through the table to see if the object is already there
-            tablemodel.insertRow(0, new Object[]{sq.getString("date"), sq.getString("score")});
+            tableModel.insertRow(0, new Object[]{sq.getString("date"), sq.getString("score")});
             System.out.println("date and score : " + sq.getInt("score") + ", " + dateFormat.parse(sq.getString("date")));
             //this.user.getUsArr().add(new Score(sq.getInt("score"), dateFormat.parse(sq.getString("date"))));
         }
@@ -133,7 +141,11 @@ public class scoreArchive extends javax.swing.JFrame {
                 "Date", "Score"
             }
         ));
-        jTable1.setFocusable(false);
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         remSc.setText("Remove Score");
@@ -192,7 +204,6 @@ public class scoreArchive extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseEntered
 
-    //TODO how to delete event ?
     
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
            this.setVisible(false);
@@ -227,24 +238,27 @@ public class scoreArchive extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_remScActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == 8){  // disable editing
+            System.out.println("backspace");
+        }else if (evt.getKeyCode() == 9){
+            //TODO disable switching to next row
+            remSc.requestFocus();
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
 
-      private void dbRemove(String date, String score) throws ClassNotFoundException, SQLException{
-        System.out.println("entry to remove-2: " + date + " : " + score);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private void dbRemove(String date, String score) throws ClassNotFoundException, SQLException{
         Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
         String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
         Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
         Statement st = conn.createStatement();
+        // up to here everything the same?
         String sql = "DELETE FROM Scores WHERE `username` = '" + this.user.getName()
                 + "' AND `score` = " + score + " AND `date` = '" + date  +  "';";
-        // see this: https://stackoverflow.com/questions/10649782/java-cannot-format-given-object-as-a-date
         System.out.println("sql : " + sql);
         st.executeUpdate(sql);
         this.user.getHM().remove(date);
-        //summUpdate(scores); // stuff like: morning scores 
     }
 
     private void displayAnalysis(){
@@ -257,16 +271,11 @@ public class scoreArchive extends javax.swing.JFrame {
         int counter = 0; 
         int ct = 0 ; 
         
-        System.out.println("HT size: " + this.user.getHM().size());
-        
-
         
         for(Entry<String, Integer> e : this.user.getHM().entrySet()){
-            System.out.println("Key : " + e.getKey() + "Value : " + e.getValue());
             sum+=e.getValue();
             counter++;
             
-          
         }
         
         commArea.setText(null);
@@ -290,29 +299,13 @@ public class scoreArchive extends javax.swing.JFrame {
             while(rs.next()){ // TODO shouldn't it be select from where?
                 username = rs.getString("username");
                 score = rs.getInt("score");
-                dt = rs.getString("date"); // convert to a different format?
-                
-                System.out.println("Here. Username: " + username + "this user : " + this.user.getName());
+                dt = rs.getString("date"); // convert to a different format?                
                 if(username.equals(this.user.getName())){// && us_pass.equals(String.copyValueOf(password))){
                     //TODO should check if the score isn't already in the usArr
-                    System.out.println("Date : " + dt.toString() + " " + this.user.getHM().containsKey(dt) + "\n");
                     if(!this.user.getHM().containsKey(dt)){
-                        System.out.println("inserting : " + dt  + " " + score);
                         this.user.HM_Insert(dt, score);
                     }
-                    System.out.println("we out");
-                     //
-                     
-                     /*
-                    Score sco = new Score(score, dt); // hmm not working, 
-                    //make a HT and check this way
-                    //key: date, value: score
-                    if(!this.user.getUsArr().contains(sco)){ //TODO make a one-liner
-                        //System.out.append("adding");
-                        this.user.getUsArr().add(sco);
-                        }
-                    
-                    */
+
                     }
                 }
             }catch(Exception e){
