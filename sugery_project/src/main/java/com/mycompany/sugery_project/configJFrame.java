@@ -9,6 +9,7 @@ package com.mycompany.sugery_project;
 //TODO add login options
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -19,6 +20,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
 //how to invoke the other screen once all data gathered?
@@ -27,9 +34,20 @@ import javax.swing.JPasswordField;
  *
  * @author mikowhy
  */
+
+
+
 public class configJFrame extends javax.swing.JFrame {
 //TODO Description of Methods
     //TODO change these to other values? e.g. Integer.MIN_VALUE (?)
+
+private boolean nameOk = false;
+private boolean ageOk = false;
+private boolean goalOk = false; 
+private boolean passOk = false; 
+private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
+//private List<boolean> checks = new ArrayList<boolean>();
+    
     BufferedWriter writer; 
     String username = "";
     private int age = -1;
@@ -40,6 +58,13 @@ public class configJFrame extends javax.swing.JFrame {
     configJFrame() {
         initComponents();
         entryText.setBackground(null);
+        this.setSize(new Dimension(780, 500));
+        nameArea1.requestFocus();
+        tests.put("nameOk", nameOk);
+        tests.put("ageOk", ageOk);
+        tests.put("goalOk", goalOk);
+        tests.put("passOk", passOk);
+        
     }
 
     /**
@@ -66,14 +91,15 @@ public class configJFrame extends javax.swing.JFrame {
         nameArea1 = new javax.swing.JTextArea();
         jTextField8 = new javax.swing.JTextField();
         passField = new javax.swing.JPasswordField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        errorArea = new javax.swing.JTextArea();
+        goBack = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
         getContentPane().setLayout(null);
 
+        createUsrButton.setBackground(new java.awt.Color(0, 0, 0));
+        createUsrButton.setForeground(new java.awt.Color(255, 255, 255));
         createUsrButton.setText("create a new user");
         createUsrButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,7 +112,7 @@ public class configJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(createUsrButton);
-        createUsrButton.setBounds(430, 250, 156, 32);
+        createUsrButton.setBounds(120, 330, 530, 50);
         createUsrButton.getAccessibleContext().setAccessibleName("apBut1");
 
         goalField.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
@@ -96,9 +122,10 @@ public class configJFrame extends javax.swing.JFrame {
             }
         });
 
+        goalArea.setBackground(new java.awt.Color(0, 0, 0));
         goalArea.setColumns(10);
+        goalArea.setForeground(new java.awt.Color(255, 255, 255));
         goalArea.setRows(1);
-        goalArea.setOpaque(false);
         goalArea.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 goalAreaKeyPressed(evt);
@@ -107,11 +134,13 @@ public class configJFrame extends javax.swing.JFrame {
         goalField.setViewportView(goalArea);
 
         getContentPane().add(goalField);
-        goalField.setBounds(390, 380, 135, 36);
+        goalField.setBounds(400, 220, 135, 36);
 
         jScrollPane6.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
 
+        ageArea.setBackground(java.awt.SystemColor.window);
         ageArea.setColumns(10);
+        ageArea.setForeground(new java.awt.Color(255, 255, 255));
         ageArea.setRows(1);
         ageArea.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -121,9 +150,8 @@ public class configJFrame extends javax.swing.JFrame {
         jScrollPane6.setViewportView(ageArea);
 
         getContentPane().add(jScrollPane6);
-        jScrollPane6.setBounds(210, 380, 135, 36);
+        jScrollPane6.setBounds(200, 220, 135, 36);
 
-        entryText.setEditable(false);
         entryText.setBackground(new java.awt.Color(0, 0, 0));
         entryText.setFont(new java.awt.Font("Mukta Mahee", 2, 36)); // NOI18N
         entryText.setText("But first, introduce yourself.");
@@ -136,46 +164,53 @@ public class configJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(entryText);
-        entryText.setBounds(110, 30, 450, 61);
+        entryText.setBounds(170, 30, 450, 61);
 
         jTextField5.setEditable(false);
         jTextField5.setBackground(new java.awt.Color(0, 0, 0));
         jTextField5.setForeground(new java.awt.Color(255, 255, 255));
         jTextField5.setText("Age");
+        jTextField5.setFocusable(false);
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
             }
         });
         getContentPane().add(jTextField5);
-        jTextField5.setBounds(250, 430, 46, 24);
+        jTextField5.setBounds(240, 270, 46, 24);
 
         jTextField6.setEditable(false);
         jTextField6.setBackground(new java.awt.Color(238, 238, 238));
         jTextField6.setText("Name");
+        jTextField6.setFocusable(false);
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField6ActionPerformed(evt);
             }
         });
         getContentPane().add(jTextField6);
-        jTextField6.setBounds(30, 420, 50, 24);
+        jTextField6.setBounds(60, 270, 50, 24);
 
         jTextField7.setEditable(false);
         jTextField7.setBackground(new java.awt.Color(238, 238, 238));
         jTextField7.setText("Password");
+        jTextField7.setFocusable(false);
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField7ActionPerformed(evt);
             }
         });
         getContentPane().add(jTextField7);
-        jTextField7.setBounds(600, 430, 86, 24);
+        jTextField7.setBounds(620, 270, 86, 24);
 
         jScrollPane4.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
 
+        nameArea1.setBackground(java.awt.SystemColor.window);
         nameArea1.setColumns(10);
+        nameArea1.setForeground(new java.awt.Color(255, 255, 255));
         nameArea1.setRows(1);
+        nameArea1.setBorder(null);
+        nameArea1.setOpaque(false);
         nameArea1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nameArea1KeyPressed(evt);
@@ -184,19 +219,22 @@ public class configJFrame extends javax.swing.JFrame {
         jScrollPane4.setViewportView(nameArea1);
 
         getContentPane().add(jScrollPane4);
-        jScrollPane4.setBounds(20, 380, 135, 36);
+        jScrollPane4.setBounds(20, 220, 135, 36);
 
         jTextField8.setEditable(false);
         jTextField8.setBackground(new java.awt.Color(238, 238, 238));
         jTextField8.setText("Goal");
+        jTextField8.setFocusable(false);
         jTextField8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField8ActionPerformed(evt);
             }
         });
         getContentPane().add(jTextField8);
-        jTextField8.setBounds(430, 430, 46, 24);
+        jTextField8.setBounds(440, 270, 46, 24);
 
+        passField.setBackground(new java.awt.Color(0, 0, 0));
+        passField.setForeground(new java.awt.Color(255, 255, 255));
         passField.setToolTipText("");
         passField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,19 +242,22 @@ public class configJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(passField);
-        passField.setBounds(580, 380, 135, 40);
+        passField.setBounds(590, 220, 135, 40);
 
-        errorArea.setBackground(new java.awt.Color(238, 238, 238));
-        errorArea.setColumns(20);
-        errorArea.setRows(5);
-        jScrollPane1.setViewportView(errorArea);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(540, 200, 244, 84);
+        goBack.setBackground(new java.awt.Color(0, 0, 0));
+        goBack.setForeground(new java.awt.Color(255, 255, 255));
+        goBack.setText("back to login");
+        goBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goBackActionPerformed(evt);
+            }
+        });
+        getContentPane().add(goBack);
+        goBack.setBounds(570, 420, 150, 32);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("/Users/mikowhy/Documents/Informatyka/Side Projects/Java/Sugery/sugery/sugery_project/src/main/resources/config.jpg")); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 930, 600);
+        jLabel1.setBounds(0, 0, 800, 600);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -232,18 +273,27 @@ public class configJFrame extends javax.swing.JFrame {
                 mf.setVisible(true);
                 this.setVisible(false);
                 mf.displayUserData(usArr, usArr.size()-1); // the most recent one
-            }
+            }else{
+                  //throw an exception here
+                  // check the HT
+                 for (Entry e : tests.entrySet()){
+                      if(!tests.get(e)){
+// tests.get(age)
+                  
+                  JOptionPane.showMessageDialog(new JFrame("Problem"), e);
+              }
              
-          
+                 }
             
 
-        }catch(Exception e){ // TODO more detailed exceptions
-            entryText.setText(null);
-            entryText.setText("missing info!" + e);
         }
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
     }
     
-    
+    }
     private void createUsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUsrButtonActionPerformed
             tryCreatingUser(); // not entirely sure this is correct
 
@@ -306,12 +356,21 @@ public class configJFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_passFieldActionPerformed
 
+    private void goBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackActionPerformed
+        // TODO add your handling code here:
+        loginScreen lf = new loginScreen();
+        lf.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_goBackActionPerformed
+
     
     boolean userCreate(){ //usr, age, goal are global (?)
         boolean success = false;
         //adding new entries to two tables: LoginData & UserData
         //TODO: re-do tables(id not necessary?)
         if(validEntriesCheck()){
+            
+            
             try{
             Class.forName("com.mysql.cj.jdbc.Driver"); // may not be necessary?
             String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
@@ -320,7 +379,8 @@ public class configJFrame extends javax.swing.JFrame {
                     usCr(conn, username, passField, age, goal); // add user to login & data tables
                     success = true; 
                 }else{
-                    errorArea.append("The username already exists!");
+                    //TODO replace
+                    //errorArea.append("The username already exists!");
                 }
             }catch(Exception e){
                 System.out.println("Exception: " + e);
@@ -359,14 +419,13 @@ public class configJFrame extends javax.swing.JFrame {
     
     boolean validEntriesCheck(){
                     //TODO: this check should be more precise (e.g. define the range for age)
-        boolean retVal = (!username.equals("") && age > -1 && goal > -1 && passField.getPassword().length> 0) 
-                ?  true :  false; 
-        if(retVal) return true;
-        else{
-            // check which entry is not correct
-            // output in the form
-        }
-        return false; 
+        if(!username.equals("")) this.nameOk = true;
+        if(age > -1) this.ageOk= true;
+        if(goal > 0) this.goalOk= true;
+        if(passField.getPassword().length> 0) this.passOk = true;
+                    
+        return (nameOk && ageOk && goalOk && passOk);
+        
     }
     
     
@@ -413,11 +472,10 @@ public class configJFrame extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton createUsrButton;
     private javax.swing.JTextField entryText;
-    private javax.swing.JTextArea errorArea;
+    private javax.swing.JButton goBack;
     private javax.swing.JTextArea goalArea;
     private javax.swing.JScrollPane goalField;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextField jTextField5;

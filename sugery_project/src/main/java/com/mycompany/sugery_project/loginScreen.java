@@ -15,6 +15,7 @@ import java.util.Scanner;
 import java.sql.*; 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JRootPane;
  /*
  * @author mikowhy
  */
@@ -39,6 +40,7 @@ public class loginScreen extends javax.swing.JFrame {
     public loginScreen() {
         initComponents();
         loginButton.setBackground(Color.BLACK);
+        jf.getRootPane().setWindowDecorationStyle(JRootPane.COLOR_CHOOSER_DIALOG);
     }
 
     /**
