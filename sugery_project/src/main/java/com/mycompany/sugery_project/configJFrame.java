@@ -8,6 +8,7 @@ package com.mycompany.sugery_project;
 //TODO set this as the main one?
 //TODO add login options
 
+import java.awt.Color;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -38,6 +39,7 @@ public class configJFrame extends javax.swing.JFrame {
     
     configJFrame() {
         initComponents();
+        entryText.setBackground(null);
     }
 
     /**
@@ -66,8 +68,11 @@ public class configJFrame extends javax.swing.JFrame {
         passField = new javax.swing.JPasswordField();
         jScrollPane1 = new javax.swing.JScrollPane();
         errorArea = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 0, 0));
+        getContentPane().setLayout(null);
 
         createUsrButton.setText("create a new user");
         createUsrButton.addActionListener(new java.awt.event.ActionListener() {
@@ -80,6 +85,9 @@ public class configJFrame extends javax.swing.JFrame {
                 createUsrButtonKeyPressed(evt);
             }
         });
+        getContentPane().add(createUsrButton);
+        createUsrButton.setBounds(430, 250, 156, 32);
+        createUsrButton.getAccessibleContext().setAccessibleName("apBut1");
 
         goalField.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         goalField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -90,12 +98,16 @@ public class configJFrame extends javax.swing.JFrame {
 
         goalArea.setColumns(10);
         goalArea.setRows(1);
+        goalArea.setOpaque(false);
         goalArea.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 goalAreaKeyPressed(evt);
             }
         });
         goalField.setViewportView(goalArea);
+
+        getContentPane().add(goalField);
+        goalField.setBounds(390, 380, 135, 36);
 
         jScrollPane6.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
 
@@ -108,24 +120,35 @@ public class configJFrame extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(ageArea);
 
+        getContentPane().add(jScrollPane6);
+        jScrollPane6.setBounds(210, 380, 135, 36);
+
         entryText.setEditable(false);
-        entryText.setBackground(new java.awt.Color(238, 238, 238));
-        entryText.setText("First, tell us about yourself.");
+        entryText.setBackground(new java.awt.Color(0, 0, 0));
+        entryText.setFont(new java.awt.Font("Mukta Mahee", 2, 36)); // NOI18N
+        entryText.setText("But first, introduce yourself.");
         entryText.setBorder(null);
+        entryText.setFocusable(false);
+        entryText.setOpaque(false);
         entryText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 entryTextActionPerformed(evt);
             }
         });
+        getContentPane().add(entryText);
+        entryText.setBounds(110, 30, 450, 61);
 
         jTextField5.setEditable(false);
-        jTextField5.setBackground(new java.awt.Color(238, 238, 238));
+        jTextField5.setBackground(new java.awt.Color(0, 0, 0));
+        jTextField5.setForeground(new java.awt.Color(255, 255, 255));
         jTextField5.setText("Age");
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
             }
         });
+        getContentPane().add(jTextField5);
+        jTextField5.setBounds(250, 430, 46, 24);
 
         jTextField6.setEditable(false);
         jTextField6.setBackground(new java.awt.Color(238, 238, 238));
@@ -135,6 +158,8 @@ public class configJFrame extends javax.swing.JFrame {
                 jTextField6ActionPerformed(evt);
             }
         });
+        getContentPane().add(jTextField6);
+        jTextField6.setBounds(30, 420, 50, 24);
 
         jTextField7.setEditable(false);
         jTextField7.setBackground(new java.awt.Color(238, 238, 238));
@@ -144,6 +169,8 @@ public class configJFrame extends javax.swing.JFrame {
                 jTextField7ActionPerformed(evt);
             }
         });
+        getContentPane().add(jTextField7);
+        jTextField7.setBounds(600, 430, 86, 24);
 
         jScrollPane4.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
 
@@ -156,6 +183,9 @@ public class configJFrame extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(nameArea1);
 
+        getContentPane().add(jScrollPane4);
+        jScrollPane4.setBounds(20, 380, 135, 36);
+
         jTextField8.setEditable(false);
         jTextField8.setBackground(new java.awt.Color(238, 238, 238));
         jTextField8.setText("Goal");
@@ -164,6 +194,8 @@ public class configJFrame extends javax.swing.JFrame {
                 jTextField8ActionPerformed(evt);
             }
         });
+        getContentPane().add(jTextField8);
+        jTextField8.setBounds(430, 430, 46, 24);
 
         passField.setToolTipText("");
         passField.addActionListener(new java.awt.event.ActionListener() {
@@ -171,79 +203,20 @@ public class configJFrame extends javax.swing.JFrame {
                 passFieldActionPerformed(evt);
             }
         });
+        getContentPane().add(passField);
+        passField.setBounds(580, 380, 135, 40);
 
         errorArea.setBackground(new java.awt.Color(238, 238, 238));
         errorArea.setColumns(20);
         errorArea.setRows(5);
         jScrollPane1.setViewportView(errorArea);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(entryText, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(goalField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(createUsrButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(entryText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
-                        .addComponent(createUsrButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(goalField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49))
-        );
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(540, 200, 244, 84);
 
-        createUsrButton.getAccessibleContext().setAccessibleName("apBut1");
+        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/mikowhy/Documents/Informatyka/Side Projects/Java/Sugery/sugery/sugery_project/src/main/resources/config.jpg")); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 930, 600);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -443,6 +416,7 @@ public class configJFrame extends javax.swing.JFrame {
     private javax.swing.JTextArea errorArea;
     private javax.swing.JTextArea goalArea;
     private javax.swing.JScrollPane goalField;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
