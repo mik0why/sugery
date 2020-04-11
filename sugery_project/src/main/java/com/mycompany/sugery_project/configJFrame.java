@@ -55,10 +55,12 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     private ArrayList<User> usArr = new ArrayList<User>(); // idt it should be new
     mainFrame mf ;
     
-    configJFrame() {
+    public configJFrame() {
         initComponents();
         entryText.setBackground(null);
-        this.setSize(new Dimension(780, 500));
+//        Dimension dx = new Dimension(780, 500));
+        
+  //      this.setSize(new Dimension(780, 500));
         nameArea1.requestFocus();
         tests.put("nameOk", nameOk);
         tests.put("ageOk", ageOk);
@@ -96,6 +98,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
+        setMinimumSize(new java.awt.Dimension(800, 500));
         getContentPane().setLayout(null);
 
         createUsrButton.setBackground(new java.awt.Color(0, 0, 0));
@@ -138,7 +141,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
 
         jScrollPane6.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
 
-        ageArea.setBackground(java.awt.SystemColor.window);
+        ageArea.setBackground(new java.awt.Color(0, 0, 0));
         ageArea.setColumns(10);
         ageArea.setForeground(new java.awt.Color(255, 255, 255));
         ageArea.setRows(1);
@@ -152,9 +155,9 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         getContentPane().add(jScrollPane6);
         jScrollPane6.setBounds(200, 220, 135, 36);
 
-        entryText.setBackground(new java.awt.Color(0, 0, 0));
+        entryText.setBackground(new java.awt.Color(51, 51, 51));
         entryText.setFont(new java.awt.Font("Mukta Mahee", 2, 36)); // NOI18N
-        entryText.setText("But first, introduce yourself.");
+        entryText.setText("    But first, introduce yourself.");
         entryText.setBorder(null);
         entryText.setFocusable(false);
         entryText.setOpaque(false);
@@ -164,7 +167,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
             }
         });
         getContentPane().add(entryText);
-        entryText.setBounds(170, 30, 450, 61);
+        entryText.setBounds(140, 30, 480, 90);
 
         jTextField5.setEditable(false);
         jTextField5.setBackground(new java.awt.Color(0, 0, 0));
@@ -180,7 +183,8 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         jTextField5.setBounds(240, 270, 46, 24);
 
         jTextField6.setEditable(false);
-        jTextField6.setBackground(new java.awt.Color(238, 238, 238));
+        jTextField6.setBackground(new java.awt.Color(0, 0, 0));
+        jTextField6.setForeground(new java.awt.Color(255, 255, 255));
         jTextField6.setText("Name");
         jTextField6.setFocusable(false);
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
@@ -192,7 +196,8 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         jTextField6.setBounds(60, 270, 50, 24);
 
         jTextField7.setEditable(false);
-        jTextField7.setBackground(new java.awt.Color(238, 238, 238));
+        jTextField7.setBackground(new java.awt.Color(0, 0, 0));
+        jTextField7.setForeground(new java.awt.Color(255, 255, 255));
         jTextField7.setText("Password");
         jTextField7.setFocusable(false);
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
@@ -205,12 +210,12 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
 
         jScrollPane4.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
 
-        nameArea1.setBackground(java.awt.SystemColor.window);
+        nameArea1.setBackground(new java.awt.Color(0, 0, 0));
         nameArea1.setColumns(10);
         nameArea1.setForeground(new java.awt.Color(255, 255, 255));
         nameArea1.setRows(1);
         nameArea1.setBorder(null);
-        nameArea1.setOpaque(false);
+        nameArea1.setFocusTraversalPolicyProvider(true);
         nameArea1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nameArea1KeyPressed(evt);
@@ -222,7 +227,8 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         jScrollPane4.setBounds(20, 220, 135, 36);
 
         jTextField8.setEditable(false);
-        jTextField8.setBackground(new java.awt.Color(238, 238, 238));
+        jTextField8.setBackground(new java.awt.Color(0, 0, 0));
+        jTextField8.setForeground(new java.awt.Color(255, 255, 255));
         jTextField8.setText("Goal");
         jTextField8.setFocusable(false);
         jTextField8.addActionListener(new java.awt.event.ActionListener() {
@@ -239,6 +245,11 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         passField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passFieldActionPerformed(evt);
+            }
+        });
+        passField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passFieldKeyPressed(evt);
             }
         });
         getContentPane().add(passField);
@@ -263,12 +274,12 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tryCreatingUser(){
+                    //TODO text area displays out of bounds
         try{
-            //TODO text area displays out of bounds
+            if(userCreate()){ // successful creation (or just without try?)
             username = nameArea1.getText().replaceAll("\\s+", "");
             age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
             goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));        
-              if(userCreate()){ // successful creation
                 mf = new mainFrame(new User(username, age, goal)); // TODO should there be a new user statement?
                 mf.setVisible(true);
                 this.setVisible(false);
@@ -276,11 +287,16 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
             }else{
                   //throw an exception here
                   // check the HT
+                 System.out.println(tests.entrySet());
                  for (Entry e : tests.entrySet()){
-                      if(!tests.get(e)){
-// tests.get(age)
-                  
-                  JOptionPane.showMessageDialog(new JFrame("Problem"), e);
+                     System.out.println("entry: " + e);
+                     System.out.println("value: " + e.getValue());
+                      if(!(Boolean)e.getValue()){ // == false){
+// tests.get(age)       
+                    // get which value is wrong and display it
+
+                  JOptionPane.showMessageDialog(new JFrame("Problem"), e.getKey() 
+                  + "incorrectly specified");
               }
              
                  }
@@ -320,6 +336,9 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         if (evt.getKeyCode()==9){
             goalArea.requestFocus();
         }
+        
+        //if(evt.getKeyChar()== evt.VK_)
+        //TODO: for shift + tab
     }//GEN-LAST:event_ageAreaKeyPressed
 
     private void goalFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_goalFieldKeyPressed
@@ -362,6 +381,10 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         lf.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_goBackActionPerformed
+
+    private void passFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passFieldKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passFieldKeyPressed
 
     
     boolean userCreate(){ //usr, age, goal are global (?)
