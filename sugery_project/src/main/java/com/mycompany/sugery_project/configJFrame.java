@@ -276,7 +276,8 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     private void tryCreatingUser(){
                     //TODO text area displays out of bounds
         try{
-            if(userCreate()){ // successful creation (or just without try?)
+            //if(userCreate()){ // successful creation (or just without try?)
+            userCreate();
             username = nameArea1.getText().replaceAll("\\s+", "");
             age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
             goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));        
@@ -284,30 +285,24 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
                 mf.setVisible(true);
                 this.setVisible(false);
                 mf.displayUserData(usArr, usArr.size()-1); // the most recent one
-            }else{
+            }catch(Exception e){
                   //throw an exception here
                   // check the HT
                  System.out.println(tests.entrySet());
-                 for (Entry e : tests.entrySet()){
-                     System.out.println("entry: " + e);
-                     System.out.println("value: " + e.getValue());
-                      if(!(Boolean)e.getValue()){ // == false){
-// tests.get(age)       
-                    // get which value is wrong and display it
-
-                  JOptionPane.showMessageDialog(new JFrame("Problem"), e.getKey() 
-                  + "incorrectly specified");
-              }
+                 for (Entry ent : tests.entrySet()){
+                     System.out.println("entry: " + ent);
+                     System.out.println("value: " + ent.getValue());
+                      if(!(Boolean)ent.getValue()){ // == false){
+                        JOptionPane.showMessageDialog(new JFrame("Problem"), ent.getKey() 
+                        + "incorrectly specified");
+                        }
              
-                 }
-            
-
-        }
-    } catch (ClassNotFoundException ex) {
+                    }
+    } /*catch (ClassNotFoundException ex) {
         Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
         Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
-    }
+    } */
     
     }
     private void createUsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUsrButtonActionPerformed
@@ -441,12 +436,28 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     }
     
     boolean validEntriesCheck(){
-                    //TODO: this check should be more precise (e.g. define the range for age)
-        if(!username.equals("")) this.nameOk = true;
-        if(age > -1) this.ageOk= true;
+       
+        System.out.println("welcome to entries check");
+
+
+    //TODO: this check should be more precise (e.g. define the range for age)
+    
+        username = nameArea1.getText().replaceAll("\\s+", "");
+        age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
+        goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+","")); 
+        
+        
+        //TODO why redefined here
+        System.out.println(username + " " + age + " " + goal);
+        if(!username.equals("")){
+            nameOk = true;
+            tests.replace("nameOk", nameOk); //, goalOk)
+        }
+        if(age > -1) ageOk= true;
         if(goal > 0) this.goalOk= true;
         if(passField.getPassword().length> 0) this.passOk = true;
                     
+        
         return (nameOk && ageOk && goalOk && passOk);
         
     }
