@@ -48,7 +48,8 @@ private boolean goalOk = false;
 private boolean passOk = false; 
 private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
 //private List<boolean> checks = new ArrayList<boolean>();
-    
+//TODO sql should be its' own class 
+
     BufferedWriter writer; 
     String username = "";
     private int age = -1;
@@ -59,9 +60,6 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     public configJFrame() {
         initComponents();
         entryText.setBackground(null);
-//        Dimension dx = new Dimension(780, 500));
-        
-  //      this.setSize(new Dimension(780, 500));
         nameArea1.requestFocus();
         tests.put("Name", nameOk);
         tests.put("Age", ageOk);
@@ -274,7 +272,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tryCreatingUser(){
+    private void tryCreatingUser() throws ClassNotFoundException, SQLException{
             
         //TODO text area displays out of bounds
         if(userCreate()){
@@ -286,7 +284,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
                 mf = new mainFrame(new User(username, age, goal)); // TODO should there be a new user statement?
                 mf.setVisible(true);
                 this.setVisible(false);
-                //mf.displayUserData(usArr, usArr.size()-1); // the most recent one
+                mf.displayUserData(usArr, usArr.size()-1); // the most recent one
             }else{
                   //throw an exception here
                   // check the HT
@@ -308,7 +306,13 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     
     }
     private void createUsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUsrButtonActionPerformed
-            tryCreatingUser(); // not entirely sure this is correct
+    try {
+        tryCreatingUser(); // not entirely sure this is correct
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
+    }
 
     }//GEN-LAST:event_createUsrButtonActionPerformed
 
@@ -345,7 +349,13 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     private void createUsrButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_createUsrButtonKeyPressed
         // TODO add your handling code here:
         if (this.hasFocus() && evt.getKeyCode()==13){
-                tryCreatingUser(); 
+            try { 
+                tryCreatingUser();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_createUsrButtonKeyPressed
 
@@ -399,7 +409,9 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
                     usCr(conn, username, passField, age, goal); // add user to login & data tables
                     success = true; 
                 }else{
-                    //TODO replace
+                    //TODO: need to display both connectivity error OR username taken error
+
+                    new JFrame(); 
                     //errorArea.append("The username already exists!");
                 }
             }catch(Exception e){
@@ -472,14 +484,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     }catch(Exception e){
           //JOptionPane.showMessageDialog(new JFrame("Problem"), "Password field empty");
     }
-    
-        System.out.println(username + " " + age + " " + goal);
-
-        
-       // if(passField.getPassword().length> 0) this.passOk = true;
-                    
-        
-        return (nameOk && ageOk && goalOk && passOk);
+        return (tests.get("Name") && tests.get("Age") && tests.get("Goal") && tests.get("Password"));
         
     }
     
