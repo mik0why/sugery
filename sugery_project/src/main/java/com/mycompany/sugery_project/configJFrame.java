@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import sun.security.util.Password;
 
 //how to invoke the other screen once all data gathered?
 
@@ -274,18 +275,19 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tryCreatingUser(){
-                    //TODO text area displays out of bounds
-        try{
+            
+        //TODO text area displays out of bounds
+        if(userCreate()){
             //if(userCreate()){ // successful creation (or just without try?)
-            userCreate();
+            //userCreate();
             username = nameArea1.getText().replaceAll("\\s+", "");
             age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
             goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));        
                 mf = new mainFrame(new User(username, age, goal)); // TODO should there be a new user statement?
                 mf.setVisible(true);
                 this.setVisible(false);
-                mf.displayUserData(usArr, usArr.size()-1); // the most recent one
-            }catch(Exception e){
+                //mf.displayUserData(usArr, usArr.size()-1); // the most recent one
+            }else{
                   //throw an exception here
                   // check the HT
                  System.out.println(tests.entrySet());
@@ -436,26 +438,46 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     }
     
     boolean validEntriesCheck(){
-       
-        System.out.println("welcome to entries check");
-
-
+    //TODO: throw an exception, but don't stop the execution    
+        
+    //TODO invoke this with "while(!vec()) ?
     //TODO: this check should be more precise (e.g. define the range for age)
-    
+    //TODO why is it redefined here btw?      
+        System.out.println("welcome to entries check");
+ 
+    try{
         username = nameArea1.getText().replaceAll("\\s+", "");
-        age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
-        goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+","")); 
-        
-        
-        //TODO why redefined here
-        System.out.println(username + " " + age + " " + goal);
         if(!username.equals("")){
             nameOk = true;
             tests.replace("nameOk", nameOk); //, goalOk)
         }
+    }catch(Exception e){
+        JOptionPane.showMessageDialog(new JFrame("Problem"), "Username field empty");
+    }
+    try{
+        age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
         if(age > -1) ageOk= true;
+    }catch(Exception e){
+            JOptionPane.showMessageDialog(new JFrame("Problem"), "Age field empty?");
+    }
+    try{
+        goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+","")); 
         if(goal > 0) this.goalOk= true;
-        if(passField.getPassword().length> 0) this.passOk = true;
+
+    }catch(Exception e){
+          JOptionPane.showMessageDialog(new JFrame("Problem"), "Goal field empty");
+    }    
+    try{
+        char[] pass= passField.getPassword();
+        if(pass.length > 0) this.passOk = true; 
+    }catch(Exception e){
+          JOptionPane.showMessageDialog(new JFrame("Problem"), "Password field empty");
+    }
+    
+        System.out.println(username + " " + age + " " + goal);
+
+        
+       // if(passField.getPassword().length> 0) this.passOk = true;
                     
         
         return (nameOk && ageOk && goalOk && passOk);
