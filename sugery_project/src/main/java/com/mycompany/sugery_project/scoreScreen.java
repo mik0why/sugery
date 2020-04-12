@@ -25,12 +25,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.lang.String;
 
+
 /**
  *
  * @author mikowhy
  */
 //TODO fix the update thing
 public class scoreScreen extends javax.swing.JFrame  {
+    private entryTable dataTable = new entryTable(); 
 
     /**
      * Creates new form scoreScreen
@@ -308,6 +310,7 @@ public class scoreScreen extends javax.swing.JFrame  {
     // need to register the day of the input
 
     void addScore() throws ClassNotFoundException, SQLException, ParseException{
+        //TODO ADD option to custom the date
         //TODO only triggered on one KeyEvent?
         /*TODO maybe there should be a condition that if the same score
         was added less thatn 5/10 seconds ago then it shouldn't add it
@@ -320,19 +323,13 @@ public class scoreScreen extends javax.swing.JFrame  {
         
         
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
-        String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
-        Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
-        Statement st = conn.createStatement();
         if(checkbox1.getState()){
             // date is custom
         }
-        
-        
         String sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
                 + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
         + ","+ '\'' +  dateFormat.format(new Date())  +  "');" ; 
-        st.executeUpdate(sql);
+        dataTable.addRemoveEntry(sql);
         this.user.getUsArr().add(new Score(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")), new Date()));
         
     }

@@ -40,14 +40,14 @@ public class scoreArchive extends javax.swing.JFrame {
     /**
      * Creates new form scoreArchive
      */
-    User user;
-
+    private User user;
+    private entryTable dataTable = new entryTable();
     /**
      *
      * @param usr
      * @param model
      */
-     scoreArchive(User usr) {
+    public scoreArchive(User usr) {
         this.user = usr; 
         initComponents();
     }
@@ -62,38 +62,25 @@ public class scoreArchive extends javax.swing.JFrame {
         //TODO make private
         //TODO display buttons so the user can modify scores
         //TODO score summary
-        
         //TODO: remake Scores into a hashTable?
         // find a solution to not enter the same entry twice
+        //  idea: look at the previous entry & if they're the same, ask if you're sure
+        // q: how to quickly retrieve that entry - where from
 
-        
-
-                
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         tableModel.setRowCount(0); // no initial rows
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
-        // move into the SQL function
         DateFormat dateFormat = new SimpleDateFormat("yyy-mm-dd HH:mm:ss");
-        Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
-        String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
-        Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
-        Statement st = conn.createStatement();
-        String sql = "SELECT * FROM Scores WHERE `username` = " + "'" + this.user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
-        //
-        
-        ResultSet sq =  st.executeQuery(sql);
+        String sql = "SELECT * FROM Scores WHERE `username` = " + "'" + 
+                this.user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
+        ResultSet sq =  dataTable.selectEntries(sql); // st.executeQuery(sql);
         while(sq.next()){ //TODO: check if entry already in the table
             Object[] score = new Object[]{sq.getString("date"), sq.getString("score")}; 
-            // search through the table to see if the object is already there
             tableModel.insertRow(0, new Object[]{sq.getString("date"), sq.getString("score")});
             System.out.println("date and score : " + sq.getInt("score") + ", " + dateFormat.parse(sq.getString("date")));
             //this.user.getUsArr().add(new Score(sq.getInt("score"), dateFormat.parse(sq.getString("date"))));
         }
         displayAnalysis(); 
-        /*
-        System.out.println("Let's see the first score : " +this.user.getUsArr().get(0).date);
-        System.out.println("also, let's see array's size: " + this.user.getUsArr().size());
-        */
     }
     
     /**
@@ -257,7 +244,6 @@ public class scoreArchive extends javax.swing.JFrame {
         String sql = "DELETE FROM Scores WHERE `username` = '" + this.user.getName()
                 + "' AND `score` = " + score + " AND `date` = '" + date  +  "';";
         System.out.println("sql : " + sql);
-        st.executeUpdate(sql);
         this.user.getHM().remove(date);
     }
 
@@ -268,9 +254,7 @@ public class scoreArchive extends javax.swing.JFrame {
         // can do stuff like morningCount, eveningCount etc
         getAllScores(); // 
         int sum = 0;
-        int counter = 0; 
-        int ct = 0 ; 
-        
+        int counter = 0;         
         
         for(Entry<String, Integer> e : this.user.getHM().entrySet()){
             sum+=e.getValue();
@@ -290,22 +274,16 @@ public class scoreArchive extends javax.swing.JFrame {
         int score;
         String dt; 
             try{
-            Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
-            String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
-            Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
-            Statement st = conn.createStatement();
             String sql = "SELECT username, score, date FROM Scores";
-            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
             while(rs.next()){ // TODO shouldn't it be select from where?
                 username = rs.getString("username");
                 score = rs.getInt("score");
-                dt = rs.getString("date"); // convert to a different format?                
-                if(username.equals(this.user.getName())){// && us_pass.equals(String.copyValueOf(password))){
-                    //TODO should check if the score isn't already in the usArr
-                    if(!this.user.getHM().containsKey(dt)){
+                dt = rs.getString("date"); // convert to a different format?  // below check : && us_pass.equals(String.copyValueOf(password))){
+                if(username.equals(this.user.getName())){                    //TODO should check if the score isn't already in the usArr
+                    if(!this.user.getHM().containsKey(dt)){ // checks the date
                         this.user.HM_Insert(dt, score);
-                    }
-
+                        }
                     }
                 }
             }catch(Exception e){

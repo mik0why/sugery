@@ -34,6 +34,7 @@ public class scoreAnalizer extends JPanel {
    private static final int Y_HATCH_CNT = 10;
    private ArrayList<Integer> scores = new ArrayList<Integer>();  //TODO: not necessary
    private User user; 
+   private entryTable dataTable = new entryTable();
    
    public scoreAnalizer(User usr) { //TODO modify the score
        this.user = usr;

@@ -25,6 +25,7 @@ public class loginScreen extends javax.swing.JFrame {
     /**
      * Creates new form loginScreen
      */
+    private entryTable dataTable = new entryTable();
     mainFrame mf; // TODO needs to be fixed (what exactly?)
     configJFrame jf = new configJFrame(); 
    
@@ -350,12 +351,8 @@ public class loginScreen extends javax.swing.JFrame {
         // condition to check if login and password match entries in db
         // validate - check if reasonable, verify - check if accurate
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
-            String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
-            Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
-            Statement st = conn.createStatement();
             String sql = "SELECT username, password FROM LoginData";
-            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
             while(rs.next()){ // TODO shouldn't it be select from where?
                 String username = rs.getString("username");
                 String us_pass = rs.getString("password");
@@ -371,16 +368,11 @@ public class loginScreen extends javax.swing.JFrame {
             this.setVisible(false);
             mf.setVisible(true);
             mf.displayUserData(usData, usrIdx); // replace with proper arguments (TODO change the parameter)
-            
-            
            /* usData.add(new User(login, 22, 100)); // get rid of
             mf = new mainFrame(usData.get(usrIdx)); //TODO change the method definition; old: get user from db (TODO change which one)
             mf.setVisible(true);
             mf.displayUserData(usData, usrIdx); // replace with proper arguments (TODO change the parameter)
             this.setVisible(false); */
-            
-            
-            
         }else{ // no user found in the database
                 logErrorField.setText("Incorrect username or password :(");
         }
@@ -391,13 +383,9 @@ public class loginScreen extends javax.swing.JFrame {
      int age = Integer.MIN_VALUE; 
      int goal = Integer.MIN_VALUE;
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
-            String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
-            Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
-            Statement st = conn.createStatement();
             String sql = "SELECT * FROM UserData WHERE username = '" + username + "';";
-            ResultSet rs = st.executeQuery(sql);
-            rs.next();
+            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
+            rs.next(); // omitting the first one
             user = rs.getString("username");
             age = rs.getInt("age");
             goal = rs.getInt("goal");
@@ -405,7 +393,6 @@ public class loginScreen extends javax.swing.JFrame {
             }catch(Exception e){
                 System.out.println("Exception: " + e);
         }
-        
         return new User(user, age, goal); // TODO change
     }
     
