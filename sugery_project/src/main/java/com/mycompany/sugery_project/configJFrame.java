@@ -63,10 +63,10 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         
   //      this.setSize(new Dimension(780, 500));
         nameArea1.requestFocus();
-        tests.put("nameOk", nameOk);
-        tests.put("ageOk", ageOk);
-        tests.put("goalOk", goalOk);
-        tests.put("passOk", passOk);
+        tests.put("Name", nameOk);
+        tests.put("Age", ageOk);
+        tests.put("Goal", goalOk);
+        tests.put("Password", passOk);
         
     }
 
@@ -295,8 +295,8 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
                      System.out.println("entry: " + ent);
                      System.out.println("value: " + ent.getValue());
                       if(!(Boolean)ent.getValue()){ // == false){
-                        JOptionPane.showMessageDialog(new JFrame("Problem"), ent.getKey() 
-                        + "incorrectly specified");
+                        JOptionPane.showMessageDialog(new JFrame("Problem"), 
+                                ent.getKey() + " incorrectly specified. Please review");
                         }
              
                     }
@@ -444,34 +444,33 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     //TODO: this check should be more precise (e.g. define the range for age)
     //TODO why is it redefined here btw?      
         System.out.println("welcome to entries check");
+    //setValFalse; 
+        for (Entry e: tests.entrySet()) e.setValue(false);
+
  
     try{
         username = nameArea1.getText().replaceAll("\\s+", "");
-        if(!username.equals("")){
-            nameOk = true;
-            tests.replace("nameOk", nameOk); //, goalOk)
-        }
+        if(!username.equals("")) tests.replace("Name", true); //, goalOk
     }catch(Exception e){
-        JOptionPane.showMessageDialog(new JFrame("Problem"), "Username field empty");
+        //JOptionPane.showMessageDialog(new JFrame("Problem"), "Username field empty");
     }
     try{
         age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
-        if(age > -1) ageOk= true;
+        if(age > -1) tests.replace("Age", true);
     }catch(Exception e){
-            JOptionPane.showMessageDialog(new JFrame("Problem"), "Age field empty?");
+            //JOptionPane.showMessageDialog(new JFrame("Problem"), "Age field empty?");
     }
     try{
         goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+","")); 
-        if(goal > 0) this.goalOk= true;
-
+        if(goal > 0) tests.replace("Goal", true); // or display the other error here?
     }catch(Exception e){
-          JOptionPane.showMessageDialog(new JFrame("Problem"), "Goal field empty");
+          //JOptionPane.showMessageDialog(new JFrame("Problem"), "Goal field empty");
     }    
     try{
         char[] pass= passField.getPassword();
-        if(pass.length > 0) this.passOk = true; 
+        if(pass.length > 0) tests.replace("Password", true);
     }catch(Exception e){
-          JOptionPane.showMessageDialog(new JFrame("Problem"), "Password field empty");
+          //JOptionPane.showMessageDialog(new JFrame("Problem"), "Password field empty");
     }
     
         System.out.println(username + " " + age + " " + goal);
