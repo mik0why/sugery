@@ -36,7 +36,8 @@ import java.util.Observer;
  */
 public class scoreArchive extends javax.swing.JFrame {
 
-    //TODO Event Deletion
+    //TODO Event Deletion (the average should display the score after insertion right away
+    // bc with deletion seems like it's already working
     /**
      * Creates new form scoreArchive
      */
@@ -277,18 +278,26 @@ public class scoreArchive extends javax.swing.JFrame {
     }//GEN-LAST:event_edScActionPerformed
 
     private void dbRemove(String date, String score) throws ClassNotFoundException, SQLException{
+        /*
         Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
         String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
         Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
         Statement st = conn.createStatement();
-        // up to here everything the same?
+        // up to here everything the same? */
         String sql = "DELETE FROM Scores WHERE `username` = '" + this.user.getName()
                 + "' AND `score` = " + score + " AND `date` = '" + date  +  "';";
+        dataTable.addRemoveEntry(sql);
+
         System.out.println("sql : " + sql);
         this.user.getHM().remove(date);
     }
 
     private void displayAnalysis(){
+        
+        // Entry<String, Integer> set
+        // range to which the values should be calculated - e.g. week or all
+        
+        
         //TODO sc will be empty with each execution - needs to be obtained from the server
         
         // so then just with each operation call displayAnalysis I guess?
@@ -297,12 +306,14 @@ public class scoreArchive extends javax.swing.JFrame {
         int sum = 0;
         int counter = 0;         
         
+        
         for(Entry<String, Integer> e : this.user.getHM().entrySet()){
             sum+=e.getValue();
             counter++;
             
         }
         
+        //this should be returned in an array?
         commArea.setText(null);
         commArea.append(counter + " scores registered. \n");
         commArea.append("Average Value: " + sum / counter);

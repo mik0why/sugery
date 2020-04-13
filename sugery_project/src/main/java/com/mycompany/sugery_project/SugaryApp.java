@@ -69,6 +69,7 @@ class User extends Observable implements Serializable{
     }
     
     //TODO: get rid of 'public', other minor changes
+    //TODO getters and setters for user
     String getName(){
         return first;
     }
