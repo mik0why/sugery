@@ -351,6 +351,7 @@ public class loginScreen extends javax.swing.JFrame {
         // condition to check if login and password match entries in db
         // validate - check if reasonable, verify - check if accurate
         try{
+//                        Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
             String sql = "SELECT username, password FROM LoginData";
             ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
             while(rs.next()){ // TODO shouldn't it be select from where?

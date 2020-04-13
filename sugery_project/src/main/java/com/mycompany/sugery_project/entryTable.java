@@ -23,7 +23,7 @@ public class entryTable {
             Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
             String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
             Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
-            Statement st = conn.createStatement();
+            st = conn.createStatement();
          }catch(Exception e){
              System.out.println("Exception: " + e);
         }        
@@ -31,6 +31,8 @@ public class entryTable {
     
 
     public void addRemoveEntry(String query) throws SQLException{        
+        
+        
         st.executeUpdate(query);
     }; // add or remove based on the type
 

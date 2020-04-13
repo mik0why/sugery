@@ -218,7 +218,6 @@ public class scoreScreen extends javax.swing.JFrame  {
     private void scoreFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreFieldKeyPressed
             
         //this is for enter and not working?
-        System.out.println("here");    
         if (evt.getKeyCode()== KeyEvent.VK_ENTER){ //this should be made a function bc used twice
                 try {
                     this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
