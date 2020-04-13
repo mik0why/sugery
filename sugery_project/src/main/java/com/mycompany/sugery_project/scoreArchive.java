@@ -250,6 +250,8 @@ public class scoreArchive extends javax.swing.JFrame {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
             //commArea.setText("Select a row first, then click 'Delete'");
@@ -292,7 +294,12 @@ public class scoreArchive extends javax.swing.JFrame {
         this.user.getHM().remove(date);
     }
 
-    private void displayAnalysis(){
+    private void displayAnalysis() throws ParseException{
+        //TODO btw this can be extended to show more than just week
+        // for example month, year ... etc (or custom period)
+        
+        //parameter: Date earliest date (input_date)
+        Date curr_date; 
         
         // Entry<String, Integer> set
         // range to which the values should be calculated - e.g. week or all
@@ -306,8 +313,12 @@ public class scoreArchive extends javax.swing.JFrame {
         int sum = 0;
         int counter = 0;         
         
+        //TODO sth like this below; modify each call to include the cutoff date
         
         for(Entry<String, Integer> e : this.user.getHM().entrySet()){
+            curr_date = new SimpleDateFormat("dd/MM/yyyy").parse(e.getKey().toString());  
+            System.out.println(curr_date);
+            
             sum+=e.getValue();
             counter++;
             

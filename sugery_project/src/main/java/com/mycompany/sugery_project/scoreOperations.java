@@ -19,13 +19,21 @@ public class scoreOperations {
         
     }
     
-    public ArrayList<String> displayAnalysis(Set<Entry<String, Integer>>  set, String range){
+    public ArrayList<String> displayAnalysis(Set<Entry<String, Integer>>  set ){
         ArrayList<String> ret = new ArrayList<String>(); 
         
-        for(Entry<String, Integer> e : set){
-            
-        }
         
+        
+        
+        int sum = 0, counter = 0; 
+        
+        for(Entry<String, Integer> e : set){
+            sum+=e.getValue();
+            counter++;
+        }
+        // not adding null - remember to clear the output field first
+        ret.add(counter + " scores registered");
+        ret.add(Integer.toString(sum / counter));
         
         
         

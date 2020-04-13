@@ -33,6 +33,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     
     User user;
     entryTable table = new entryTable();
+    private scoreOperations scOp= new scoreOperations();
     // where to move this?
 //    scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
 // TODO usArr seems kinda tedious
@@ -472,13 +473,14 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     }
     
     private void weeklyScoreUpdate() throws SQLException{
+        ArrayList<String> displayEntries; 
         LocalDate date = LocalDate.now();
         int sum = 0, count = 0; 
         String statement = "SELECT * FROM UserData WHERE username = " + this.user.getName()
                 + "AND date > " + date.minusDays(7);
         ResultSet rs = table.selectEntries(statement);
         rs.next(); // TODO check if necessary
-        
+       // displayEntries = scOp.displayAnalysis();
         // sprawdz jak to sie robi w screenArchive z calosca
         
         
