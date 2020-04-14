@@ -77,14 +77,13 @@ public class scoreArchive extends javax.swing.JFrame {
                 this.user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
         ResultSet sq =  dataTable.selectEntries(sql); // st.executeQuery(sql);
         while(sq.next()){ //TODO: check if entry already in the table
-            //Object[] score = new Object[]{sq.getString("date"), sq.getString("score")}; 
             tableModel.insertRow(0, new Object[]{sq.getString("date"), sq.getString("score")});
             System.out.println("date and score : " + sq.getInt("score") + ", " + dateFormat.parse(sq.getString("date")));
             //TODO why does this show the wrong date? 2 months ahead
             //this.user.getUsArr().add(new Score(sq.getInt("score"), dateFormat.parse(sq.getString("date"))));
         }
         getAllScores();
-        updateScores(user.displayAnalysis("0000-01-01 00:00:00")); // all scores
+        updateScores(user.displayAnalysis("all")); // all scores
     }
     
     
@@ -120,7 +119,7 @@ public class scoreArchive extends javax.swing.JFrame {
         
         // so then just with each operation call displayAnalysis I guess?
         // can do stuff like morningCount, eveningCount etc
-        getAllScores(); // 
+        getAllScores(); // TODO idt it will be useful anymore, but need to make sure (ins, del)
         int sum = 0;
         int counter = 0;         
         
@@ -143,7 +142,6 @@ public class scoreArchive extends javax.swing.JFrame {
     }
     
     private void getAllScores(){
-        ArrayList<Score> ans; 
         String username;
         int score;
         String dt; 
@@ -261,10 +259,10 @@ public class scoreArchive extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
@@ -327,7 +325,7 @@ public class scoreArchive extends javax.swing.JFrame {
                         jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
                 ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
        
-                updateScores(user.displayAnalysis("0000-01-01 00:00:00"));
+                updateScores(user.displayAnalysis("all"));
                 // need to do the same with adding to the array
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);

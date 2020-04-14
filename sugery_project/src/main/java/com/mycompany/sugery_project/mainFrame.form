@@ -84,7 +84,6 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                               <Component id="ageField" min="-2" pref="74" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="311" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="entryText" alignment="1" min="-2" pref="244" max="-2" attributes="0"/>
@@ -249,7 +248,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ee" green="ee" red="ee" type="rgb"/>
+              <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>

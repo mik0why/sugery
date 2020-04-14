@@ -309,6 +309,7 @@ public class scoreScreen extends javax.swing.JFrame  {
     // need to register the day of the input
 
     void addScore() throws ClassNotFoundException, SQLException, ParseException{
+        //TODO get the last entry and check if not the same
         //TODO ADD option to custom the date
         //TODO only triggered on one KeyEvent?
         /*TODO maybe there should be a condition that if the same score
@@ -329,7 +330,11 @@ public class scoreScreen extends javax.swing.JFrame  {
                 + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
         + ","+ '\'' +  dateFormat.format(new Date())  +  "');" ; 
         dataTable.addRemoveEntry(sql);
+        this.user.HM_Insert(new Date().toString(), Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
         this.user.getUsArr().add(new Score(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")), new Date()));
+        //todo: getUsArr not necessary, instead update the HT
+        
+        
         
     }
 

@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.*; 
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JRootPane;
@@ -289,6 +290,8 @@ public class loginScreen extends javax.swing.JFrame {
                 Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_loginButtonKeyPressed
@@ -306,6 +309,8 @@ public class loginScreen extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
+                Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
                 Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -345,7 +350,7 @@ public class loginScreen extends javax.swing.JFrame {
             }
         });
     }
-    private void loginAttempt(String login, char[] password) throws ClassNotFoundException, SQLException{
+    private void loginAttempt(String login, char[] password) throws ClassNotFoundException, SQLException, ParseException{
         boolean usrFound = false;
         int usrIdx = 0; //TODO: 0 for now, might be changed 
         // condition to check if login and password match entries in db
@@ -391,6 +396,7 @@ public class loginScreen extends javax.swing.JFrame {
             age = rs.getInt("age");
             goal = rs.getInt("goal");
             System.out.println("User-2 : " + user + " age: " + age + " goal : " + goal);
+            //update_ht(); 
             }catch(Exception e){
                 System.out.println("Exception: " + e);
         }

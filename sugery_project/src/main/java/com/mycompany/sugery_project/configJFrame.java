@@ -19,6 +19,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map.Entry;
@@ -272,7 +273,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tryCreatingUser() throws ClassNotFoundException, SQLException{
+    private void tryCreatingUser() throws ClassNotFoundException, SQLException, ParseException{
             
         //TODO text area displays out of bounds
         if(userCreate()){
@@ -311,6 +312,8 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     } catch (ClassNotFoundException ex) {
         Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
+        Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ParseException ex) {
         Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
     }
 
@@ -354,6 +357,8 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
+                Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
                 Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

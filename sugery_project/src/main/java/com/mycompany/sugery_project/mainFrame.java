@@ -154,7 +154,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         });
 
         ageField.setEditable(false);
-        ageField.setBackground(new java.awt.Color(238, 238, 238));
+        ageField.setBackground(new java.awt.Color(0, 0, 0));
         ageField.setForeground(new java.awt.Color(255, 255, 255));
         ageField.setText("age: ");
         ageField.setToolTipText("");
@@ -212,8 +212,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                             .addComponent(addScoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addGap(81, 81, 81)
-                            .addComponent(ageField, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(311, 311, 311)))
+                            .addComponent(ageField, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(entryText, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -293,7 +292,6 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_feedbackFieldActionPerformed
 
     private void addScoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addScoreButtonActionPerformed
-        // TODO add your handling code here:
         // show screen for inputting the data
         scoreScreen sc = new scoreScreen(user, 0); //TODO not sure
         sc.setVisible(true);
@@ -398,41 +396,25 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
      */
 
 
-    public void displayUserData(ArrayList<User> al, int idx) throws ClassNotFoundException, SQLException{ //TODO change parameters
+    public void displayUserData(ArrayList<User> al, int idx) throws ClassNotFoundException, SQLException, ParseException{ //TODO change parameters
         //TODO display different stuff based on what time it is
-        //TODO should the arrayList be also saved to a file?
-            // when the program is closed (spot that moment)
+        // when the program is closed (spot that moment)
         this.user.addObserver(this); // TODO: what's this?
         entryText.setText("Welcome, " + this.user.getName() + ".\n"); // why can i access .first?
         ageField.setText("age : " + this.user.getAge());
         goalField.setText("goal : " + this.user.getGoal()); //not working?
-        if(getResults(1).next()){ // the result set isn't empty, so display the most recent score
-            ResultSet rs2 = getResults(2);
-            rs2.next();
-            System.out  .println("the most REC Score: " + rs2.getString("score"));
-           scoreField.setText(rs2.getString("score")); // make sure it's still the same score
-           jTextField1.setText(rs2.getString("date"));
-           evaluateScore(Integer.parseInt(rs2.getString("score")), this.user.getGoal());
+        
+           if(!this.user.getHM().isEmpty()){
+            System.out  .println("the most REC Score: " + 
+                    this.user.getHM().lastEntry().getValue().toString());
+           scoreField.setText(this.user.getHM().lastEntry().getValue().toString()); // make sure it's still the same score
+           jTextField1.setText(this.user.getHM().lastEntry().getKey().toString());
+           weekAvg.setText(this.user.displayAnalysis("week").get(1));
+           
+           evaluateScore(Integer.parseInt(this.user.getHM().lastEntry().getValue().toString()),
+                   this.user.getGoal());
         }
-           /*ResultSet allUserScores = getResults(); //here: get the result set for the particular user
-        if(allUserScores.size > 0){
-            
-        } the code below is to be commented out once the code above is done */
-        /* int scoreArrSize = al.get(idx).usArr.size();
-           if (scoreArrSize > 0){ // TODO not sure yet how to modify it
-            scoreField.setText(Integer.toString(al.get(idx).usArr.get(al.get(idx).usArr.size()-1).getScoreValue()));
-            jTextField1.setText(null);
-            jTextField1.setText("most recent score (registered on " +
-            al.get(idx).usArr.get(al.get(idx).usArr.size()-1).date
-            + " )" );            
-            }else{
-                feedbackField.setText("no score yet :(");
-            }
-          */ 
-        //
-     
-        //based on what the score is, and how much off from the goal
-            //display the score differently
+
 
         }
    // }
@@ -461,8 +443,14 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             int recentScore = this.user.getUsArr().get(this.user.getUsArr().size()-1).result;
             scoreField.setText(Integer.toString(this.user.getUsArr().get(this.user.getUsArr().size()-1).result)); // ZMI the most recent one
             jTextField1.setText("Your score updated at : " +  this.user.getUsArr().get(this.user.getUsArr().size()-1).date);
+            try {
+                weekAvg.setText(this.user.displayAnalysis("week").get(1));
+            } catch (ParseException ex) {
+                Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
             evaluateScore(recentScore, this.user.getGoal());
-           // weeklyScoreUpdate(); 
+            //TODO weekly score upadte as well
+// weeklyScoreUpdate(); 
         }else{
         
         //TODO not done yet bc still causes an exception

@@ -17,12 +17,12 @@ import java.sql.* ;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.Set;
 import java.util.TreeMap;
-
 /**
  *
  * @author mikowhy
@@ -63,12 +63,16 @@ class User extends Observable implements Serializable{
     private int age;
     private int goal;
     private ArrayList<Score> usArr = new ArrayList<Score>();
-    //private Map<String, Integer> scoreMap = new HashMap<>(); //= new HashMap<String,Integer>();
     private NavigableMap<String, Integer> scoreMap = new TreeMap<String, Integer>(); //= new HashMap<String,Integer>();
+    private entryTable dataTable = new entryTable();
+    
+    
     User(String name, int age, int goal){
         this.first = name;
         this.age = age;
         this.goal = goal;
+        
+        loadScores();
     }
     
     //TODO: get rid of 'public', other minor changes
@@ -77,20 +81,20 @@ class User extends Observable implements Serializable{
         return first;
     }
     
-    int getAge(){
+    public int getAge(){
         return age;
     }
     
-    int getGoal(){
+    public int getGoal(){
         return goal;
     }
     
-    TreeMap<String, Integer> getHM(){ // should this be one method?
+    public TreeMap<String, Integer> getHM(){ // should this be one method?
         return (TreeMap<String, Integer>) scoreMap;
     }
     
-    void HM_Insert(String d, int score){
-        scoreMap.put(d, score);
+    void HM_Insert(String date, int score){
+        scoreMap.put(date, score);
     }
     
     void addScore(int result) throws FileNotFoundException, IOException{ //ZMI when else should notifyObservers be called?
@@ -116,11 +120,18 @@ class User extends Observable implements Serializable{
         return rs; 
     }
     
-        public ArrayList<String> displayAnalysis(String latest ) throws ParseException{
+        public ArrayList<String> displayAnalysis(String range ) throws ParseException{
+            int dateRange = 0; 
+            
+            if(range.equals("week")) dateRange = 7;
+            if(range.equals("month")) dateRange = 30;
+            
+            LocalDate Ldate = LocalDate.now();
+            java.sql.Date d2 = java.sql.Date.valueOf(Ldate.minusDays(dateRange)); 
             ArrayList<String> ret = new ArrayList<String>(); 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            // sprawdz czy tam jest ok z data
-            Date date = dateFormat.parse(latest); 
+            Date date = (range.equals("all"))? 
+                    dateFormat.parse("0000-01-01 00:00:00") : d2; 
             System.out.println("date: " + date.toString());
             int sum = 0, counter = 0; 
             
@@ -138,6 +149,30 @@ class User extends Observable implements Serializable{
             return ret; 
     }
     
+    public void loadScores(){
+        String username;
+        int score;
+        String dt; 
+            try{
+            String sql = "SELECT username, score, date FROM Scores";
+            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
+            while(rs.next()){ // TODO shouldn't it be select from where?
+                username = rs.getString("username");
+                score = rs.getInt("score");
+                dt = rs.getString("date"); // convert to a different format?  // below check : && us_pass.equals(String.copyValueOf(password))){
+                if(username.equals(this.getName())){                    //TODO should check if the score isn't already in the usArr
+                    if(!this.getHM().containsKey(dt)){ // checks the date
+                        this.HM_Insert(dt, score);
+                        }
+                    }
+                }
+            }catch(Exception e){
+                System.out.println("Exception: " + e);
+        }
+        
+        
+    }    
+        
     
 }
 
