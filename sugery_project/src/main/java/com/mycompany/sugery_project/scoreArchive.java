@@ -67,7 +67,6 @@ public class scoreArchive extends javax.swing.JFrame {
         // find a solution to not enter the same entry twice
         //  idea: look at the previous entry & if they're the same, ask if you're sure
         // q: how to quickly retrieve that entry - where from
-        ArrayList<String> resp = new ArrayList<String>(); 
 
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         tableModel.setRowCount(0); // no initial rows
@@ -96,12 +95,9 @@ public class scoreArchive extends javax.swing.JFrame {
 
     
     public void updateScores(ArrayList<String> summary){
-        
         commArea.setText(null);
         commArea.append(summary.get(0) + " scores registered. \n");
         commArea.append("Average Value: " + summary.get(1));
-        
-        
     }
     
     private void displayAnalysis() throws ParseException{

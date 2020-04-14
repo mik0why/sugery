@@ -322,19 +322,22 @@ public class scoreScreen extends javax.swing.JFrame  {
     */
         
         
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if(checkbox1.getState()){
             // date is custom
         }
+        Date curr_date = new Date();
         String sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
+        
                 + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
-        + ","+ '\'' +  dateFormat.format(new Date())  +  "');" ; 
+        + ","+ '\'' +  dateFormat.format(curr_date)  +  "');" ; 
         dataTable.addRemoveEntry(sql);
-        this.user.HM_Insert(new Date().toString(), Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+        
+        this.user.HM_Insert(dateFormat.format(curr_date).toString(), Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
         this.user.getUsArr().add(new Score(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")), new Date()));
         //todo: getUsArr not necessary, instead update the HT
         
-        
+//todo update when entry removed (especially the last one)        
         
     }
 
