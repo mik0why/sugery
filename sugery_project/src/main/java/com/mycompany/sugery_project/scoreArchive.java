@@ -34,7 +34,7 @@ import java.util.Observer;
  *
  * @author mikowhy
  */
-public class scoreArchive extends javax.swing.JFrame {
+public class scoreArchive extends javax.swing.JFrame implements Observer{
 
     //TODO Event Deletion (the average should display the score after insertion right away
     // bc with deletion seems like it's already working
@@ -43,6 +43,7 @@ public class scoreArchive extends javax.swing.JFrame {
      */
     private User user;
     private entryTable dataTable = new entryTable();
+    private scoreScreen scoreScreen; // TODO may have to be initialized
     /**
      *
      * @param usr
@@ -68,22 +69,25 @@ public class scoreArchive extends javax.swing.JFrame {
         //  idea: look at the previous entry & if they're the same, ask if you're sure
         // q: how to quickly retrieve that entry - where from
 
-        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+
+        pullScores();
+        updateScores(user.displayAnalysis("all")); // all scores
+    }
+    
+    private void pullScores() throws SQLException, ParseException{
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();      
         tableModel.setRowCount(0); // no initial rows
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         String sql = "SELECT * FROM Scores WHERE `username` = " + "'" + 
                 this.user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
         ResultSet sq =  dataTable.selectEntries(sql); // st.executeQuery(sql);
-        while(sq.next()){ //TODO: check if entry already in the table
+        while(sq.next()){ //TODO why does this show the wrong date? 2 months ahead
             tableModel.insertRow(0, new Object[]{sq.getString("date"), sq.getString("score")});
-            System.out.println("date and score : " + sq.getInt("score") + ", " + dateFormat.parse(sq.getString("date")));
-            //TODO why does this show the wrong date? 2 months ahead
-            //this.user.getUsArr().add(new Score(sq.getInt("score"), dateFormat.parse(sq.getString("date"))));
         }
-        getAllScores();
-        updateScores(user.displayAnalysis("all")); // all scores
+        
     }
+    
     
     
     private void dbRemove(String date, String score) throws ClassNotFoundException, SQLException{
@@ -116,7 +120,6 @@ public class scoreArchive extends javax.swing.JFrame {
         
         // so then just with each operation call displayAnalysis I guess?
         // can do stuff like morningCount, eveningCount etc
-        getAllScores(); // TODO idt it will be useful anymore, but need to make sure (ins, del)
         int sum = 0;
         int counter = 0;         
         
@@ -138,33 +141,20 @@ public class scoreArchive extends javax.swing.JFrame {
         
     }
     
-    private void getAllScores(){
-        String username;
-        int score;
-        String dt; 
-            try{
-            String sql = "SELECT username, score, date FROM Scores";
-            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
-            while(rs.next()){ // TODO shouldn't it be select from where?
-                username = rs.getString("username");
-                score = rs.getInt("score");
-                dt = rs.getString("date"); // convert to a different format?  // below check : && us_pass.equals(String.copyValueOf(password))){
-                if(username.equals(this.user.getName())){                    //TODO should check if the score isn't already in the usArr
-                    if(!this.user.getHM().containsKey(dt)){ // checks the date
-                        this.user.HM_Insert(dt, score);
-                        }
-                    }
-                }
-            }catch(Exception e){
-                System.out.println("Exception: " + e);
-        }
-        
+    
+    public void update(Observable o, Object arg){
+            // what is o equal to?
+            System.out.println("TEST");
+            try {
+                pullScores();
+            } catch (SQLException ex) {
+                Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       
+   
     }
-    
-    
-    
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -325,6 +315,7 @@ public class scoreArchive extends javax.swing.JFrame {
                 updateScores(user.displayAnalysis("all")); // works,
                 // need to do the same with adding to the array
                 //TODO: remove from the table
+                
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -350,8 +341,8 @@ public class scoreArchive extends javax.swing.JFrame {
 
     private void addScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addScActionPerformed
         //TODO: the screen should also be updated when adding a score in this way
-        scoreScreen sc = new scoreScreen(this.user, 0); // idk if that's the right val
-        sc.setVisible(true);
+        scoreScreen = new scoreScreen(this.user, 0); // idk if that's the right val
+        scoreScreen.setVisible(true);
     }//GEN-LAST:event_addScActionPerformed
 
     private void edScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edScActionPerformed
@@ -374,3 +365,29 @@ public class scoreArchive extends javax.swing.JFrame {
 
 
 }
+
+
+
+/*
+        String username;
+        int score;
+        String dt; 
+            try{
+            String sql = "SELECT username, score, date FROM Scores";
+            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
+            while(rs.next()){ // TODO shouldn't it be select from where?
+                username = rs.getString("username");
+                score = rs.getInt("score");
+                dt = rs.getString("date"); // convert to a different format?  // below check : && us_pass.equals(String.copyValueOf(password))){
+                if(username.equals(this.user.getName())){                    //TODO should check if the score isn't already in the usArr
+                    if(!this.user.getHM().containsKey(dt)){ // checks the date
+                        this.user.HM_Insert(dt, score);
+                        }
+                    }
+                }
+            }catch(Exception e){
+                System.out.println("Exception: " + e);
+        }
+        
+    }
+    */

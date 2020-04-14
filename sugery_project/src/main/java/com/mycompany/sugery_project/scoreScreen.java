@@ -31,7 +31,7 @@ import java.lang.String;
  * @author mikowhy
  */
 //TODO fix the update thing
-public class scoreScreen extends javax.swing.JFrame  {
+public class scoreScreen extends javax.swing.JFrame  { //
     private entryTable dataTable = new entryTable(); 
 
     /**
@@ -220,10 +220,7 @@ public class scoreScreen extends javax.swing.JFrame  {
         //this is for enter and not working?
         if (evt.getKeyCode()== KeyEvent.VK_ENTER){ //this should be made a function bc used twice
                 try {
-                    this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
                     addScore();
-                } catch (IOException ex) {
-                    Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -259,10 +256,11 @@ public class scoreScreen extends javax.swing.JFrame  {
         // TODO add your handling code here:
          try {
              
-                        this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
                         addScore(); //TODO make a change to the date
-           
-                        
+                       /*
+                        setChanged();
+                        notifyObservers();                        
+                       */
                         /*
                         if(checkbox1.isSelected()){
                             
@@ -277,9 +275,7 @@ public class scoreScreen extends javax.swing.JFrame  {
                         Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (ParseException ex) {
                         Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IOException ex) {
-            Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                    }
                     jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
         
         
