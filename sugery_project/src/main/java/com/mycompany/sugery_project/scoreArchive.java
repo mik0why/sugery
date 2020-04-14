@@ -90,7 +90,8 @@ public class scoreArchive extends javax.swing.JFrame {
         String sql = "DELETE FROM Scores WHERE `username` = '" + this.user.getName()
                 + "' AND `score` = " + score + " AND `date` = '" + date  +  "';";
         dataTable.addRemoveEntry(sql);
-        this.user.getHM().remove(date);
+        this.user.removeScore(date);
+       // this.user.getHM().remove(date);
     }
 
     
@@ -321,8 +322,9 @@ public class scoreArchive extends javax.swing.JFrame {
                         jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
                 ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
        
-                updateScores(user.displayAnalysis("all")); // works, but not always
+                updateScores(user.displayAnalysis("all")); // works,
                 // need to do the same with adding to the array
+                //TODO: remove from the table
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {

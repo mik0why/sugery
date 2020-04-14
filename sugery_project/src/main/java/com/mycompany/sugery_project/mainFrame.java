@@ -443,8 +443,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     public void update(Observable o, Object arg) { //TODO fix (not sure if this or other method)
         if(o == this.user){ // checking if it's one from many im assuming
             int recentScore = this.user.getHM().lastEntry().getValue(); 
-            scoreField.setText(Integer.toString(this.user.getUsArr().get(this.user.getUsArr().size()-1).result)); // ZMI the most recent one
-            jTextField1.setText("Your score updated at : " +  this.user.getUsArr().get(this.user.getUsArr().size()-1).date);
+            scoreField.setText(this.user.getHM().lastEntry().getValue().toString());
+            jTextField1.setText("Your score updated at : " +  this.user.getHM().lastKey()); // or last entry
             try {
                 weekAvg.setText(this.user.displayAnalysis("week").get(1));
             } catch (ParseException ex) {
