@@ -198,7 +198,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(feedbackField, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 583, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(logoutKey, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(scAnalyze)
@@ -216,7 +216,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                     .addComponent(entryText, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                         .addComponent(goalField, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(150, 150, 150))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -236,7 +236,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(209, 209, 209)
                         .addComponent(weekAvg, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(277, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,9 +271,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -407,14 +405,14 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         goalField.setText("goal : " + this.user.getGoal()); //not working?
         
            if(!this.user.getHM().isEmpty()){
-            System.out  .println("the most REC Score: " + 
-                    this.user.getHM().lastEntry().getValue().toString());
-           scoreField.setText(this.user.getHM().lastEntry().getValue().toString()); // make sure it's still the same score
-           jTextField1.setText(this.user.getHM().lastEntry().getKey().toString());
-           weekAvg.setText(this.user.displayAnalysis("week").get(1));
-           
-           evaluateScore(Integer.parseInt(this.user.getHM().lastEntry().getValue().toString()),
-                   this.user.getGoal());
+                System.out  .println("the most REC Score: " + 
+                         this.user.getHM().lastEntry().getValue().toString());
+                scoreField.setText(this.user.getHM().lastEntry().getValue().toString()); // make sure it's still the same score
+                jTextField1.setText(this.user.getHM().lastEntry().getKey().toString());
+                weekAvg.setText(this.user.displayAnalysis("week").get(1));
+                monthAvg.setText(this.user.displayAnalysis("month").get(1));
+                evaluateScore(Integer.parseInt(this.user.getHM().lastEntry().getValue().toString()),
+                        this.user.getGoal());
         }
 
 
@@ -447,6 +445,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             jTextField1.setText("Your score updated at : " +  this.user.getHM().lastKey()); // or last entry
             try {
                 weekAvg.setText(this.user.displayAnalysis("week").get(1));
+                monthAvg.setText(this.user.displayAnalysis("month").get(1));
+                //monthAvg.setText(this.user.displayAnalysis("month").get(1));
             } catch (ParseException ex) {
                 Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }

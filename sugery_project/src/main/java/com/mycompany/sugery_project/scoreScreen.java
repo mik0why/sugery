@@ -107,6 +107,7 @@ public class scoreScreen extends javax.swing.JFrame  { //
         jScrollPane2.setViewportView(textAr);
 
         jTextField1.setBackground(new java.awt.Color(238, 238, 238));
+        jTextField1.setFocusable(false);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);

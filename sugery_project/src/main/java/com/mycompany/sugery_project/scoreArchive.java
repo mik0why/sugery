@@ -221,6 +221,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         commArea.setBackground(new java.awt.Color(238, 238, 238));
         commArea.setColumns(20);
         commArea.setRows(5);
+        commArea.setFocusable(false);
         jScrollPane2.setViewportView(commArea);
 
         addSc.setText("Add Score");
@@ -335,7 +336,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
             System.out.println("backspace");
         }else if (evt.getKeyCode() == 9){
             //TODO disable switching to next row
-            remSc.requestFocus();
+            addSc.requestFocus();
         }
     }//GEN-LAST:event_jTable1KeyPressed
 
