@@ -311,7 +311,6 @@ public class scoreScreen extends javax.swing.JFrame  {
     void addScore() throws ClassNotFoundException, SQLException, ParseException{
         //TODO get the last entry and check if not the same
         //TODO ADD option to custom the date
-        //TODO only triggered on one KeyEvent?
         /*TODO maybe there should be a condition that if the same score
         was added less thatn 5/10 seconds ago then it shouldn't add it
         or better: have a window that asks whether you want to add the same score?
