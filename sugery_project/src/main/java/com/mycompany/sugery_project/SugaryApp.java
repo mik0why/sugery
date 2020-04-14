@@ -14,6 +14,9 @@ import java.util.Date;
 import java.util.Observable;
 import java.io.Serializable;
 import java.sql.* ; 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NavigableMap;
@@ -113,6 +116,27 @@ class User extends Observable implements Serializable{
         return rs; 
     }
     
+        public ArrayList<String> displayAnalysis(String latest ) throws ParseException{
+            ArrayList<String> ret = new ArrayList<String>(); 
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            // sprawdz czy tam jest ok z data
+            Date date = dateFormat.parse(latest); 
+            System.out.println("date: " + date.toString());
+            int sum = 0, counter = 0; 
+            
+
+            for(Map.Entry<String, Integer> e : this.getHM().entrySet()){
+                if(dateFormat.parse(e.getKey()).compareTo(date) > 0 ){
+                    sum+=e.getValue();
+                    counter++;
+                }
+            }
+            // not adding null - remember to clear the output field first
+            ret.add(counter + " scores registered");
+            ret.add(Integer.toString(sum / counter));
+
+            return ret; 
+    }
     
     
 }

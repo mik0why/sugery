@@ -67,22 +67,108 @@ public class scoreArchive extends javax.swing.JFrame {
         // find a solution to not enter the same entry twice
         //  idea: look at the previous entry & if they're the same, ask if you're sure
         // q: how to quickly retrieve that entry - where from
+        ArrayList<String> resp = new ArrayList<String>(); 
 
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         tableModel.setRowCount(0); // no initial rows
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
-        DateFormat dateFormat = new SimpleDateFormat("yyy-mm-dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         String sql = "SELECT * FROM Scores WHERE `username` = " + "'" + 
                 this.user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
         ResultSet sq =  dataTable.selectEntries(sql); // st.executeQuery(sql);
         while(sq.next()){ //TODO: check if entry already in the table
-            Object[] score = new Object[]{sq.getString("date"), sq.getString("score")}; 
+            //Object[] score = new Object[]{sq.getString("date"), sq.getString("score")}; 
             tableModel.insertRow(0, new Object[]{sq.getString("date"), sq.getString("score")});
             System.out.println("date and score : " + sq.getInt("score") + ", " + dateFormat.parse(sq.getString("date")));
+            //TODO why does this show the wrong date? 2 months ahead
             //this.user.getUsArr().add(new Score(sq.getInt("score"), dateFormat.parse(sq.getString("date"))));
         }
-        displayAnalysis(); 
+        getAllScores();
+        updateScores(user.displayAnalysis("0000-01-01 00:00:00")); // all scores
     }
+    
+    
+    private void dbRemove(String date, String score) throws ClassNotFoundException, SQLException{
+        String sql = "DELETE FROM Scores WHERE `username` = '" + this.user.getName()
+                + "' AND `score` = " + score + " AND `date` = '" + date  +  "';";
+        dataTable.addRemoveEntry(sql);
+        this.user.getHM().remove(date);
+    }
+
+    
+    public void updateScores(ArrayList<String> summary){
+        
+        commArea.setText(null);
+        commArea.append(summary.get(0) + " scores registered. \n");
+        commArea.append("Average Value: " + summary.get(1));
+        
+        
+    }
+    
+    private void displayAnalysis() throws ParseException{
+        //TODO btw this can be extended to show more than just week
+        // for example month, year ... etc (or custom period)
+        
+        //parameter: Date earliest date (input_date)
+        Date curr_date; 
+        
+        // Entry<String, Integer> set
+        // range to which the values should be calculated - e.g. week or all
+        
+        
+        //TODO sc will be empty with each execution - needs to be obtained from the server
+        
+        // so then just with each operation call displayAnalysis I guess?
+        // can do stuff like morningCount, eveningCount etc
+        getAllScores(); // 
+        int sum = 0;
+        int counter = 0;         
+        
+        //TODO sth like this below; modify each call to include the cutoff date
+        
+        for(Entry<String, Integer> e : this.user.getHM().entrySet()){
+            curr_date = new SimpleDateFormat("dd/MM/yyyy").parse(e.getKey().toString());  
+            System.out.println(curr_date);
+            
+            sum+=e.getValue();
+            counter++;
+            
+        }
+        
+        //this should be returned in an array?
+        commArea.setText(null);
+        commArea.append(counter + " scores registered. \n");
+        commArea.append("Average Value: " + sum / counter);
+        
+    }
+    
+    private void getAllScores(){
+        ArrayList<Score> ans; 
+        String username;
+        int score;
+        String dt; 
+            try{
+            String sql = "SELECT username, score, date FROM Scores";
+            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
+            while(rs.next()){ // TODO shouldn't it be select from where?
+                username = rs.getString("username");
+                score = rs.getInt("score");
+                dt = rs.getString("date"); // convert to a different format?  // below check : && us_pass.equals(String.copyValueOf(password))){
+                if(username.equals(this.user.getName())){                    //TODO should check if the score isn't already in the usArr
+                    if(!this.user.getHM().containsKey(dt)){ // checks the date
+                        this.user.HM_Insert(dt, score);
+                        }
+                    }
+                }
+            }catch(Exception e){
+                System.out.println("Exception: " + e);
+        }
+        
+    }
+    
+    
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -234,17 +320,14 @@ public class scoreArchive extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void remScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remScActionPerformed
-        //TODO need an observable
+        //TODO what if there are no scores loaded?
         if(!jTable1.getSelectionModel().isSelectionEmpty()){
             try {
                 dbRemove(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString(),  
                         jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
                 ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
        
-                
-                displayAnalysis();
-                //TODO: remove from usArr; selection problem
-                // use this: jTable1.getSelectedRow();
+                updateScores(user.displayAnalysis("0000-01-01 00:00:00"));
                 // need to do the same with adding to the array
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
@@ -279,81 +362,7 @@ public class scoreArchive extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_edScActionPerformed
 
-    private void dbRemove(String date, String score) throws ClassNotFoundException, SQLException{
-        /*
-        Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
-        String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
-        Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
-        Statement st = conn.createStatement();
-        // up to here everything the same? */
-        String sql = "DELETE FROM Scores WHERE `username` = '" + this.user.getName()
-                + "' AND `score` = " + score + " AND `date` = '" + date  +  "';";
-        dataTable.addRemoveEntry(sql);
-
-        System.out.println("sql : " + sql);
-        this.user.getHM().remove(date);
-    }
-
-    private void displayAnalysis() throws ParseException{
-        //TODO btw this can be extended to show more than just week
-        // for example month, year ... etc (or custom period)
-        
-        //parameter: Date earliest date (input_date)
-        Date curr_date; 
-        
-        // Entry<String, Integer> set
-        // range to which the values should be calculated - e.g. week or all
-        
-        
-        //TODO sc will be empty with each execution - needs to be obtained from the server
-        
-        // so then just with each operation call displayAnalysis I guess?
-        // can do stuff like morningCount, eveningCount etc
-        getAllScores(); // 
-        int sum = 0;
-        int counter = 0;         
-        
-        //TODO sth like this below; modify each call to include the cutoff date
-        
-        for(Entry<String, Integer> e : this.user.getHM().entrySet()){
-            curr_date = new SimpleDateFormat("dd/MM/yyyy").parse(e.getKey().toString());  
-            System.out.println(curr_date);
-            
-            sum+=e.getValue();
-            counter++;
-            
-        }
-        
-        //this should be returned in an array?
-        commArea.setText(null);
-        commArea.append(counter + " scores registered. \n");
-        commArea.append("Average Value: " + sum / counter);
-        
-    }
     
-    private void getAllScores(){
-        ArrayList<Score> ans; 
-        String username;
-        int score;
-        String dt; 
-            try{
-            String sql = "SELECT username, score, date FROM Scores";
-            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
-            while(rs.next()){ // TODO shouldn't it be select from where?
-                username = rs.getString("username");
-                score = rs.getInt("score");
-                dt = rs.getString("date"); // convert to a different format?  // below check : && us_pass.equals(String.copyValueOf(password))){
-                if(username.equals(this.user.getName())){                    //TODO should check if the score isn't already in the usArr
-                    if(!this.user.getHM().containsKey(dt)){ // checks the date
-                        this.user.HM_Insert(dt, score);
-                        }
-                    }
-                }
-            }catch(Exception e){
-                System.out.println("Exception: " + e);
-        }
-        
-    }
       
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSc;
