@@ -373,6 +373,7 @@ public class loginScreen extends javax.swing.JFrame {
             mf = new mainFrame(fetchUser(userField.getText())); // instead of user; TODO change the method definition; old: get user from db (TODO change which one)
             this.setVisible(false);
             mf.setVisible(true);
+            //TODO change here
             mf.displayUserData(usData, usrIdx); // replace with proper arguments (TODO change the parameter)
            /* usData.add(new User(login, 22, 100)); // get rid of
             mf = new mainFrame(usData.get(usrIdx)); //TODO change the method definition; old: get user from db (TODO change which one)

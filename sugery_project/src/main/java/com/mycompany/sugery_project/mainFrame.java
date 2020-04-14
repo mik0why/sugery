@@ -329,6 +329,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
     private void allScButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_allScButMouseClicked
         // TODO add your handling code here:
+       /*
         scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
         sa.setVisible(true);
         try {
@@ -340,7 +341,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         } catch (ParseException ex) {
             Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        */
     }//GEN-LAST:event_allScButMouseClicked
 
     private void scoreFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_scoreFieldPropertyChange
@@ -348,6 +349,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_scoreFieldPropertyChange
 
     private void allScButKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_allScButKeyPressed
+        /*
         if(evt.getKeyCode() == 13){ // not working?
                 scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
             sa.setVisible(true);
@@ -360,7 +362,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             } catch (ParseException ex) {
                 Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        } */
         // TODO add your handling code here:
     }//GEN-LAST:event_allScButKeyPressed
 
@@ -460,7 +462,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         }
     }
     
-    private void weeklyScoreUpdate() throws SQLException{
+    private void weeklyScoreUpdate() throws SQLException{ // TODO idk what's that
         ArrayList<String> displayEntries; 
         LocalDate date = LocalDate.now();
         int sum = 0, count = 0; 
@@ -479,6 +481,10 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     public void evaluateScore(int score, int goal){
         // TODO: display the score differently based on how much off from the goal
         //TODO check if it's working properly
+         goal = this.user.getGoal();
+         score = this.user.getHM().lastEntry().getValue(); 
+        
+        
         if(score <= goal){
             feedbackField.setText("Great Job!!!");
             feedbackField.setBackground(Color.GREEN);

@@ -309,16 +309,11 @@ public class scoreScreen extends javax.swing.JFrame  {
     // need to register the day of the input
 
     void addScore() throws ClassNotFoundException, SQLException, ParseException{
-        //TODO get the last entry and check if not the same
-        //TODO ADD option to custom the date
-        /*TODO maybe there should be a condition that if the same score
-        was added less thatn 5/10 seconds ago then it shouldn't add it
-        or better: have a window that asks whether you want to add the same score?
-       
-        Already Added : .... Do you want to add this score again?
-        
-        BTW functionality for custom date
-    */
+        /* 
+        TODO get the last entry and check if not the same
+        TODO ADD option to custom the date
+        TODO check if score not already in the HT (retrieve the lastElement)
+        */
         
         
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -327,16 +322,11 @@ public class scoreScreen extends javax.swing.JFrame  {
         }
         Date curr_date = new Date();
         String sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
-        
                 + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
         + ","+ '\'' +  dateFormat.format(curr_date)  +  "');" ; 
         dataTable.addRemoveEntry(sql);
-        
         this.user.HM_Insert(dateFormat.format(curr_date).toString(), Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
-        this.user.getUsArr().add(new Score(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")), new Date()));
-        //todo: getUsArr not necessary, instead update the HT
-        
-//todo update when entry removed (especially the last one)        
+                
         
     }
 

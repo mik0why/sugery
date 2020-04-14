@@ -105,6 +105,8 @@ class User extends Observable implements Serializable{
     
     void removeScore(String date){
         this.scoreMap.remove(date); 
+        setChanged();
+        notifyObservers();
     }
     
     ArrayList<Score> getUsArr(){
