@@ -321,7 +321,7 @@ public class scoreArchive extends javax.swing.JFrame {
                         jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
                 ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
        
-                updateScores(user.displayAnalysis("all"));
+                updateScores(user.displayAnalysis("all")); // works, but not always
                 // need to do the same with adding to the array
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);

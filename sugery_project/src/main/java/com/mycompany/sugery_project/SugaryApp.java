@@ -95,12 +95,14 @@ class User extends Observable implements Serializable{
     
     void HM_Insert(String date, int score){
         scoreMap.put(date, score);
+        setChanged(); //TODO: what it do?
+        notifyObservers();
     }
     
     void addScore(int result) throws FileNotFoundException, IOException{ //ZMI when else should notifyObservers be called?
         this.usArr.add(new Score(result, new Date()));
-        setChanged(); //TODO: what it do?
-        notifyObservers();
+        //setChanged(); //TODO: what it do?
+        //notifyObservers();
     }
     
     void removeScore(String date){
