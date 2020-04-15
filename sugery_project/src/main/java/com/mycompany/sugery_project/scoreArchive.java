@@ -75,9 +75,9 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     }
     
     private void pullScores() throws SQLException, ParseException{
-        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();      
+        DefaultTableModel tableModel = (DefaultTableModel) scoreTable.getModel();      
         tableModel.setRowCount(0); // no initial rows
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(180);
+        scoreTable.getColumnModel().getColumn(0).setPreferredWidth(180);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         String sql = "SELECT * FROM Scores WHERE `username` = " + "'" + 
                 this.user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
@@ -131,7 +131,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
 
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        scoreTable = new javax.swing.JTable();
         remSc = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         commArea = new javax.swing.JTextArea();
@@ -156,7 +156,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        scoreTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -167,12 +167,12 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
                 "Date", "Score"
             }
         ));
-        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+        scoreTable.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTable1KeyPressed(evt);
+                scoreTableKeyPressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(scoreTable);
 
         remSc.setText("Remove Score");
         remSc.setToolTipText("");
@@ -272,15 +272,14 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
 
     private void remScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remScActionPerformed
         //TODO what if there are no scores loaded?
-        if(!jTable1.getSelectionModel().isSelectionEmpty()){
+        if(!scoreTable.getSelectionModel().isSelectionEmpty()){
             try {
-                dbRemove(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString(),  
-                        jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
-                ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
-       
+                dbRemove(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 0).toString(),  
+                        scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1).toString());
+                ((DefaultTableModel)scoreTable.getModel()).removeRow(scoreTable.getSelectedRow());
+                //TODO: idk why there's an exception here
                 updateScores(user.displayAnalysis("all")); 
                 // need to do the same with adding to the array
-                //TODO: remove from the table
                 
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
@@ -294,18 +293,19 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         }
     }//GEN-LAST:event_remScActionPerformed
 
-    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+    private void scoreTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreTableKeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode() == 8){  // disable editing
             System.out.println("backspace");
         }else if (evt.getKeyCode() == 9){
             //TODO disable switching to next row (make one column not focusable)?
+           scoreTable.changeSelection(scoreTable.getSelectionModel().getLeadSelectionIndex(),
+                    0, rootPaneCheckingEnabled, rootPaneCheckingEnabled);
             addSc.requestFocus();
         }
-    }//GEN-LAST:event_jTable1KeyPressed
+    }//GEN-LAST:event_scoreTableKeyPressed
 
     private void addScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addScActionPerformed
-        //TODO: the screen should also be updated when adding a score in this way
         scoreScreen = new scoreScreen(this.user, 0); // idk if that's the right val
         scoreScreen.setVisible(true);
     }//GEN-LAST:event_addScActionPerformed
@@ -323,36 +323,10 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton remSc;
+    private javax.swing.JTable scoreTable;
     // End of variables declaration//GEN-END:variables
 
 
 
 }
-
-
-
-/*
-        String username;
-        int score;
-        String dt; 
-            try{
-            String sql = "SELECT username, score, date FROM Scores";
-            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
-            while(rs.next()){ // TODO shouldn't it be select from where?
-                username = rs.getString("username");
-                score = rs.getInt("score");
-                dt = rs.getString("date"); // convert to a different format?  // below check : && us_pass.equals(String.copyValueOf(password))){
-                if(username.equals(this.user.getName())){                    //TODO should check if the score isn't already in the usArr
-                    if(!this.user.getHM().containsKey(dt)){ // checks the date
-                        this.user.HM_Insert(dt, score);
-                        }
-                    }
-                }
-            }catch(Exception e){
-                System.out.println("Exception: " + e);
-        }
-        
-    }
-    */
