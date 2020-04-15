@@ -53,59 +53,101 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     private void initComponents() {
 
         jPanel4 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        scoreField = new javax.swing.JTextField();
-        scAnalyze = new javax.swing.JButton();
-        allScBut = new javax.swing.JButton();
-        logoutKey = new javax.swing.JButton();
-        goalField = new javax.swing.JTextField();
-        feedbackField = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
         ageField = new javax.swing.JTextField();
-        addScoreButton = new javax.swing.JButton();
         monthAvg = new javax.swing.JTextField();
+        addScoreButton = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        allScBut = new javax.swing.JButton();
+        scAnalyze = new javax.swing.JButton();
+        scoreField = new javax.swing.JTextField();
+        goalField = new javax.swing.JTextField();
+        logoutKey = new javax.swing.JButton();
         entryText = new javax.swing.JTextField();
         weekAvg = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        feedbackField = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(238, 138, 238));
         setBounds(new java.awt.Rectangle(100, 23, 0, 0));
+        setMinimumSize(new java.awt.Dimension(750, 500));
+        setPreferredSize(new java.awt.Dimension(750, 550));
+        setSize(new java.awt.Dimension(750, 550));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
         });
+        getContentPane().setLayout(null);
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.setToolTipText("");
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1061, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 290, Short.MAX_VALUE)
+        );
 
-        scoreField.setEditable(false);
-        scoreField.setBackground(new java.awt.Color(0, 0, 0));
-        scoreField.setFont(new java.awt.Font("Lucida Grande", 0, 48)); // NOI18N
-        scoreField.setForeground(new java.awt.Color(255, 255, 0));
-        scoreField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        scoreField.setText("n/a");
-        scoreField.setToolTipText("");
-        scoreField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                scoreFieldPropertyChange(evt);
-            }
-        });
+        getContentPane().add(jPanel4);
+        jPanel4.setBounds(0, 597, 1061, 290);
 
-        scAnalyze.setText("Score Analysis");
-        scAnalyze.addActionListener(new java.awt.event.ActionListener() {
+        ageField.setEditable(false);
+        ageField.setBackground(new java.awt.Color(179, 177, 178));
+        ageField.setForeground(new java.awt.Color(255, 255, 255));
+        ageField.setText("age: ");
+        ageField.setToolTipText("");
+        ageField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                scAnalyzeActionPerformed(evt);
+                ageFieldActionPerformed(evt);
             }
         });
+        getContentPane().add(ageField);
+        ageField.setBounds(340, 40, 74, 24);
 
+        monthAvg.setEditable(false);
+        monthAvg.setBackground(new java.awt.Color(179, 177, 178));
+        monthAvg.setFont(new java.awt.Font("Lucida Grande", 0, 48)); // NOI18N
+        monthAvg.setForeground(new java.awt.Color(51, 51, 51));
+        monthAvg.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        monthAvg.setText("n/a");
+        monthAvg.setToolTipText("");
+        monthAvg.setBorder(null);
+        monthAvg.setPreferredSize(new java.awt.Dimension(160, 60));
+        monthAvg.setSize(new java.awt.Dimension(160, 60));
+        monthAvg.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                monthAvgPropertyChange(evt);
+            }
+        });
+        getContentPane().add(monthAvg);
+        monthAvg.setBounds(250, 190, 160, 60);
+
+        addScoreButton.setText("Add Score");
+        addScoreButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addScoreButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(addScoreButton);
+        addScoreButton.setBounds(300, 400, 145, 32);
+
+        jTextField1.setEditable(false);
+        jTextField1.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        jTextField1.setText("Most Recent Score:");
+        jTextField1.setToolTipText("");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField1);
+        jTextField1.setBounds(110, 90, 106, 60);
+
+        allScBut.setBackground(new java.awt.Color(102, 102, 102));
         allScBut.setText("All Scores");
         allScBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -122,6 +164,42 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                 allScButKeyPressed(evt);
             }
         });
+        getContentPane().add(allScBut);
+        allScBut.setBounds(140, 400, 121, 32);
+
+        scAnalyze.setText("Score Analysis");
+        scAnalyze.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scAnalyzeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(scAnalyze);
+        scAnalyze.setBounds(500, 400, 121, 32);
+
+        scoreField.setEditable(false);
+        scoreField.setBackground(new java.awt.Color(179, 177, 178));
+        scoreField.setFont(new java.awt.Font("Lucida Grande", 0, 48)); // NOI18N
+        scoreField.setForeground(new java.awt.Color(0, 102, 51));
+        scoreField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        scoreField.setText("n/a");
+        scoreField.setToolTipText("");
+        scoreField.setBorder(null);
+        scoreField.setPreferredSize(new java.awt.Dimension(90, 60));
+        scoreField.setSize(new java.awt.Dimension(160, 60));
+        scoreField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                scoreFieldPropertyChange(evt);
+            }
+        });
+        getContentPane().add(scoreField);
+        scoreField.setBounds(250, 110, 160, 60);
+
+        goalField.setEditable(false);
+        goalField.setBackground(new java.awt.Color(238, 238, 238));
+        goalField.setText("goal: ");
+        goalField.setToolTipText("");
+        getContentPane().add(goalField);
+        goalField.setBounds(470, 40, 82, 24);
 
         logoutKey.setText("Logout");
         logoutKey.addActionListener(new java.awt.event.ActionListener() {
@@ -129,11 +207,40 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                 logoutKeyActionPerformed(evt);
             }
         });
+        getContentPane().add(logoutKey);
+        logoutKey.setBounds(420, 450, 266, 32);
 
-        goalField.setEditable(false);
-        goalField.setBackground(new java.awt.Color(238, 238, 238));
-        goalField.setText("goal: ");
-        goalField.setToolTipText("");
+        entryText.setEditable(false);
+        entryText.setBackground(new java.awt.Color(100, 218, 98));
+        entryText.setAlignmentX(1.0F);
+        getContentPane().add(entryText);
+        entryText.setBounds(30, 30, 244, 35);
+
+        weekAvg.setEditable(false);
+        weekAvg.setBackground(new java.awt.Color(179, 177, 178));
+        weekAvg.setFont(new java.awt.Font("Lucida Grande", 0, 48)); // NOI18N
+        weekAvg.setForeground(new java.awt.Color(204, 0, 51));
+        weekAvg.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        weekAvg.setText("n/a");
+        weekAvg.setToolTipText("");
+        weekAvg.setBorder(null);
+        weekAvg.setSize(new java.awt.Dimension(160, 60));
+        weekAvg.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                weekAvgPropertyChange(evt);
+            }
+        });
+        getContentPane().add(weekAvg);
+        weekAvg.setBounds(250, 270, 160, 60);
+
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green-potted-plant-on-white-ceramic-vase-1166644.jpg"))); // NOI18N
+        jLabel4.setMaximumSize(new java.awt.Dimension(700, 450));
+        jLabel4.setMinimumSize(new java.awt.Dimension(700, 450));
+        jLabel4.setPreferredSize(new java.awt.Dimension(700, 450));
+        jLabel4.setSize(new java.awt.Dimension(750, 580));
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(-50, -40, 750, 580);
 
         feedbackField.setEditable(false);
         feedbackField.setText("No score yet :(");
@@ -142,219 +249,24 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                 feedbackFieldActionPerformed(evt);
             }
         });
+        getContentPane().add(feedbackField);
+        feedbackField.setBounds(240, 320, 132, 47);
 
-        jTextField1.setEditable(false);
-        jTextField1.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jTextField1.setText("Most Recent Score:");
-        jTextField1.setToolTipText("");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 102, 0), 10));
 
-        ageField.setEditable(false);
-        ageField.setBackground(new java.awt.Color(0, 0, 0));
-        ageField.setForeground(new java.awt.Color(255, 255, 255));
-        ageField.setText("age: ");
-        ageField.setToolTipText("");
-
-        addScoreButton.setText("add score");
-        addScoreButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addScoreButtonActionPerformed(evt);
-            }
-        });
-
-        monthAvg.setEditable(false);
-        monthAvg.setBackground(new java.awt.Color(0, 0, 0));
-        monthAvg.setFont(new java.awt.Font("Lucida Grande", 0, 48)); // NOI18N
-        monthAvg.setForeground(new java.awt.Color(255, 255, 0));
-        monthAvg.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        monthAvg.setText("n/a");
-        monthAvg.setToolTipText("");
-        monthAvg.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                monthAvgPropertyChange(evt);
-            }
-        });
-
-        entryText.setEditable(false);
-        entryText.setBackground(new java.awt.Color(100, 218, 98));
-        entryText.setAlignmentX(1.0F);
-
-        weekAvg.setEditable(false);
-        weekAvg.setBackground(new java.awt.Color(0, 0, 0));
-        weekAvg.setFont(new java.awt.Font("Lucida Grande", 0, 48)); // NOI18N
-        weekAvg.setForeground(new java.awt.Color(255, 255, 0));
-        weekAvg.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        weekAvg.setText("n/a");
-        weekAvg.setToolTipText("");
-        weekAvg.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                weekAvgPropertyChange(evt);
-            }
-        });
-
-        jLabel2.setText("jLabel2");
-
-        jPanel1.setLayout(null);
-
-        jLabel5.setText("jLabel5");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 110, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 240, Short.MAX_VALUE)
         );
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green-potted-plant-on-white-ceramic-vase-1166644.jpg"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(weekAvg, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(29, 29, 29)
-                                        .addComponent(addScoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(scAnalyze)
-                                            .addComponent(logoutKey, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(93, 93, 93)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(allScBut, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(feedbackField, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(69, 69, 69)
-                                .addComponent(entryText, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(monthAvg, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ageField, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(goalField, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(93, 93, 93)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(243, 243, 243)
-                        .addComponent(scoreField, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addGap(237, 237, 237)
-                        .addComponent(goalField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(56, 56, 56)
-                                        .addComponent(scoreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(ageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(16, 16, 16)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(monthAvg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(114, 114, 114)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(weekAvg, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(logoutKey))
-                                    .addComponent(addScoreButton))
-                                .addGap(27, 27, 27)
-                                .addComponent(feedbackField, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(5, 5, 5)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(58, 58, 58)
-                                        .addComponent(scAnalyze))
-                                    .addComponent(allScBut))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(303, 303, 303)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(entryText, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(48, 48, 48)))))
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(270, 100, 130, 260);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -469,6 +381,10 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
     }//GEN-LAST:event_weekAvgPropertyChange
 
+    private void ageFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ageFieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -504,13 +420,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JTextField entryText;
     private javax.swing.JTextField feedbackField;
     private javax.swing.JTextField goalField;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton logoutKey;
@@ -567,6 +478,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
          goal = this.user.getGoal();
          score = this.user.getHM().lastEntry().getValue(); 
         
+            //TODO change font instead of text
         
         if(score <= goal){
             feedbackField.setText("Great Job!!!");
