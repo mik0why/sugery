@@ -69,7 +69,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         //  idea: look at the previous entry & if they're the same, ask if you're sure
         // q: how to quickly retrieve that entry - where from
 
-
+        this.user.addObserver(this);
         pullScores();
         updateScores(user.displayAnalysis("all")); // all scores
     }
@@ -105,56 +105,21 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         commArea.append("Average Value: " + summary.get(1));
     }
     
-    private void displayAnalysis() throws ParseException{
-        //TODO btw this can be extended to show more than just week
-        // for example month, year ... etc (or custom period)
-        
-        //parameter: Date earliest date (input_date)
-        Date curr_date; 
-        
-        // Entry<String, Integer> set
-        // range to which the values should be calculated - e.g. week or all
-        
-        
-        //TODO sc will be empty with each execution - needs to be obtained from the server
-        
-        // so then just with each operation call displayAnalysis I guess?
-        // can do stuff like morningCount, eveningCount etc
-        int sum = 0;
-        int counter = 0;         
-        
-        //TODO sth like this below; modify each call to include the cutoff date
-        
-        for(Entry<String, Integer> e : this.user.getHM().entrySet()){
-            curr_date = new SimpleDateFormat("dd/MM/yyyy").parse(e.getKey().toString());  
-            System.out.println(curr_date);
-            
-            sum+=e.getValue();
-            counter++;
-            
-        }
-        
-        //this should be returned in an array?
-        commArea.setText(null);
-        commArea.append(counter + " scores registered. \n");
-        commArea.append("Average Value: " + sum / counter);
-        
-    }
     
-    
+    @Override
     public void update(Observable o, Object arg){
-            // what is o equal to?
-            System.out.println("TEST");
-            try {
-                pullScores();
-            } catch (SQLException ex) {
-                Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
+           if(o == this.user){
+                try {
+                    pullScores();
+                    updateScores(user.displayAnalysis("all")); 
+                } catch (SQLException ex) {
+                    Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-       
    
-    }
+        }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -313,7 +278,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
                         jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString());
                 ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
        
-                updateScores(user.displayAnalysis("all")); // works,
+                updateScores(user.displayAnalysis("all")); 
                 // need to do the same with adding to the array
                 //TODO: remove from the table
                 
@@ -325,7 +290,6 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
-            //commArea.setText("Select a row first, then click 'Delete'");
             JOptionPane.showMessageDialog(new JFrame("No Selection"), "Select a row first, then click 'Delete'");
         }
     }//GEN-LAST:event_remScActionPerformed
@@ -335,7 +299,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         if(evt.getKeyCode() == 8){  // disable editing
             System.out.println("backspace");
         }else if (evt.getKeyCode() == 9){
-            //TODO disable switching to next row
+            //TODO disable switching to next row (make one column not focusable)?
             addSc.requestFocus();
         }
     }//GEN-LAST:event_jTable1KeyPressed

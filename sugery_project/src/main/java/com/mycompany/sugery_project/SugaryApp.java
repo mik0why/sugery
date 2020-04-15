@@ -136,7 +136,6 @@ class User extends Observable implements Serializable{
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = (range.equals("all"))? 
                     dateFormat.parse("0000-01-01 00:00:00") : d2; 
-            System.out.println("date: " + date.toString());
             int sum = 0, counter = 0; 
             
 

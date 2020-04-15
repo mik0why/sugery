@@ -405,8 +405,6 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         goalField.setText("goal : " + this.user.getGoal()); //not working?
         
            if(!this.user.getHM().isEmpty()){
-                System.out  .println("the most REC Score: " + 
-                         this.user.getHM().lastEntry().getValue().toString());
                 scoreField.setText(this.user.getHM().lastEntry().getValue().toString()); // make sure it's still the same score
                 jTextField1.setText(this.user.getHM().lastEntry().getKey().toString());
                 weekAvg.setText(this.user.displayAnalysis("week").get(1));
