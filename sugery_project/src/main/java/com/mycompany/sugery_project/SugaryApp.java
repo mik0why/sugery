@@ -126,6 +126,7 @@ class User extends Observable implements Serializable{
     
         public ArrayList<String> displayAnalysis(String range ) throws ParseException{
             int dateRange = 0; 
+            int sum = 0, counter = 0; 
             
             if(range.equals("week")) dateRange = 7;
             if(range.equals("month")) dateRange = 30;
@@ -136,9 +137,9 @@ class User extends Observable implements Serializable{
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = (range.equals("all"))? 
                     dateFormat.parse("0000-01-01 00:00:00") : d2; 
-            int sum = 0, counter = 0; 
-            
 
+            
+ 
             for(Map.Entry<String, Integer> e : this.getHM().entrySet()){
                 if(dateFormat.parse(e.getKey()).compareTo(date) > 0 ){
                     sum+=e.getValue();
@@ -147,7 +148,7 @@ class User extends Observable implements Serializable{
             }
             // not adding null - remember to clear the output field first
             ret.add(counter + " scores registered");
-            ret.add(Integer.toString(sum / counter));
+            boolean zero = ((counter != 0) ? (ret.add(Integer.toString(sum / counter))) : (ret.add("no score")));
 
             return ret; 
     }

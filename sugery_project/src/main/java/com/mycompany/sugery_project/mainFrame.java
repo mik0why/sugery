@@ -63,7 +63,9 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         goalField = new javax.swing.JTextField();
         logoutKey = new javax.swing.JButton();
         entryText = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         weekAvg = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         feedbackField = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
@@ -71,9 +73,11 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(238, 138, 238));
         setBounds(new java.awt.Rectangle(100, 23, 0, 0));
-        setMinimumSize(new java.awt.Dimension(750, 500));
-        setPreferredSize(new java.awt.Dimension(750, 550));
-        setSize(new java.awt.Dimension(750, 550));
+        setMaximumSize(new java.awt.Dimension(700, 500));
+        setMinimumSize(new java.awt.Dimension(700, 500));
+        setPreferredSize(new java.awt.Dimension(750, 520));
+        setResizable(false);
+        setSize(new java.awt.Dimension(740, 550));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -106,7 +110,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }
         });
         getContentPane().add(ageField);
-        ageField.setBounds(340, 40, 74, 24);
+        ageField.setBounds(560, 10, 74, 24);
 
         monthAvg.setEditable(false);
         monthAvg.setBackground(new java.awt.Color(179, 177, 178));
@@ -118,13 +122,18 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         monthAvg.setBorder(null);
         monthAvg.setPreferredSize(new java.awt.Dimension(160, 60));
         monthAvg.setSize(new java.awt.Dimension(160, 60));
+        monthAvg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthAvgActionPerformed(evt);
+            }
+        });
         monthAvg.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 monthAvgPropertyChange(evt);
             }
         });
         getContentPane().add(monthAvg);
-        monthAvg.setBounds(250, 190, 160, 60);
+        monthAvg.setBounds(280, 280, 160, 60);
 
         addScoreButton.setText("Add Score");
         addScoreButton.addActionListener(new java.awt.event.ActionListener() {
@@ -133,19 +142,22 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }
         });
         getContentPane().add(addScoreButton);
-        addScoreButton.setBounds(300, 400, 145, 32);
+        addScoreButton.setBounds(280, 400, 145, 32);
 
         jTextField1.setEditable(false);
+        jTextField1.setBackground(new java.awt.Color(179, 177, 178));
         jTextField1.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(51, 51, 0));
         jTextField1.setText("Most Recent Score:");
         jTextField1.setToolTipText("");
+        jTextField1.setBorder(null);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(110, 90, 106, 60);
+        jTextField1.setBounds(440, 150, 290, 50);
 
         allScBut.setBackground(new java.awt.Color(102, 102, 102));
         allScBut.setText("All Scores");
@@ -165,7 +177,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }
         });
         getContentPane().add(allScBut);
-        allScBut.setBounds(140, 400, 121, 32);
+        allScBut.setBounds(460, 400, 121, 32);
 
         scAnalyze.setText("Score Analysis");
         scAnalyze.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +186,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }
         });
         getContentPane().add(scAnalyze);
-        scAnalyze.setBounds(500, 400, 121, 32);
+        scAnalyze.setBounds(610, 400, 121, 32);
 
         scoreField.setEditable(false);
         scoreField.setBackground(new java.awt.Color(179, 177, 178));
@@ -192,14 +204,14 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }
         });
         getContentPane().add(scoreField);
-        scoreField.setBounds(250, 110, 160, 60);
+        scoreField.setBounds(280, 140, 160, 60);
 
         goalField.setEditable(false);
         goalField.setBackground(new java.awt.Color(238, 238, 238));
         goalField.setText("goal: ");
         goalField.setToolTipText("");
         getContentPane().add(goalField);
-        goalField.setBounds(470, 40, 82, 24);
+        goalField.setBounds(560, 50, 82, 24);
 
         logoutKey.setText("Logout");
         logoutKey.addActionListener(new java.awt.event.ActionListener() {
@@ -208,13 +220,22 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }
         });
         getContentPane().add(logoutKey);
-        logoutKey.setBounds(420, 450, 266, 32);
+        logoutKey.setBounds(276, 450, 460, 32);
 
         entryText.setEditable(false);
-        entryText.setBackground(new java.awt.Color(100, 218, 98));
+        entryText.setBackground(new java.awt.Color(179, 177, 178));
+        entryText.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        entryText.setForeground(new java.awt.Color(51, 51, 51));
         entryText.setAlignmentX(1.0F);
         getContentPane().add(entryText);
-        entryText.setBounds(30, 30, 244, 35);
+        entryText.setBounds(30, 30, 430, 70);
+
+        jTextField2.setBackground(new java.awt.Color(179, 177, 178));
+        jTextField2.setForeground(new java.awt.Color(51, 51, 0));
+        jTextField2.setText("7 Day Average");
+        jTextField2.setBorder(null);
+        getContentPane().add(jTextField2);
+        jTextField2.setBounds(440, 230, 290, 30);
 
         weekAvg.setEditable(false);
         weekAvg.setBackground(new java.awt.Color(179, 177, 178));
@@ -231,16 +252,28 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             }
         });
         getContentPane().add(weekAvg);
-        weekAvg.setBounds(250, 270, 160, 60);
+        weekAvg.setBounds(280, 210, 160, 60);
+
+        jTextField3.setBackground(new java.awt.Color(179, 177, 178));
+        jTextField3.setForeground(new java.awt.Color(51, 51, 0));
+        jTextField3.setText("30 Day Average");
+        jTextField3.setBorder(null);
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField3);
+        jTextField3.setBounds(440, 300, 290, 30);
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green-potted-plant-on-white-ceramic-vase-1166644.jpg"))); // NOI18N
-        jLabel4.setMaximumSize(new java.awt.Dimension(700, 450));
-        jLabel4.setMinimumSize(new java.awt.Dimension(700, 450));
-        jLabel4.setPreferredSize(new java.awt.Dimension(700, 450));
-        jLabel4.setSize(new java.awt.Dimension(750, 580));
+        jLabel4.setMaximumSize(new java.awt.Dimension(750, 580));
+        jLabel4.setMinimumSize(new java.awt.Dimension(750, 580));
+        jLabel4.setName(""); // NOI18N
+        jLabel4.setPreferredSize(new java.awt.Dimension(750, 580));
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(-50, -40, 750, 580);
+        jLabel4.setBounds(0, -40, 760, 580);
 
         feedbackField.setEditable(false);
         feedbackField.setText("No score yet :(");
@@ -385,6 +418,14 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
     }//GEN-LAST:event_ageFieldActionPerformed
 
+    private void monthAvgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthAvgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_monthAvgActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -424,6 +465,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JButton logoutKey;
     private javax.swing.JTextField monthAvg;
     private javax.swing.JButton scAnalyze;
