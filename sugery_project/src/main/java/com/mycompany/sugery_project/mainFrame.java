@@ -19,6 +19,7 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.Stage;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,13 +35,17 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     User user;
     entryTable table = new entryTable();
     private scoreOperations scOp= new scoreOperations();
-    // where to move this?
+    private ArrayList<JTextField> fields = new ArrayList<JTextField>();
+    private ArrayList<Integer> scoreAverages = new ArrayList<Integer>();
+// where to move this?
 //    scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
 // TODO usArr seems kinda tedious
 
     public mainFrame(User usr) {
         initComponents();
         this.user = usr;
+        addFields(); 
+ 
     }
 
     /**
@@ -62,11 +67,12 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         scoreField = new javax.swing.JTextField();
         goalField = new javax.swing.JTextField();
         logoutKey = new javax.swing.JButton();
+        weekScore = new javax.swing.JTextField();
         entryText = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         weekAvg = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        monthScore = new javax.swing.JTextField();
+        lastScore = new javax.swing.JTextField();
+        entryText1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         feedbackField = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
@@ -150,7 +156,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         jTextField1.setBackground(new java.awt.Color(179, 177, 178));
         jTextField1.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(51, 51, 0));
-        jTextField1.setText("Last Score Registered At:");
+        jTextField1.setText("Last score registered at ");
         jTextField1.setToolTipText("");
         jTextField1.setBorder(null);
         jTextField1.setFocusable(false);
@@ -226,23 +232,22 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         getContentPane().add(logoutKey);
         logoutKey.setBounds(276, 450, 460, 32);
 
-        entryText.setEditable(false);
-        entryText.setBackground(new java.awt.Color(179, 177, 178));
+        weekScore.setBackground(new java.awt.Color(179, 177, 178));
+        weekScore.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        weekScore.setForeground(new java.awt.Color(51, 51, 0));
+        weekScore.setText("7 Day Average");
+        weekScore.setBorder(null);
+        weekScore.setFocusable(false);
+        getContentPane().add(weekScore);
+        weekScore.setBounds(440, 230, 290, 30);
+
+        entryText.setBackground(new java.awt.Color(178, 176, 177));
         entryText.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         entryText.setForeground(new java.awt.Color(51, 51, 51));
         entryText.setAlignmentX(1.0F);
-        entryText.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        entryText.setBorder(null);
         getContentPane().add(entryText);
-        entryText.setBounds(30, 30, 430, 70);
-
-        jTextField2.setBackground(new java.awt.Color(179, 177, 178));
-        jTextField2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(51, 51, 0));
-        jTextField2.setText("7 Day Average");
-        jTextField2.setBorder(null);
-        jTextField2.setFocusable(false);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(440, 220, 290, 30);
+        entryText.setBounds(270, 20, 250, 70);
 
         weekAvg.setEditable(false);
         weekAvg.setBackground(new java.awt.Color(179, 177, 178));
@@ -262,33 +267,43 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         getContentPane().add(weekAvg);
         weekAvg.setBounds(280, 210, 160, 60);
 
-        jTextField3.setBackground(new java.awt.Color(179, 177, 178));
-        jTextField3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(51, 51, 0));
-        jTextField3.setText("30 Day Average");
-        jTextField3.setBorder(null);
-        jTextField3.setFocusable(false);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        monthScore.setBackground(new java.awt.Color(179, 177, 178));
+        monthScore.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        monthScore.setForeground(new java.awt.Color(51, 51, 0));
+        monthScore.setText("30 Day Average");
+        monthScore.setBorder(null);
+        monthScore.setFocusable(false);
+        monthScore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                monthScoreActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(440, 290, 290, 30);
+        getContentPane().add(monthScore);
+        monthScore.setBounds(440, 300, 290, 30);
 
-        jTextField4.setBackground(new java.awt.Color(179, 177, 178));
-        jTextField4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(51, 51, 0));
-        jTextField4.setText("Last Update");
-        jTextField4.setBorder(null);
-        jTextField4.setFocusable(false);
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        lastScore.setBackground(new java.awt.Color(179, 177, 178));
+        lastScore.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        lastScore.setForeground(new java.awt.Color(51, 51, 0));
+        lastScore.setText("Last Update");
+        lastScore.setBorder(null);
+        lastScore.setFocusable(false);
+        lastScore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                lastScoreActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(440, 150, 103, 30);
+        getContentPane().add(lastScore);
+        lastScore.setBounds(440, 160, 140, 30);
+
+        entryText1.setEditable(false);
+        entryText1.setBackground(new java.awt.Color(175, 173, 174));
+        entryText1.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        entryText1.setForeground(new java.awt.Color(51, 51, 51));
+        entryText1.setText("Welcome,");
+        entryText1.setAlignmentX(1.0F);
+        entryText1.setBorder(null);
+        getContentPane().add(entryText1);
+        entryText1.setBounds(90, 20, 170, 70);
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green-potted-plant-on-white-ceramic-vase-1166644.jpg"))); // NOI18N
@@ -446,13 +461,13 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
     }//GEN-LAST:event_monthAvgActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void monthScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthScoreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_monthScoreActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void lastScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastScoreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_lastScoreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -463,7 +478,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         //TODO display different stuff based on what time it is
         // when the program is closed (spot that moment)
         this.user.addObserver(this); // TODO: what's this?
-        entryText.setText("Welcome, " + this.user.getName() + ".\n"); // why can i access .first?
+        entryText.setText(this.user.getName() + ".\n"); // why can i access .first?
         ageField.setText("age : " + this.user.getAge());
         goalField.setText("goal : " + this.user.getGoal()); //not working?
         
@@ -472,8 +487,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
                 jTextField1.setText(jTextField1.getText() + this.user.getHM().lastEntry().getKey().toString());
                 weekAvg.setText(this.user.displayAnalysis("week").get(1));
                 monthAvg.setText(this.user.displayAnalysis("month").get(1));
-                evaluateScore(Integer.parseInt(this.user.getHM().lastEntry().getValue().toString()),
-                        this.user.getGoal());
+                evaluateScore(this.user.getGoal());
         }
 
 
@@ -487,20 +501,21 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JTextField ageField;
     private javax.swing.JButton allScBut;
     private javax.swing.JTextField entryText;
+    private javax.swing.JTextField entryText1;
     private javax.swing.JTextField feedbackField;
     private javax.swing.JTextField goalField;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField lastScore;
     private javax.swing.JButton logoutKey;
     private javax.swing.JTextField monthAvg;
+    private javax.swing.JTextField monthScore;
     private javax.swing.JButton scAnalyze;
     private javax.swing.JTextField scoreField;
     private javax.swing.JTextField weekAvg;
+    private javax.swing.JTextField weekScore;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -516,7 +531,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             } catch (ParseException ex) {
                 Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-            evaluateScore(recentScore, this.user.getGoal());
+            evaluateScore(this.user.getGoal());
             //TODO weekly score upadte as well
 // weeklyScoreUpdate(); 
         }else{
@@ -526,6 +541,13 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+    }
+    
+    
+    private void addFields(){
+        fields.add(scoreField);   
+        fields.add(weekAvg);
+        fields.add(monthAvg);        
     }
     
     private void weeklyScoreUpdate() throws SQLException{ // TODO idk what's that
@@ -544,32 +566,43 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         
         
     }
-    public void evaluateScore(int score, int goal){
+    
+    private void getScores(){
+        scoreAverages.add(Integer.parseInt(scoreField.getText()));
+        scoreAverages.add(Integer.parseInt(weekAvg.getText()));
+        scoreAverages.add(Integer.parseInt(monthAvg.getText()));
+
+    }
+    public void evaluateScore(int goal){
         // TODO: display the score differently based on how much off from the goal
         //TODO check if it's working properly
+        JTextField textField;
+        
          goal = this.user.getGoal();
-         score = this.user.getHM().lastEntry().getValue(); 
+         int score = this.user.getHM().lastEntry().getValue(); 
+         getScores();
         
-            //TODO change font instead of text
-        
-        if(score <= goal){
-            feedbackField.setText("Great Job!!!");
-            feedbackField.setBackground(Color.GREEN);
-        }else if(score > goal * 1.5){
-            feedbackField.setText("Your sugar level is very high.");
-            feedbackField.setBackground(Color.RED);
-        }else if(score > goal * 1.3){
-            feedbackField.setText("High score - but not in a good way :(");
-            feedbackField.setBackground(Color.BLUE);
-        }else if(score > goal * 1.15){
-            feedbackField.setText("Not bad - but a little too high.");
-            feedbackField.setBackground(Color.CYAN);
-        }else if(score > goal * 1){
-            feedbackField.setText("Nice work!");
-            feedbackField.setBackground(Color.MAGENTA);
-        }
-        else{
-  
+            //TODO change font instead of text, removed feedback field
+        //for(JTextField textField: fields){
+            
+        for(int i = 0; i < 3; i++){    
+            textField = fields.get(i);
+            score = scoreAverages.get(i);
+        //    
+            if(score <= goal){
+                textField.setForeground(new java.awt.Color(0,102,51));
+            }else if(score > goal * 1.5){
+                textField.setForeground(new java.awt.Color(204,0,51));
+            }else if(score > goal * 1.3){
+                textField.setForeground(new java.awt.Color(3, 111, 252));
+            }else if(score > goal * 1.15){
+                textField.setForeground(new java.awt.Color( 206, 252, 3));
+            }else if(score > goal * 1){
+                textField.setForeground(new java.awt.Color( 30,102,51));                
+            }
+            else{
+
+            }
         }
     }
     private ResultSet getResults(int mode) throws ClassNotFoundException, SQLException{ //TODO change to ResultSet
