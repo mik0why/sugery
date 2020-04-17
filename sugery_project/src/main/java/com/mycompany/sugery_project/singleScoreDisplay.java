@@ -83,6 +83,11 @@ public class singleScoreDisplay extends javax.swing.JFrame {
         dateField.setBounds(190, 140, 200, 40);
 
         valueChange.setText("Change Value");
+        valueChange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                valueChangeActionPerformed(evt);
+            }
+        });
         getContentPane().add(valueChange);
         valueChange.setBounds(140, 230, 120, 30);
 
@@ -110,6 +115,11 @@ public class singleScoreDisplay extends javax.swing.JFrame {
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_quitButtonActionPerformed
+
+    private void valueChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valueChangeActionPerformed
+        // TODO add your handling code here:
+        new newScoreValue(this.user, this.score, this.date).setVisible(true);
+    }//GEN-LAST:event_valueChangeActionPerformed
 
     /**
      * @param args the command line arguments

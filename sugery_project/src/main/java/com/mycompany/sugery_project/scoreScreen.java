@@ -307,6 +307,7 @@ public class scoreScreen extends javax.swing.JFrame  { //
 
     void addScore() throws ClassNotFoundException, SQLException, ParseException{
         /* 
+        TODO check if the score in the valid range
         TODO get the last entry and check if not the same
         TODO ADD option to custom the date
         TODO check if score not already in the HT (retrieve the lastElement)
