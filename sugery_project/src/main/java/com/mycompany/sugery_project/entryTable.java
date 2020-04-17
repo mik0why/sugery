@@ -32,8 +32,9 @@ public class entryTable {
 
     public void addRemoveEntry(String query) throws SQLException{        
         
-        
+        System.out.println(query);
         st.executeUpdate(query);
+        
     }; // add or remove based on the type
 
     public ResultSet selectEntries(String query) throws SQLException{

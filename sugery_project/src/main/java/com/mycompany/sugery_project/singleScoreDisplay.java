@@ -55,6 +55,7 @@ public class singleScoreDisplay extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(420, 305));
         getContentPane().setLayout(null);
 
+        scoreValueField.setEditable(false);
         scoreValueField.setBackground(new java.awt.Color(0, 0, 0));
         scoreValueField.setFont(new java.awt.Font("Lucida Grande", 0, 48)); // NOI18N
         scoreValueField.setForeground(new java.awt.Color(255, 255, 255));

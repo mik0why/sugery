@@ -23,12 +23,14 @@ public class newScoreValue extends javax.swing.JFrame {
     private User user;
     private int score;
     private String date; 
-    private entryTable et;
+    private entryTable et = new entryTable();
     
     public newScoreValue(User user, int score, String date) {
         //TODO rethink the constructor
         initComponents();
         this.user = user;
+        this.score = score;
+        this.date = date; 
     }
 
     /**
@@ -72,13 +74,17 @@ public class newScoreValue extends javax.swing.JFrame {
         // check if score ok
         // execute update
         if(scoreVerify()){
+            // first need to find that score 
             String sql = "UPDATE Scores SET score = " + scoreField.getText()
-                    + " where username = '" + this.user.getName() + "'";
+                    + " where username = " + '\'' +  this.user.getName() + "' AND date = '"
+                     + this.date + "';";
+            
             try {
                 et.addRemoveEntry(sql);
             } catch (SQLException ex) {
                 Logger.getLogger(newScoreValue.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         }
         
         this.setVisible(false);
