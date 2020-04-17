@@ -312,6 +312,10 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
 
     private void edScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edScActionPerformed
         // TODO add your handling code here:
+        new singleScoreDisplay(this.user, 
+        scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 0).toString(),  
+        Integer.parseInt(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1).
+                toString())).setVisible(true);
     }//GEN-LAST:event_edScActionPerformed
 
     
