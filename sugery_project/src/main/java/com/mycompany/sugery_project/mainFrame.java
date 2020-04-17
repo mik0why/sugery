@@ -36,7 +36,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     entryTable table = new entryTable();
     private scoreOperations scOp= new scoreOperations();
     private ArrayList<JTextField> fields = new ArrayList<JTextField>();
-    private ArrayList<Integer> scoreAverages = new ArrayList<Integer>();
+    //private ArrayList<Integer> scoreAverages = new ArrayList<Integer>();
 // where to move this?
 //    scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
 // TODO usArr seems kinda tedious
@@ -241,6 +241,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         getContentPane().add(weekScore);
         weekScore.setBounds(440, 230, 290, 30);
 
+        entryText.setEditable(false);
         entryText.setBackground(new java.awt.Color(178, 176, 177));
         entryText.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         entryText.setForeground(new java.awt.Color(51, 51, 51));
@@ -567,27 +568,29 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         
     }
     
-    private void getScores(){
+    private ArrayList<Integer> getScores(){
+        ArrayList<Integer> scoreAverages = new ArrayList<Integer>();
         scoreAverages.add(Integer.parseInt(scoreField.getText()));
         scoreAverages.add(Integer.parseInt(weekAvg.getText()));
         scoreAverages.add(Integer.parseInt(monthAvg.getText()));
+        return scoreAverages; 
 
     }
+    
     public void evaluateScore(int goal){
         // TODO: display the score differently based on how much off from the goal
         //TODO check if it's working properly
         JTextField textField;
-        
          goal = this.user.getGoal();
-         int score = this.user.getHM().lastEntry().getValue(); 
-         getScores();
+         int score; 
+         ArrayList<Integer> scores = getScores();
         
             //TODO change font instead of text, removed feedback field
         //for(JTextField textField: fields){
             
         for(int i = 0; i < 3; i++){    
             textField = fields.get(i);
-            score = scoreAverages.get(i);
+            score = scores.get(i);
         //    
             if(score <= goal){
                 textField.setForeground(new java.awt.Color(0,102,51));
