@@ -140,6 +140,7 @@ public class scoreAnalizer extends JPanel {
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.getContentPane().add(mainPanel);
       frame.pack();
+      frame.setBackground(Color.BLACK);
       frame.setLocationByPlatform(true);
       frame.setVisible(true);
       frame.addKeyListener(new KeyAdapter() {

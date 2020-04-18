@@ -306,7 +306,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_scoreTableKeyPressed
 
     private void addScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addScActionPerformed
-        scoreScreen = new scoreScreen(this.user, 0); // idk if that's the right val
+        scoreScreen = new scoreScreen(this.user, false, null); // idk if that's the right val
         scoreScreen.setVisible(true);
     }//GEN-LAST:event_addScActionPerformed
 

@@ -70,6 +70,8 @@ public class singleScoreDisplay extends javax.swing.JFrame {
         scoreValueField.setBounds(40, 20, 340, 70);
 
         jTextField2.setEditable(false);
+        jTextField2.setBackground(new java.awt.Color(0, 0, 0));
+        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
         jTextField2.setText("Registered At");
         getContentPane().add(jTextField2);
         jTextField2.setBounds(280, 110, 110, 30);
@@ -79,6 +81,8 @@ public class singleScoreDisplay extends javax.swing.JFrame {
         dateChange.setBounds(280, 230, 130, 32);
 
         dateField.setEditable(false);
+        dateField.setBackground(new java.awt.Color(0, 0, 0));
+        dateField.setForeground(new java.awt.Color(255, 255, 255));
         dateField.setText("jTextField3");
         getContentPane().add(dateField);
         dateField.setBounds(190, 140, 200, 40);
@@ -118,8 +122,7 @@ public class singleScoreDisplay extends javax.swing.JFrame {
     }//GEN-LAST:event_quitButtonActionPerformed
 
     private void valueChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valueChangeActionPerformed
-        // TODO add your handling code here:
-        new newScoreValue(this.user, this.score, this.date).setVisible(true);
+        new scoreScreen(this.user, true, this.date).setVisible(true);
     }//GEN-LAST:event_valueChangeActionPerformed
 
     /**

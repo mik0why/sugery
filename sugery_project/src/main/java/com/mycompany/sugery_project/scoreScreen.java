@@ -24,6 +24,7 @@ import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.lang.String;
+import javax.swing.JCheckBox;
 
 
 /**
@@ -38,6 +39,8 @@ public class scoreScreen extends javax.swing.JFrame  { //
      * Creates new form scoreScreen
      */
     private User user;
+    private boolean updateValue = false; 
+    private String date;
     boolean focusTraversalKeysEnabled = false;
 
     @Override
@@ -45,9 +48,11 @@ public class scoreScreen extends javax.swing.JFrame  { //
         super.setFocusTraversalKeysEnabled(focusTraversalKeysEnabled); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public scoreScreen(User usr, int idx) { // change usr to string
+    public scoreScreen(User usr, boolean updateValue, String date) { // change usr to string
         initComponents();
         this.user = usr;
+        this.updateValue = updateValue;
+        this.date= date; 
     }
 
     private void keyPressed(java.awt.event.KeyEvent e){
@@ -83,8 +88,8 @@ public class scoreScreen extends javax.swing.JFrame  { //
         scoreSet = new javax.swing.JButton();
         scoreField = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
-        checkbox1 = new java.awt.Checkbox();
         dateField = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -151,11 +156,14 @@ public class scoreScreen extends javax.swing.JFrame  { //
             }
         });
 
-        checkbox1.setBackground(new java.awt.Color(63, 63, 65));
-        checkbox1.setForeground(new java.awt.Color(255, 255, 255));
-        checkbox1.setLabel("Custom Date");
-
         dateField.setText("jTextField2");
+
+        jButton2.setText("Custom Date");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -169,7 +177,7 @@ public class scoreScreen extends javax.swing.JFrame  { //
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(scoreSet, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
@@ -194,12 +202,13 @@ public class scoreScreen extends javax.swing.JFrame  { //
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(scoreSet)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(scoreSet)
+                            .addComponent(jButton2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(checkbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(38, 38, 38)
                         .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(82, Short.MAX_VALUE))
         );
@@ -256,33 +265,27 @@ public class scoreScreen extends javax.swing.JFrame  { //
     private void scoreSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoreSetActionPerformed
         // TODO add your handling code here:
          try {
-             
-                        addScore(); //TODO make a change to the date
-                       /*
-                        setChanged();
-                        notifyObservers();                        
-                       */
-                        /*
-                        if(checkbox1.isSelected()){
-                            
-                        } */
-                        
-                        
-                        jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
-                        //this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ParseException ex) {
-                        Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
-        
+                addScore(); //TODO make a change to the date
+                jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
+                //this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
+
         
         
         
     }//GEN-LAST:event_scoreSetActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // display the date change screen
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,9 +293,9 @@ public class scoreScreen extends javax.swing.JFrame  { //
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Checkbox checkbox1;
     private javax.swing.JTextField dateField;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
@@ -313,17 +316,28 @@ public class scoreScreen extends javax.swing.JFrame  { //
         TODO check if score not already in the HT (retrieve the lastElement)
         */
         
-        
+        String sql = new String();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        if(checkbox1.getState()){
-            // date is custom
+
+        if(this.updateValue){
+            sql = "UPDATE Scores SET score = " + scoreField.getText()
+          + " where username = " + '\'' +  this.user.getName() + "' AND date = '"
+           + this.date + "';";
+            
+            this.user.HM_Replace(this.date, 
+                    Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+            
+        }else{
+            Date curr_date = new Date();
+            sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
+                    + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
+            + ","+ '\'' +  dateFormat.format(curr_date)  +  "');" ;
+            this.user.HM_Insert(dateFormat.format(curr_date).toString(), 
+                    Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+
         }
-        Date curr_date = new Date();
-        String sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
-                + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
-        + ","+ '\'' +  dateFormat.format(curr_date)  +  "');" ; 
+ 
         dataTable.addRemoveEntry(sql);
-        this.user.HM_Insert(dateFormat.format(curr_date).toString(), Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
                 
         
     }

@@ -99,7 +99,11 @@ class User extends Observable implements Serializable{
         notifyObservers();
     }
     
-
+    void HM_Replace(String date, int score){
+        this.scoreMap.replace(date, score);
+        setChanged();
+        notifyObservers();
+    }
     
     void removeScore(String date){
         this.scoreMap.remove(date); 

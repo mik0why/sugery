@@ -354,7 +354,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
     private void addScoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addScoreButtonActionPerformed
         // show screen for inputting the data
-        scoreScreen sc = new scoreScreen(user, 0); //TODO not sure
+        scoreScreen sc = new scoreScreen(user, false, null); //TODO not sure
         sc.setVisible(true);
         
         if(!sc.isVisible()){
