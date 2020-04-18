@@ -320,24 +320,29 @@ public class scoreScreen extends javax.swing.JFrame  { //
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         if(this.updateValue){
-            sql = "UPDATE Scores SET score = " + scoreField.getText()
-          + " where username = " + '\'' +  this.user.getName() + "' AND date = '"
-           + this.date + "';";
-            
+                sql = "UPDATE Scores SET score = " + scoreField.getText()
+              + " where username = " + '\'' +  this.user.getName() + "' AND date = '"
+               + this.date + "';";
+
+            dataTable.addRemoveEntry(sql);
+
             this.user.HM_Replace(this.date, 
-                    Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                        Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
             
         }else{
             Date curr_date = new Date();
             sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
                     + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
             + ","+ '\'' +  dateFormat.format(curr_date)  +  "');" ;
+            
+            dataTable.addRemoveEntry(sql);
+
             this.user.HM_Insert(dateFormat.format(curr_date).toString(), 
                     Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
 
         }
  
-        dataTable.addRemoveEntry(sql);
+ //       dataTable.addRemoveEntry(sql);
                 
         
     }

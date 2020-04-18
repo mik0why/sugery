@@ -49,9 +49,13 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
      * @param usr
      * @param model
      */
-    public scoreArchive(User usr) {
+    public scoreArchive(User usr) throws SQLException, ParseException {
         this.user = usr; 
         initComponents();
+        this.user.addObserver(this);
+        pullScores();
+        updateScores(user.displayAnalysis("all")); // all scores
+
     }
 
      // @Override
@@ -59,20 +63,6 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
                 return false;               
         };      
      
-     
-    void displayScores() throws ClassNotFoundException, SQLException, ParseException{
-        //TODO make private
-        //TODO display buttons so the user can modify scores
-        //TODO score summary
-        //TODO: remake Scores into a hashTable?
-        // find a solution to not enter the same entry twice
-        //  idea: look at the previous entry & if they're the same, ask if you're sure
-        // q: how to quickly retrieve that entry - where from
-
-        this.user.addObserver(this);
-        pullScores();
-        updateScores(user.displayAnalysis("all")); // all scores
-    }
     
     private void pullScores() throws SQLException, ParseException{
         DefaultTableModel tableModel = (DefaultTableModel) scoreTable.getModel();      
@@ -110,8 +100,9 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     public void update(Observable o, Object arg){
            if(o == this.user){
                 try {
+                    updateScores(user.displayAnalysis("all"));  // ok
                     pullScores();
-                    updateScores(user.displayAnalysis("all")); 
+
                 } catch (SQLException ex) {
                     Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ParseException ex) {
@@ -276,7 +267,12 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
             try {
                 dbRemove(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 0).toString(),  
                         scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1).toString());
-                ((DefaultTableModel)scoreTable.getModel()).removeRow(scoreTable.getSelectedRow());
+                
+                
+                
+                //((DefaultTableModel)scoreTable.getModel()).removeRow(scoreTable.getSelectedRow());
+                pullScores();
+
                 //TODO: idk why there's an exception here
                 updateScores(user.displayAnalysis("all")); 
                 // need to do the same with adding to the array
@@ -311,7 +307,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_addScActionPerformed
 
     private void edScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edScActionPerformed
-        // TODO add your handling code here:
+        //TODO check if there is a score selected first
         new singleScoreDisplay(this.user, 
         scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 0).toString(),  
         Integer.parseInt(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1).

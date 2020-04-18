@@ -374,17 +374,16 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
     private void allScButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allScButActionPerformed
         // TODO add your handling code here:
-        scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
-        sa.setVisible(true);
+        scoreArchive sa;
         try {
-            sa.displayScores();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            sa = new scoreArchive(this.user); // where should this be? it's just a new window
+            sa.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         
     }//GEN-LAST:event_allScButActionPerformed
 
