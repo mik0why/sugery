@@ -6,21 +6,26 @@
 
 package com.mycompany.sugery_project;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  *
  * @author mikowhy
  */
-public class singleScoreDisplay extends javax.swing.JFrame {
+public class singleScoreDisplay extends javax.swing.JFrame implements Observer{
 
     private User user; 
     private int score; 
     private String date;
     /** Creates new form singleScoreDisplay */
     public singleScoreDisplay(User user, String date, int score) {
+        
         initComponents();
         this.user = user;
         this.score = score; 
         this.date= date; 
+        this.user.addObserver(this);
         displayData();
     }
 
@@ -139,5 +144,19 @@ public class singleScoreDisplay extends javax.swing.JFrame {
     private javax.swing.JTextField scoreValueField;
     private javax.swing.JButton valueChange;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+        
+        if(o == this.user){
+            //ok for score - but what about when the date changes?
+            scoreValueField.setText(Integer.toString(this.user.getHM().get(this.date)));
+        }
+        
+        
+        
+        
+  //      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

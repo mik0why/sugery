@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TreeMap;
 /**
  *
@@ -65,7 +66,7 @@ class User extends Observable implements Serializable{
     private ArrayList<Score> usArr = new ArrayList<Score>();
     private NavigableMap<String, Integer> scoreMap = new TreeMap<String, Integer>(); //= new HashMap<String,Integer>();
     private entryTable dataTable = new entryTable();
-    
+    private Stack <String> lastUsed = new Stack <String>(); 
     
     User(String name, int age, int goal){
         this.first = name;
