@@ -75,9 +75,10 @@ public class singleScoreDisplay extends javax.swing.JFrame implements Observer{
         scoreValueField.setBounds(40, 20, 340, 70);
 
         jTextField2.setEditable(false);
-        jTextField2.setBackground(new java.awt.Color(0, 0, 0));
-        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField2.setBackground(new java.awt.Color(193, 146, 166));
+        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
         jTextField2.setText("Registered At");
+        jTextField2.setBorder(null);
         getContentPane().add(jTextField2);
         jTextField2.setBounds(280, 110, 110, 30);
 

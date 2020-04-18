@@ -34,7 +34,7 @@ import javax.swing.JCheckBox;
 //TODO fix the update thing
 public class scoreScreen extends javax.swing.JFrame  { //
     private entryTable dataTable = new entryTable(); 
-
+    private dateChanger dateChanger = new dateChanger();
     /**
      * Creates new form scoreScreen
      */
@@ -283,8 +283,7 @@ public class scoreScreen extends javax.swing.JFrame  { //
     }//GEN-LAST:event_scoreSetActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // display the date change screen
-        
+        dateChanger.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
