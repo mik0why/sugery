@@ -106,6 +106,8 @@ class User extends Observable implements Serializable{
         notifyObservers();
     }
     
+    //todo make a HM_Replace_Key?
+    
     void removeScore(String date){
         this.scoreMap.remove(date); 
         setChanged();

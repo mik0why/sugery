@@ -5,7 +5,11 @@
  */
 package com.mycompany.sugery_project;
 
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.IllegalFormatException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,11 +20,60 @@ public class dateChanger extends javax.swing.JFrame {
     /**
      * Creates new form dateChanger
      */
-    public dateChanger() {
+    private String oldDate; 
+    private String newDate; 
+    private User user; 
+    private entryTable entryTable = new entryTable();
+   
+    public dateChanger(User user, String date) {
+        this.oldDate = date; 
+        this.user = user; 
         initComponents();
     }
 
+    private void modifyDate(){
+        
+              String date = yearField.getText(); 
+              
+              String sql = "UPDATE Scores SET date = " + date
+              + " where username = " + '\'' +  this.user.getName() + "' AND date = '"
+               + this.oldDate + "';";
+
+            try {
+                entryTable.addRemoveEntry(sql);
+            } catch (SQLException ex) {
+                Logger.getLogger(dateChanger.class.getName()).log(Level.SEVERE, null, ex);
+            }
+/*
+            this.user.HM_Replace(this.date, 
+
+            Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+        
+ */           
+    }
     
+    private boolean fieldsCheck(){
+        //TODO check each of the fields
+        int year, month, day;
+        String time; 
+        //timeFormat
+        
+        
+        try{
+            year = Integer.parseInt(yearField.getText());
+            month = Integer.parseInt(monthField.getText());
+            day = Integer.parseInt(dayField.getText());
+            
+            // set newDate
+        }catch(IllegalFormatException e){
+            //output the error
+            return false;
+        }
+              
+              
+        
+        return true; 
+    }
     
  
     
@@ -36,10 +89,10 @@ public class dateChanger extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         setDate = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        yearField = new javax.swing.JTextField();
+        monthField = new javax.swing.JTextField();
+        dayField = new javax.swing.JTextField();
+        timeField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,40 +117,40 @@ public class dateChanger extends javax.swing.JFrame {
             }
         });
 
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setText("2020");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        yearField.setBackground(new java.awt.Color(255, 255, 255));
+        yearField.setText("2020");
+        yearField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                yearFieldActionPerformed(evt);
             }
         });
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setText("04");
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        monthField.setBackground(new java.awt.Color(255, 255, 255));
+        monthField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        monthField.setText("04");
+        monthField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                monthFieldActionPerformed(evt);
             }
         });
 
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setText("15");
-        jTextField5.setMinimumSize(new java.awt.Dimension(46, 24));
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        dayField.setBackground(new java.awt.Color(255, 255, 255));
+        dayField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        dayField.setText("15");
+        dayField.setMinimumSize(new java.awt.Dimension(46, 24));
+        dayField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                dayFieldActionPerformed(evt);
             }
         });
 
-        jTextField8.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setText("12:30:55");
-        jTextField8.setMinimumSize(new java.awt.Dimension(46, 24));
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        timeField.setBackground(new java.awt.Color(255, 255, 255));
+        timeField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        timeField.setText("12:30:55");
+        timeField.setMinimumSize(new java.awt.Dimension(46, 24));
+        timeField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                timeFieldActionPerformed(evt);
             }
         });
 
@@ -118,13 +171,13 @@ public class dateChanger extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(53, 53, 53)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(yearField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(monthField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dayField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+                                .addComponent(timeField, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -145,10 +198,10 @@ public class dateChanger extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(yearField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(monthField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dayField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(timeField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -164,8 +217,13 @@ public class dateChanger extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void setDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setDateActionPerformed
-        //TODO check if the format is correct
-        //actually set several small fields instead
+        String sql; 
+        
+        if(fieldsCheck()){
+            modifyDate();
+ 
+                    
+        }
         String x = dateField.toString();
         
         // this shouldn't necessairly be a query, it's based on 
@@ -175,21 +233,21 @@ public class dateChanger extends javax.swing.JFrame {
         
     }//GEN-LAST:event_setDateActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void yearFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_yearFieldActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void monthFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_monthFieldActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void dayFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_dayFieldActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void timeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_timeFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,13 +255,13 @@ public class dateChanger extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField dayField;
     private javax.swing.JButton jButton1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField monthField;
     private javax.swing.JButton setDate;
+    private javax.swing.JTextField timeField;
+    private javax.swing.JTextField yearField;
     // End of variables declaration//GEN-END:variables
 
     private javax.swing.JTextField dateField;

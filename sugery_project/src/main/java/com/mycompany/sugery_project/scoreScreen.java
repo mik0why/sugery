@@ -34,7 +34,7 @@ import javax.swing.JCheckBox;
 //TODO fix the update thing
 public class scoreScreen extends javax.swing.JFrame  { //
     private entryTable dataTable = new entryTable(); 
-    private dateChanger dateChanger = new dateChanger();
+    private dateChanger dateChanger = new dateChanger(this.user, null);
     /**
      * Creates new form scoreScreen
      */

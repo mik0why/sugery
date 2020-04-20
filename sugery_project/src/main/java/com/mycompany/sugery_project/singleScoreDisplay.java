@@ -83,6 +83,11 @@ public class singleScoreDisplay extends javax.swing.JFrame implements Observer{
         jTextField2.setBounds(280, 110, 110, 30);
 
         dateChange.setText("Change Date");
+        dateChange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateChangeActionPerformed(evt);
+            }
+        });
         getContentPane().add(dateChange);
         dateChange.setBounds(280, 230, 130, 32);
 
@@ -130,6 +135,12 @@ public class singleScoreDisplay extends javax.swing.JFrame implements Observer{
     private void valueChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valueChangeActionPerformed
         new scoreScreen(this.user, true, this.date).setVisible(true);
     }//GEN-LAST:event_valueChangeActionPerformed
+
+    private void dateChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateChangeActionPerformed
+        // TODO add your handling code here:
+        dateChanger dt = new dateChanger(this.user, dateField.getText());
+        dt.setVisible(true);
+    }//GEN-LAST:event_dateChangeActionPerformed
 
     /**
      * @param args the command line arguments
