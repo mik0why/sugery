@@ -6,6 +6,9 @@
 package com.mycompany.sugery_project;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.IllegalFormatException;
 import java.util.logging.Level;
@@ -31,12 +34,13 @@ public class dateChanger extends javax.swing.JFrame {
         initComponents();
     }
 
-    private void modifyDate(){
-        
-              String date = yearField.getText(); 
+    private void modifyDate() throws ParseException{
+
+              String date = composeDate(); 
+
               
-              String sql = "UPDATE Scores SET date = " + date
-              + " where username = " + '\'' +  this.user.getName() + "' AND date = '"
+              String sql = "UPDATE Scores SET date = '" + date
+              + "' where username = " + '\'' +  this.user.getName() + "' AND date = '"
                + this.oldDate + "';";
 
             try {
@@ -52,6 +56,22 @@ public class dateChanger extends javax.swing.JFrame {
  */           
     }
     
+    private String composeDate() throws ParseException{
+           //Date date = new Date();
+           String userDate = new String();
+           DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+           try{
+                userDate = yearField.getText() + "-" + monthField.getText() + "-" + dayField.getText()
+                        + " " + timeField.getText(); 
+                dateFormat.parse(userDate); 
+           }catch(IllegalFormatException e){ //or ParseException?
+               System.out.println("Illegal format!"); //TODO output in a jframe
+           }
+        
+        
+        
+           return userDate; 
+    }
     private boolean fieldsCheck(){
         //TODO check each of the fields
         int year, month, day;
@@ -68,7 +88,11 @@ public class dateChanger extends javax.swing.JFrame {
         }catch(IllegalFormatException e){
             //output the error
             return false;
+            
         }
+        
+        //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
               
               
         
@@ -118,6 +142,7 @@ public class dateChanger extends javax.swing.JFrame {
         });
 
         yearField.setBackground(new java.awt.Color(255, 255, 255));
+        yearField.setForeground(new java.awt.Color(204, 204, 204));
         yearField.setText("2020");
         yearField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,6 +151,7 @@ public class dateChanger extends javax.swing.JFrame {
         });
 
         monthField.setBackground(new java.awt.Color(255, 255, 255));
+        monthField.setForeground(new java.awt.Color(204, 204, 204));
         monthField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         monthField.setText("04");
         monthField.addActionListener(new java.awt.event.ActionListener() {
@@ -135,6 +161,7 @@ public class dateChanger extends javax.swing.JFrame {
         });
 
         dayField.setBackground(new java.awt.Color(255, 255, 255));
+        dayField.setForeground(new java.awt.Color(204, 204, 204));
         dayField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         dayField.setText("15");
         dayField.setMinimumSize(new java.awt.Dimension(46, 24));
@@ -145,6 +172,7 @@ public class dateChanger extends javax.swing.JFrame {
         });
 
         timeField.setBackground(new java.awt.Color(255, 255, 255));
+        timeField.setForeground(new java.awt.Color(204, 204, 204));
         timeField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         timeField.setText("12:30:55");
         timeField.setMinimumSize(new java.awt.Dimension(46, 24));
@@ -220,11 +248,15 @@ public class dateChanger extends javax.swing.JFrame {
         String sql; 
         
         if(fieldsCheck()){
-            modifyDate();
+            try {
+                modifyDate();
+            } catch (ParseException ex) {
+                Logger.getLogger(dateChanger.class.getName()).log(Level.SEVERE, null, ex);
+            }
  
                     
         }
-        String x = dateField.toString();
+        //String x = dateField.toString();
         
         // this shouldn't necessairly be a query, it's based on 
         // whether the goal is to update the date, or to set it
@@ -264,5 +296,5 @@ public class dateChanger extends javax.swing.JFrame {
     private javax.swing.JTextField yearField;
     // End of variables declaration//GEN-END:variables
 
-    private javax.swing.JTextField dateField;
+    //private javax.swing.JTextField dateField;
 }
