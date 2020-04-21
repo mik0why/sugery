@@ -85,8 +85,9 @@ public class dateChanger extends javax.swing.JFrame {
             day = Integer.parseInt(dayField.getText());
             
             // set newDate
-        }catch(IllegalFormatException e){
+        }catch(NumberFormatException e){
             //output the error
+            System.out.println(e);
             return false;
             
         }
