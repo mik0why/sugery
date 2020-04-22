@@ -60,7 +60,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     
     public configJFrame() {
         initComponents();
-        entryText.setBackground(null);
+//        entryText.setBackground(null);
         nameArea1.requestFocus();
         tests.put("Name", nameOk);
         tests.put("Age", ageOk);
@@ -85,15 +85,15 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         goalArea = new javax.swing.JTextArea();
         jScrollPane6 = new javax.swing.JScrollPane();
         ageArea = new javax.swing.JTextArea();
-        entryText = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         nameArea1 = new javax.swing.JTextArea();
         jTextField8 = new javax.swing.JTextField();
         passField = new javax.swing.JPasswordField();
         goBack = new javax.swing.JButton();
+        jTextField9 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -155,23 +155,10 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         getContentPane().add(jScrollPane6);
         jScrollPane6.setBounds(200, 220, 135, 36);
 
-        entryText.setBackground(new java.awt.Color(51, 51, 51));
-        entryText.setFont(new java.awt.Font("Mukta Mahee", 2, 36)); // NOI18N
-        entryText.setText("    But first, introduce yourself.");
-        entryText.setBorder(null);
-        entryText.setFocusable(false);
-        entryText.setOpaque(false);
-        entryText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                entryTextActionPerformed(evt);
-            }
-        });
-        getContentPane().add(entryText);
-        entryText.setBounds(140, 30, 480, 90);
-
         jTextField5.setEditable(false);
         jTextField5.setBackground(new java.awt.Color(0, 0, 0));
         jTextField5.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField5.setText("Age");
         jTextField5.setFocusable(false);
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
@@ -180,11 +167,27 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
             }
         });
         getContentPane().add(jTextField5);
-        jTextField5.setBounds(240, 270, 46, 24);
+        jTextField5.setBounds(240, 260, 46, 24);
+
+        jTextField7.setEditable(false);
+        jTextField7.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField7.setFont(new java.awt.Font("Mukta Mahee", 2, 36)); // NOI18N
+        jTextField7.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField7.setText("    But first, introduce yourself.");
+        jTextField7.setBorder(null);
+        jTextField7.setFocusable(false);
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField7);
+        jTextField7.setBounds(140, 40, 480, 100);
 
         jTextField6.setEditable(false);
         jTextField6.setBackground(new java.awt.Color(0, 0, 0));
         jTextField6.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField6.setText("Name");
         jTextField6.setFocusable(false);
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
@@ -193,20 +196,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
             }
         });
         getContentPane().add(jTextField6);
-        jTextField6.setBounds(60, 270, 50, 24);
-
-        jTextField7.setEditable(false);
-        jTextField7.setBackground(new java.awt.Color(0, 0, 0));
-        jTextField7.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField7.setText("Password");
-        jTextField7.setFocusable(false);
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField7);
-        jTextField7.setBounds(620, 270, 86, 24);
+        jTextField6.setBounds(60, 260, 50, 24);
 
         jScrollPane4.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
 
@@ -229,6 +219,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         jTextField8.setEditable(false);
         jTextField8.setBackground(new java.awt.Color(0, 0, 0));
         jTextField8.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField8.setText("Goal");
         jTextField8.setFocusable(false);
         jTextField8.addActionListener(new java.awt.event.ActionListener() {
@@ -237,7 +228,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
             }
         });
         getContentPane().add(jTextField8);
-        jTextField8.setBounds(440, 270, 46, 24);
+        jTextField8.setBounds(440, 260, 46, 24);
 
         passField.setBackground(new java.awt.Color(0, 0, 0));
         passField.setForeground(new java.awt.Color(255, 255, 255));
@@ -265,6 +256,20 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         });
         getContentPane().add(goBack);
         goBack.setBounds(570, 420, 150, 32);
+
+        jTextField9.setEditable(false);
+        jTextField9.setBackground(new java.awt.Color(0, 0, 0));
+        jTextField9.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField9.setText("Password");
+        jTextField9.setFocusable(false);
+        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField9ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField9);
+        jTextField9.setBounds(616, 260, 90, 24);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("/Users/mikowhy/Documents/Informatyka/Side Projects/Java/Sugery/sugery/sugery_project/src/main/resources/config.jpg")); // NOI18N
         getContentPane().add(jLabel1);
@@ -318,10 +323,6 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     }
 
     }//GEN-LAST:event_createUsrButtonActionPerformed
-
-    private void entryTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entryTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_entryTextActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
@@ -397,6 +398,10 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     private void passFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passFieldKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_passFieldKeyPressed
+
+    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField9ActionPerformed
 
     
     boolean userCreate(){ //usr, age, goal are global (?)
@@ -536,7 +541,6 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton createUsrButton;
-    private javax.swing.JTextField entryText;
     private javax.swing.JButton goBack;
     private javax.swing.JTextArea goalArea;
     private javax.swing.JScrollPane goalField;
@@ -547,6 +551,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextArea nameArea1;
     private javax.swing.JPasswordField passField;
     // End of variables declaration//GEN-END:variables
