@@ -48,12 +48,11 @@ public class dateChanger extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(dateChanger.class.getName()).log(Level.SEVERE, null, ex);
             }
-/*
-            this.user.HM_Replace(this.date, 
 
-            Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
-        
- */           
+           this.user.HM_Replace_Key(this.oldDate, date); // or befoer caling entryTable
+           // this.user.HM_Replace(this.date, 
+  //          Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+           
     }
     
     private String composeDate() throws ParseException{
@@ -246,7 +245,6 @@ public class dateChanger extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void setDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setDateActionPerformed
-        String sql; 
         
         if(fieldsCheck()){
             try {

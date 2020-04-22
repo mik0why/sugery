@@ -63,6 +63,7 @@ class User extends Observable implements Serializable{
     private String first;
     private int age;
     private int goal;
+    private Stack<String> mostRecentEntries = new Stack<String>(); 
     private ArrayList<Score> usArr = new ArrayList<Score>();
     private NavigableMap<String, Integer> scoreMap = new TreeMap<String, Integer>(); //= new HashMap<String,Integer>();
     private entryTable dataTable = new entryTable();
@@ -94,14 +95,21 @@ class User extends Observable implements Serializable{
         return (TreeMap<String, Integer>) scoreMap;
     }
     
+    public Stack<String> getEntryStack(){
+        return this.mostRecentEntries;  
+    }
+    
     void HM_Insert(String date, int score){
         this.scoreMap.put(date, score);
+        this.mostRecentEntries.push(date);
         setChanged(); //TODO: what it do?
         notifyObservers();
     }
     
     void HM_Replace(String date, int score){
         this.scoreMap.replace(date, score);
+        this.mostRecentEntries.remove(date);
+        this.mostRecentEntries.push(date);
         setChanged();
         notifyObservers();
     }
@@ -111,6 +119,8 @@ class User extends Observable implements Serializable{
        
        int value = this.scoreMap.remove(oldDate);
        this.scoreMap.put(newDate, value);
+       this.mostRecentEntries.remove(oldDate);
+       this.mostRecentEntries.push(newDate);
        setChanged();
        notifyObservers();
        
@@ -120,6 +130,7 @@ class User extends Observable implements Serializable{
     
     void removeScore(String date){
         this.scoreMap.remove(date); 
+        this.mostRecentEntries.remove(date);
         setChanged();
         notifyObservers();
     }

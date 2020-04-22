@@ -18,12 +18,14 @@ public class singleScoreDisplay extends javax.swing.JFrame implements Observer{
     private User user; 
     private int score; 
     private String date;
+    private String oldDate; // not sure if the best way
     /** Creates new form singleScoreDisplay */
     public singleScoreDisplay(User user, String date, int score) {
         
         initComponents();
         this.user = user;
         this.score = score; 
+        
         this.date= date; 
         this.user.addObserver(this);
         displayData();
@@ -162,7 +164,12 @@ public class singleScoreDisplay extends javax.swing.JFrame implements Observer{
         
         if(o == this.user){
             //ok for score - but what about when the date changes?
-            scoreValueField.setText(Integer.toString(this.user.getHM().get(this.date)));
+            System.out.println("last entry: " + this.user.getEntryStack().peek());
+            //scoreValueField.setText(Integer.toString(this.user.getHM().get(this.date)));
+            scoreValueField.setText(Integer.toString(
+                    this.user.getHM().get(this.user.getEntryStack().peek())));
+            dateField.setText(this.user.getEntryStack().peek());
+            
         }
         
         

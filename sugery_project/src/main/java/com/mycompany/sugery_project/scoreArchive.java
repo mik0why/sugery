@@ -53,6 +53,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         this.user = usr; 
         initComponents();
         this.user.addObserver(this);
+//        this.user.getHM().addObserver(this);
         pullScores();
         updateScores(user.displayAnalysis("all")); // all scores
 
