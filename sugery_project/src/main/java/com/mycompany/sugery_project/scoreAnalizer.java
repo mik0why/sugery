@@ -23,7 +23,8 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class scoreAnalizer extends JPanel {
-   private static final int MAX_SCORE = 300;
+   private static final int MAX_SCORE = 350;
+   private static final int MIN_SCORE = 30;
    private static final int PREF_W = 800;
    private static final int PREF_H = 650;
    private static final int BORDER_GAP = 30;
@@ -41,9 +42,6 @@ public class scoreAnalizer extends JPanel {
        for(Map.Entry e : this.user.getHM().entrySet()){
            scores.add((Integer)e.getValue());
        }
-
-       // TODO: should use .getUsArr;
-//       this.addKeyListener(this);
        
   
    }
@@ -59,21 +57,23 @@ public class scoreAnalizer extends JPanel {
 
       double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (scores.size() - 1);
       double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_SCORE - 1);
-      yScale/=2;
-      yScale/=1.2;
+      //yScale/=2; 
+     // yScale/=1.2; // 0.82
+      yScale = 1; 
       List<Point> graphPoints = new ArrayList<Point>();
       for (int i = 0; i < scores.size(); i++) {
          int x1 = (int) (i * xScale + BORDER_GAP);
-         int y1 = (int) ((MAX_SCORE - scores.get(i)) * yScale + BORDER_GAP);
-         System.out.print("YSCALE : " + yScale);
+         int y1 = (int) ((MAX_SCORE - (scores.get(i)) * yScale + BORDER_GAP));
          System.out.print("score : " + scores.get(i));
-         System.out.print("y value: " + y1);
-         y1 = (y1 < 0) ? MAX_SCORE : y1;
-         y1 = (y1 > 300) ? MAX_SCORE : y1;
+         System.out.print(" y value: " + y1);
+         System.out.println("y scale: " + yScale);
+         y1 = (y1 < 30) ? MIN_SCORE : y1;
+         y1 = (y1 > 620) ? MAX_SCORE : y1;
          
-         graphPoints.add(new Point(x1, y1));
-
-         System.out.println("added points (y change?)  " + x1 + " " + y1);
+         graphPoints.add(new Point(x1, 325)); // changed from y1
+         // y range[30-620]
+         
+         System.out.println(" added points (y change?)  " + x1 + " " + y1);
       }
 
       // create x and y axes 
