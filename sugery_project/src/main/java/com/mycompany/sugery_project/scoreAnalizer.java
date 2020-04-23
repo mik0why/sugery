@@ -23,7 +23,7 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class scoreAnalizer extends JPanel {
-   private static final int MAX_SCORE = 350;
+   private static final int MAX_SCORE = 200;
    private static final int MIN_SCORE = 30;
    private static final int PREF_W = 800;
    private static final int PREF_H = 650;
@@ -46,31 +46,30 @@ public class scoreAnalizer extends JPanel {
   
    }
    //TODO scaling problem
-   //TODO needs at least 2 points
    //TODO add score metrics 
+   //TODO line in the middle(?)
    
    @Override
    protected void paintComponent(Graphics g) {
       super.paintComponent(g);
       Graphics2D g2 = (Graphics2D)g;
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+      g2.setBackground(Color.BLACK);
+      
       double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (scores.size() - 1);
       double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_SCORE - 1);
-      //yScale/=2; 
-     // yScale/=1.2; // 0.82
-      yScale = 1; 
+      yScale = 2.95; 
       List<Point> graphPoints = new ArrayList<Point>();
       for (int i = 0; i < scores.size(); i++) {
          int x1 = (int) (i * xScale + BORDER_GAP);
-         int y1 = (int) ((MAX_SCORE - (scores.get(i)) * yScale + BORDER_GAP));
+         int y1 = (int) ((MAX_SCORE - (scores.get(i))) * yScale + BORDER_GAP);
          System.out.print("score : " + scores.get(i));
          System.out.print(" y value: " + y1);
-         System.out.println("y scale: " + yScale);
+         System.out.println(" y scale: " + yScale);
          y1 = (y1 < 30) ? MIN_SCORE : y1;
          y1 = (y1 > 620) ? MAX_SCORE : y1;
          
-         graphPoints.add(new Point(x1, 325)); // changed from y1
+         graphPoints.add(new Point(x1, y1)); // changed from y1
          // y range[30-620]
          
          System.out.println(" added points (y change?)  " + x1 + " " + y1);
