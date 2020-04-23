@@ -19,10 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class scoreAnalizer extends JPanel {
+   private static final Logger LOGGER = Logger.getLogger(scoreAnalizer.class.getName());
    private static int MAX_SCORE = 200;
    private static int MIN_SCORE = 30;
    private static final int PREF_W = 800;
@@ -59,7 +62,10 @@ public class scoreAnalizer extends JPanel {
       g2.setColor(Color.white);
       double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (scores.size() - 1);
       double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_SCORE - 1);
-      yScale = 2.95; 
+      yScale = (MAX_SCORE - MIN_SCORE)/ this.user.getHM().size();
+      yScale = yScale > 4.5 ? 4.5 : yScale;
+      //yScale = 8;
+      System.out.println("yScale: " + yScale);
       List<Point> graphPoints = new ArrayList<Point>();
       for (int i = 0; i < scores.size(); i++) {
          int x1 = (int) (i * xScale + BORDER_GAP);
