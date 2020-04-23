@@ -32,7 +32,7 @@ public class scoreAnalizer extends JPanel {
    private static final Color GRAPH_POINT_COLOR = new Color(150, 50, 50, 180);
    private static final Stroke GRAPH_STROKE = new BasicStroke(3f);
    private static final int GRAPH_POINT_WIDTH = 12;
-   private static final int Y_HATCH_CNT = 10;
+   private static final int Y_HATCH_CNT = 5;
    private ArrayList<Integer> scores = new ArrayList<Integer>();  //TODO: not necessary
    private User user; 
    private entryTable dataTable = new entryTable();
@@ -42,6 +42,7 @@ public class scoreAnalizer extends JPanel {
        for(Map.Entry e : this.user.getHM().entrySet()){
            scores.add((Integer)e.getValue());
        }
+       //TODO get max, min value; adjust to the scale
        
   
    }
@@ -54,8 +55,7 @@ public class scoreAnalizer extends JPanel {
       super.paintComponent(g);
       Graphics2D g2 = (Graphics2D)g;
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-      g2.setBackground(Color.BLACK);
-      
+      g2.setColor(Color.white);
       double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (scores.size() - 1);
       double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_SCORE - 1);
       yScale = 2.95; 
@@ -134,12 +134,12 @@ public class scoreAnalizer extends JPanel {
          scores.add(random.nextInt(maxScore));
       }
       scoreAnalizer mainPanel = new scoreAnalizer(this.user); // hmm weird
-
+      mainPanel.setBackground(Color.BLACK);
       JFrame frame = new JFrame("Score Graph");
+      
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.getContentPane().add(mainPanel);
       frame.pack();
-      frame.setBackground(Color.BLACK);
       frame.setLocationByPlatform(true);
       frame.setVisible(true);
       frame.addKeyListener(new KeyAdapter() {
