@@ -23,8 +23,8 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class scoreAnalizer extends JPanel {
-   private static final int MAX_SCORE = 200;
-   private static final int MIN_SCORE = 30;
+   private static int MAX_SCORE = 200;
+   private static int MIN_SCORE = 30;
    private static final int PREF_W = 800;
    private static final int PREF_H = 650;
    private static final int BORDER_GAP = 30;
@@ -42,8 +42,9 @@ public class scoreAnalizer extends JPanel {
        for(Map.Entry e : this.user.getHM().entrySet()){
            scores.add((Integer)e.getValue());
        }
-       //TODO get max, min value; adjust to the scale
-       
+       MAX_SCORE = this.user.getMaxScoreValue();
+       MIN_SCORE = this.user.getMinScoreValue(); 
+              
   
    }
    //TODO scaling problem
@@ -89,7 +90,9 @@ public class scoreAnalizer extends JPanel {
       }
 
       // and for x axis
-      for (int i = 0; i < scores.size() - 1; i++) {
+//      int numHatch = scores.size() > 10 ? 10 : scores.size();
+        int numHatch = scores.size(); 
+    for (int i = 0; i < numHatch - 1; i++) {
          int x0 = (i + 1) * (getWidth() - BORDER_GAP * 2) / (scores.size() - 1) + BORDER_GAP;
          int x1 = x0;
          int y0 = getHeight() - BORDER_GAP;

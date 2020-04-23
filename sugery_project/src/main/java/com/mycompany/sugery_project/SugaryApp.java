@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NavigableMap;
 import java.util.Set;
 import java.util.Stack;
@@ -69,7 +70,7 @@ class User extends Observable implements Serializable{
     private entryTable dataTable = new entryTable();
     private Stack <String> lastUsed = new Stack <String>(); 
     
-    User(String name, int age, int goal){
+    public User(String name, int age, int goal){
         this.first = name;
         this.age = age;
         this.goal = goal;
@@ -99,14 +100,33 @@ class User extends Observable implements Serializable{
         return this.mostRecentEntries;  
     }
     
-    void HM_Insert(String date, int score){
+    public int getMaxScoreValue(){
+        int max = Integer.MIN_VALUE; 
+        for(Entry <String, Integer> e : this.getHM().entrySet()){
+            if (e.getValue() > max) max = e.getValue();
+        }
+        return max; 
+    }
+    
+    public int getMinScoreValue(){
+        int min = Integer.MAX_VALUE; 
+        for(Entry <String, Integer> e : this.getHM().entrySet()){
+            if (e.getValue() < min) min = e.getValue();
+        }
+        return min; 
+    }        
+        
+        
+    
+    
+    public void HM_Insert(String date, int score){
         this.scoreMap.put(date, score);
         this.mostRecentEntries.push(date);
         setChanged(); //TODO: what it do?
         notifyObservers();
     }
     
-    void HM_Replace(String date, int score){
+    public void HM_Replace(String date, int score){
         this.scoreMap.replace(date, score);
         this.mostRecentEntries.remove(date);
         this.mostRecentEntries.push(date);
@@ -115,8 +135,7 @@ class User extends Observable implements Serializable{
     }
     
 
-   void HM_Replace_Key(String oldDate, String newDate){
-       
+   public void HM_Replace_Key(String oldDate, String newDate){
        int value = this.scoreMap.remove(oldDate);
        this.scoreMap.put(newDate, value);
        this.mostRecentEntries.remove(oldDate);
@@ -128,18 +147,18 @@ class User extends Observable implements Serializable{
 
    }
     
-    void removeScore(String date){
+    public void removeScore(String date){
         this.scoreMap.remove(date); 
         this.mostRecentEntries.remove(date);
         setChanged();
         notifyObservers();
     }
     
-    ArrayList<Score> getUsArr(){
+    public ArrayList<Score> getUsArr(){
         return this.usArr;
     }
     
-    ResultSet sqlConnect(String date, int score, int mode){
+    public ResultSet sqlConnect(String date, int score, int mode){
         ResultSet rs = null ;
         
         //idk if the mode variable necessary since the SQL query itself determines the operation type

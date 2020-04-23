@@ -277,7 +277,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
                 //TODO: idk why there's an exception here
                 updateScores(user.displayAnalysis("all")); 
                 // need to do the same with adding to the array
-                
+                scoreTable.requestFocus(); 
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
