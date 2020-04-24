@@ -14,6 +14,9 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class scoreAnalizer extends JPanel {
+public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionListener{
    private static final Logger LOGGER = Logger.getLogger(scoreAnalizer.class.getName());
    private static int MAX_SCORE = 200;
    private static int MIN_SCORE = 30;
@@ -47,7 +50,9 @@ public class scoreAnalizer extends JPanel {
        }
        MAX_SCORE = this.user.getMaxScoreValue();
        MIN_SCORE = this.user.getMinScoreValue(); 
-              
+       addMouseListener(this); // not sure if necessary
+       addMouseMotionListener(this);
+       
   
    }
    //TODO scaling problem
@@ -96,11 +101,11 @@ public class scoreAnalizer extends JPanel {
          g2.drawLine(x0, y0, x1, y1);
          g2.drawString(Integer.toString((i+1) * (MAX_SCORE/(Y_HATCH_CNT))), 
                  x1, y1);
-         // increment by 50 
       }
 
       // and for x axis
-//      int numHatch = scores.size() > 10 ? 10 : scores.size();
+//      TODO: int numHatch = scores.size() > 10 ? 10 : scores.size();
+//      change x1
         int numHatch = scores.size(); 
         if(numHatch < 20){
             for (int i = 0; i < numHatch - 1; i++) {
@@ -166,7 +171,42 @@ public class scoreAnalizer extends JPanel {
             });
    }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
+    @Override
+    public void mousePressed(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        Point loc = e.getLocationOnScreen();
+        System.out.println("loc value: " + loc);
+        
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void mouseMoved(MouseEvent e){
+        System.out.println("Moved: " + e.getPoint());
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        System.out.println("Moved-2: " + e.getPoint());
+    }
 
 }
 /**
