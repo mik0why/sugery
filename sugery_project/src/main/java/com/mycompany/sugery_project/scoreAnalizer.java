@@ -26,6 +26,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*; 
 import java.lang.Object; 
+import java.sql.Time;
+import java.util.Date;
 import javafx.scene.shape.Circle;
 
 @SuppressWarnings("serial")
@@ -47,6 +49,8 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
    private entryTable dataTable = new entryTable();
    private List<Point> graphPoints;
    private List<Circle> graphCircles; 
+   private Circle lastDisplayedCircle = new Circle(); 
+   private long recentDisplayTime; //TODO initialize
    
    public scoreAnalizer(User usr) { //TODO modify the score
        this.user = usr;
@@ -106,7 +110,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
          int y0 = getHeight() - (((i + 1) * (getHeight() - BORDER_GAP * 2)) / Y_HATCH_CNT + BORDER_GAP);
          int y1 = y0;
          g2.drawLine(x0, y0, x1, y1);
-         g2.drawString(Integer.toString((i+1) * (MAX_SCORE/(Y_HATCH_CNT))), 
+         g2.drawString(Integer.toString((i+1) * ((MAX_SCORE - MIN_SCORE)/(Y_HATCH_CNT))), 
                  x1, y1);
       }
 
@@ -139,10 +143,11 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
       g2.setColor(GRAPH_POINT_COLOR);
       for (int i = 0; i < graphPoints.size(); i++) {
          int x = graphPoints.get(i).x - GRAPH_POINT_WIDTH / 2;
-         int y = graphPoints.get(i).y - GRAPH_POINT_WIDTH / 2;;
+         int y = graphPoints.get(i).y - GRAPH_POINT_WIDTH / 2;
          int ovalW = GRAPH_POINT_WIDTH;
          int ovalH = GRAPH_POINT_WIDTH;
          g2.fillOval(x, y, ovalW, ovalH);
+         
       }
    }
 
@@ -218,16 +223,22 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
 
     public void mouseMoved(MouseEvent e){
         int idx; 
+        Date date = new Date(); 
         //System.out.println(graphCircles.toString());
             
         for(Circle c : graphCircles){ // efficiency?
             if(c.contains(e.getX(), e.getY())){
-                //check if hasn't been recently displayed
-                idx = graphCircles.indexOf(c);
-                JOptionPane.showMessageDialog(new JFrame("Score"), 
-                    "Value " + scores.get(idx) +
-                    " registered at: " + dates.get(idx)); // (e.getIndex)                
+                if(lastDisplayedCircle != c || date.getTime() - recentDisplayTime > 2000){
+                    idx = graphCircles.indexOf(c);
+                    //TODO display score as a rectangle
+                    JOptionPane.showMessageDialog(new JFrame("Score"), 
+                        "Value " + scores.get(idx) +
+                        " registered at: " + dates.get(idx)); // (e.getIndex)
+                    lastDisplayedCircle = c; 
+                    recentDisplayTime = date.getTime();
+                    }
                 }
+            
             }
         }
 
