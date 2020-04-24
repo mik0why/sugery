@@ -40,19 +40,22 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
    private static final int GRAPH_POINT_WIDTH = 12;
    private static final int Y_HATCH_CNT = 5;
    private ArrayList<Integer> scores = new ArrayList<Integer>();  //TODO: not necessary
+   private ArrayList<String> dates = new ArrayList<String>(); 
    private User user; 
    private entryTable dataTable = new entryTable();
+   private List<Point> graphPoints;
    
    public scoreAnalizer(User usr) { //TODO modify the score
        this.user = usr;
        for(Map.Entry e : this.user.getHM().entrySet()){
            scores.add((Integer)e.getValue());
+           dates.add((String)e.getKey()); 
        }
        MAX_SCORE = this.user.getMaxScoreValue();
        MIN_SCORE = this.user.getMinScoreValue(); 
        addMouseListener(this); // not sure if necessary
        addMouseMotionListener(this);
-       
+       graphPoints = new ArrayList<Point>(); 
   
    }
    //TODO scaling problem
@@ -72,7 +75,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
       */ yScale = 590 / (MAX_SCORE - MIN_SCORE);
       yScale = yScale <= 0 ? 2 : yScale;
       System.out.println("yScale: " + yScale);
-      List<Point> graphPoints = new ArrayList<Point>();
+      //List<Point> graphPoints = new ArrayList<Point>();
       for (int i = 0; i < scores.size(); i++) {
          int x1 = (int) (i * xScale + BORDER_GAP);
          int y1 = (int) ((MAX_SCORE - scores.get(i)) * yScale + BORDER_GAP);
@@ -173,6 +176,15 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        /*
+        System.out.println("Clicked: " + e.getPoint());
+        System.out.println(graphPoints.toString());
+        if(graphPoints.contains(e.getPoint())){
+            System.out.println("YES");
+            JOptionPane.showMessageDialog(new JFrame("Score"), 
+                                "there is a value: " + e.getPoint());
+        }
+        */
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -200,9 +212,17 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
     }
 
     public void mouseMoved(MouseEvent e){
-        System.out.println("Moved: " + e.getPoint());
+        if(graphPoints.contains(e.getPoint())){
+            System.out.println("YES");
+            int idx = graphPoints.indexOf(e.getPoint()); 
+            
+            
+            JOptionPane.showMessageDialog(new JFrame("Score"), 
+                "Value " + scores.get(idx) +
+                " registered at: " + dates.get(idx)); // (e.getIndex)
+            
+        }
     }
-
     @Override
     public void mouseDragged(MouseEvent e) {
         System.out.println("Moved-2: " + e.getPoint());
