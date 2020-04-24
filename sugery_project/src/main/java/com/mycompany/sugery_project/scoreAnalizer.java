@@ -24,7 +24,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.*;
+import javax.swing.*; 
+import java.lang.Object; 
+import javafx.scene.shape.Circle;
 
 @SuppressWarnings("serial")
 public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionListener{
@@ -44,6 +46,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
    private User user; 
    private entryTable dataTable = new entryTable();
    private List<Point> graphPoints;
+   private List<Circle> graphCircles; 
    
    public scoreAnalizer(User usr) { //TODO modify the score
        this.user = usr;
@@ -56,6 +59,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
        addMouseListener(this); // not sure if necessary
        addMouseMotionListener(this);
        graphPoints = new ArrayList<Point>(); 
+       graphCircles = new ArrayList<Circle>(); 
   
    }
    //TODO scaling problem
@@ -86,7 +90,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
          y1 = (y1 > 620) ? 620 : y1; // MAX_SCORE : y1;
          
          graphPoints.add(new Point(x1, y1)); // changed from y1
-         // y range[30-620]
+         graphCircles.add(new Circle(x1, y1, 10));          // y range[30-620]
          
          System.out.println(" added points (y change?)  " + x1 + " " + y1);
       }
@@ -176,6 +180,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
         /*
         System.out.println("Clicked: " + e.getPoint());
         System.out.println(graphPoints.toString());
@@ -212,21 +217,28 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
     }
 
     public void mouseMoved(MouseEvent e){
-        if(graphPoints.contains(e.getPoint())){
-            System.out.println("YES");
-            int idx = graphPoints.indexOf(e.getPoint()); 
+        int idx; 
+        //System.out.println(graphCircles.toString());
             
-            
-            JOptionPane.showMessageDialog(new JFrame("Score"), 
-                "Value " + scores.get(idx) +
-                " registered at: " + dates.get(idx)); // (e.getIndex)
-            
+        for(Circle c : graphCircles){ // efficiency?
+            if(c.contains(e.getX(), e.getY())){
+                //check if hasn't been recently displayed
+                idx = graphCircles.indexOf(c);
+                JOptionPane.showMessageDialog(new JFrame("Score"), 
+                    "Value " + scores.get(idx) +
+                    " registered at: " + dates.get(idx)); // (e.getIndex)                
+                }
+            }
         }
-    }
+
     @Override
     public void mouseDragged(MouseEvent e) {
-        System.out.println("Moved-2: " + e.getPoint());
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+  
+    
+   
 
 }
 /**
