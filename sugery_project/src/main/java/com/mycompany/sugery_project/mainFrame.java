@@ -477,10 +477,10 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     public void displayUserData(ArrayList<User> al, int idx) throws ClassNotFoundException, SQLException, ParseException{ //TODO change parameters
         //TODO display different stuff based on what time it is
         // when the program is closed (spot that moment)
-        this.user.addObserver(this); // TODO: what's this?
-        entryText.setText(this.user.getName() + ".\n"); // why can i access .first?
+        this.user.addObserver(this); 
+        entryText.setText(this.user.getName() + ".\n"); 
         ageField.setText("age : " + this.user.getAge());
-        goalField.setText("goal : " + this.user.getGoal()); //not working?
+        goalField.setText("goal : " + this.user.getGoal()); 
         
            if(!this.user.getHM().isEmpty()){
                 scoreField.setText(this.user.getHM().lastEntry().getValue().toString()); // make sure it's still the same score
@@ -527,19 +527,13 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             try {
                 weekAvg.setText(this.user.displayAnalysis("week").get(1));
                 monthAvg.setText(this.user.displayAnalysis("month").get(1));
-                //monthAvg.setText(this.user.displayAnalysis("month").get(1));
             } catch (ParseException ex) {
                 Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
             evaluateScore(this.user.getGoal());
-            //TODO weekly score upadte as well
-// weeklyScoreUpdate(); 
+
         }else{
         
-        //TODO not done yet bc still causes an exception
-           
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
     
