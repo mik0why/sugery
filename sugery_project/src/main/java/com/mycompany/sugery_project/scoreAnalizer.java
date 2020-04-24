@@ -62,19 +62,20 @@ public class scoreAnalizer extends JPanel {
       g2.setColor(Color.white);
       double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (scores.size() - 1);
       double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_SCORE - 1);
-      yScale = (MAX_SCORE - MIN_SCORE)/ this.user.getHM().size();
+      /*yScale = (MAX_SCORE - MIN_SCORE)/ this.user.getHM().size();
       yScale = yScale > 4.5 ? 4.5 : yScale;
-      //yScale = 8;
+      */ yScale = 590 / (MAX_SCORE - MIN_SCORE);
+      yScale = yScale <= 0 ? 2 : yScale;
       System.out.println("yScale: " + yScale);
       List<Point> graphPoints = new ArrayList<Point>();
       for (int i = 0; i < scores.size(); i++) {
          int x1 = (int) (i * xScale + BORDER_GAP);
-         int y1 = (int) ((MAX_SCORE - (scores.get(i))) * yScale + BORDER_GAP);
+         int y1 = (int) ((MAX_SCORE - scores.get(i)) * yScale + BORDER_GAP);
          System.out.print("score : " + scores.get(i));
          System.out.print(" y value: " + y1);
          System.out.println(" y scale: " + yScale);
-         y1 = (y1 < 30) ? MIN_SCORE : y1;
-         y1 = (y1 > 620) ? MAX_SCORE : y1;
+         y1 = (y1 < 30) ? 30 : y1;
+         y1 = (y1 > 620) ? 620 : y1; // MAX_SCORE : y1;
          
          graphPoints.add(new Point(x1, y1)); // changed from y1
          // y range[30-620]
