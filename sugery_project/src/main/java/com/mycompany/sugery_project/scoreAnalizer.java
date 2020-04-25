@@ -6,6 +6,8 @@
 package com.mycompany.sugery_project;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -51,6 +53,9 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
    private List<Circle> graphCircles; 
    private Circle lastDisplayedCircle = new Circle(); 
    private long recentDisplayTime; //TODO initialize
+   private Graphics2D graph; //TODO idk if necessary
+   private JFrame frame = new JFrame("Score Graph"); 
+
    
    public scoreAnalizer(User usr) { //TODO modify the score
        this.user = usr;
@@ -72,8 +77,10 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
    
    @Override
    protected void paintComponent(Graphics g) {
-      super.paintComponent(g);
+       //parent : contentPane
+       super.paintComponent(g);
       Graphics2D g2 = (Graphics2D)g;
+      this.graph = g2; 
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       g2.setColor(Color.white);
       double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (scores.size() - 1);
@@ -100,9 +107,11 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
       }
 
       // create x and y axes 
+      
       g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);
-      g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
-
+        g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
+ 
+      
       // create hatch marks for y axis. 
       for (int i = 0; i < Y_HATCH_CNT; i++) {
          int x0 = BORDER_GAP;
@@ -166,15 +175,17 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
          scores.add(random.nextInt(maxScore));
       }
       scoreAnalizer mainPanel = new scoreAnalizer(this.user); // hmm weird
-      mainPanel.setBackground(Color.BLACK);
-      JFrame frame = new JFrame("Score Graph");
+                         
+                    
       
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      frame.getContentPane().add(mainPanel);
-      frame.pack();
-      frame.setLocationByPlatform(true);
-      frame.setVisible(true);
-      frame.addKeyListener(new KeyAdapter() {
+      //mainPanel.setBackground(Color.BLACK);
+      //JFrame frame = new JFrame("Score Graph"); // make this a parameter?
+      this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      this.frame.getContentPane().add(mainPanel);
+      this.frame.pack();
+      this.frame.setLocationByPlatform(true);
+      this.frame.setVisible(true);
+      this.frame.addKeyListener(new KeyAdapter() {
         public void keyPressed(KeyEvent ke) {  // handler
             if(ke.getKeyCode() == ke.VK_ESCAPE) {
                 frame.setVisible(false);
@@ -224,16 +235,41 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
     public void mouseMoved(MouseEvent e){
         int idx; 
         Date date = new Date(); 
-        //System.out.println(graphCircles.toString());
             
         for(Circle c : graphCircles){ // efficiency?
             if(c.contains(e.getX(), e.getY())){
                 if(lastDisplayedCircle != c || date.getTime() - recentDisplayTime > 2000){
                     idx = graphCircles.indexOf(c);
-                    //TODO display score as a rectangle
-                    JOptionPane.showMessageDialog(new JFrame("Score"), 
+                      //TODO display score as a rectangle
+//                      e.getComponent().add(new JFrame());
+                      
+                      
+                    //  System.out.println("comp: " + this.frame.getContentPane().getComponentCount()); 
+                   //this.graph.fillOval(200, 200, 50, 50); //, idx, WIDTH, HEIGHT);
+                   
+                   /*JOptionPane.showMessageDialog(new JFrame("Score"), 
                         "Value " + scores.get(idx) +
                         " registered at: " + dates.get(idx)); // (e.getIndex)
+                   */
+                   
+                    //      frame.getContentPane().add(mainPanel);
+                       
+                    System.out.println("0: " + e.getComponent()); 
+                    
+                    
+                //    g2.fillOval(100, 200, 50, 50); //, idx, WIDTH, HEIGHT);
+                 //   e.getComponent().getParent().paint(g);
+                   // System.out.println(e.getSource().
+
+                   
+                   // System.out.println(e.getComponent().getParent().getComponent(1)); // getComponent(0).getName()); 
+                    //source: screenAnalizer
+                    
+                    /// null -> contentPane
+                    
+                    
+                    //1 -layeredPane
+                    //2 - glassPane
                     lastDisplayedCircle = c; 
                     recentDisplayTime = date.getTime();
                     }
