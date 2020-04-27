@@ -178,7 +178,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
                          
                     
       
-      //mainPanel.setBackground(Color.BLACK);
+      mainPanel.setBackground(Color.BLACK);
       //JFrame frame = new JFrame("Score Graph"); // make this a parameter?
       this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       this.frame.getContentPane().add(mainPanel);
@@ -196,17 +196,25 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
-        /*
-        System.out.println("Clicked: " + e.getPoint());
-        System.out.println(graphPoints.toString());
-        if(graphPoints.contains(e.getPoint())){
-            System.out.println("YES");
-            JOptionPane.showMessageDialog(new JFrame("Score"), 
-                                "there is a value: " + e.getPoint());
-        }
-        */
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int idx; 
+        Date date = new Date(); 
+            
+        for(Circle c : graphCircles){ // efficiency?
+            if(c.contains(e.getX(), e.getY())){
+                if(lastDisplayedCircle != c || date.getTime() - recentDisplayTime > 2000){
+                    idx = graphCircles.indexOf(c);
+                    JOptionPane.showMessageDialog(new JFrame("Score"), 
+                    "Value " + scores.get(idx) +
+                    " registered at: " + dates.get(idx)); // (e.getIndex)
+                    lastDisplayedCircle = c; 
+                    recentDisplayTime = date.getTime();
+                    }
+                }
+            
+            }
+        
+        
+        
     }
 
     @Override
@@ -233,49 +241,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
     }
 
     public void mouseMoved(MouseEvent e){
-        int idx; 
-        Date date = new Date(); 
-            
-        for(Circle c : graphCircles){ // efficiency?
-            if(c.contains(e.getX(), e.getY())){
-                if(lastDisplayedCircle != c || date.getTime() - recentDisplayTime > 2000){
-                    idx = graphCircles.indexOf(c);
-                      //TODO display score as a rectangle
-//                      e.getComponent().add(new JFrame());
-                      
-                      
-                    //  System.out.println("comp: " + this.frame.getContentPane().getComponentCount()); 
-                   //this.graph.fillOval(200, 200, 50, 50); //, idx, WIDTH, HEIGHT);
-                   
-                   /*JOptionPane.showMessageDialog(new JFrame("Score"), 
-                        "Value " + scores.get(idx) +
-                        " registered at: " + dates.get(idx)); // (e.getIndex)
-                   */
-                   
-                    //      frame.getContentPane().add(mainPanel);
-                       
-                    System.out.println("0: " + e.getComponent()); 
-                    
-                    
-                //    g2.fillOval(100, 200, 50, 50); //, idx, WIDTH, HEIGHT);
-                 //   e.getComponent().getParent().paint(g);
-                   // System.out.println(e.getSource().
 
-                   
-                   // System.out.println(e.getComponent().getParent().getComponent(1)); // getComponent(0).getName()); 
-                    //source: screenAnalizer
-                    
-                    /// null -> contentPane
-                    
-                    
-                    //1 -layeredPane
-                    //2 - glassPane
-                    lastDisplayedCircle = c; 
-                    recentDisplayTime = date.getTime();
-                    }
-                }
-            
-            }
         }
 
     @Override
