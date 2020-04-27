@@ -178,7 +178,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
                          
                     
       
-//      mainPanel.setBackground(Color.BLACK);
+      mainPanel.setBackground(Color.BLACK);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.getContentPane().add(mainPanel);
       frame.pack();
@@ -202,16 +202,11 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
             if(c.contains(e.getX(), e.getY())){
                 if(lastDisplayedCircle != c || date.getTime() - recentDisplayTime > 2000){
                     idx = graphCircles.indexOf(c);
-                    System.out.println("graphics: " + this.getParent().getGraphics());
-/*
-                    this.getParent().getGraphics().setColor(Color.PINK);
-                    this.getParent().getGraphics().fillRect(10, 10, 100, 100); 
- */
                     JOptionPane pane = new JOptionPane("Value " + scores.get(idx) + " registered at: "
                              + dates.get(idx)); 
                     JDialog d = pane.createDialog((JFrame)null, "Score Details");
                     d.setLocation((int) e.getPoint().getX() - d.getWidth(), (int) e.getPoint().getY()); // - d.getHeight()); //, idx);
-                    d.setBackground(Color.BLACK);
+                    d.setBackground(Color.ORANGE);
 
                     d.setVisible(true);
                     /*
@@ -251,27 +246,32 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
     }
 
     public void mouseMoved(MouseEvent e){
-        int idx; 
+        int idx, lastX = 0, lastY = 0;
+        boolean previousCircleReset; 
         Graphics g = this.getGraphics(); 
         for(Circle c : graphCircles){ // efficiency?
             if(c.contains(e.getX(), e.getY())){
-                System.out.println("Before: " + g.getColor());
                 idx = graphCircles.indexOf(c); 
 //                this.getParent().getGraphics().setColor(Color.BLUE);
                 g.setColor(Color.RED);
-                g.fillOval((int) graphPoints.get(idx).x - 12,
-                        (int) graphPoints.get(idx).y  - 12 ,20, 20); //TODO ok for not
-                lastX = graphPoints.get(idx).x;
-                lastY = graphPoints.get(idx).y; 
-                
+                lastX = graphPoints.get(idx).x - 6; // weird notation
+                lastY = graphPoints.get(idx).y - 6; 
+                g.fillOval(lastX, lastY, 12, 12); 
+                //TODO idk how to delete this component (to preserve the lines)
 
-                }
-            else{
-                if(lastX != 0 && lastY != 0){ // clear oval
+                }else{ // current point outside the circle
+                    //TODO: check if the previous background black
                     
-                    //this.getParent().getGraphics().clearRect(lastX, lastY, 12, 12); //, HEIGHT);
+                    if(lastX != 0 && lastY != 0){ // there has been a previous point highlighted
+                                    System.out.println("last X: " + lastX + " last y: " + lastY);
+
+                        g.setColor(Color.BLACK);
+                        g.fillOval(lastX, lastY, 12, 12); //, idx, WIDTH, HEIGHT);
+                        g.setColor(GRAPH_POINT_COLOR);
+                        g.fillOval(lastX, lastY, 12, 12); //, idx, WIDTH, HEIGHT);
+                      
                     }
-                }
+                   }
                 
         //g.clearRect(0, 0, getWidth(), getHeight() );
     
