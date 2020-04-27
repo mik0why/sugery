@@ -107,7 +107,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         jPanel4.setBounds(0, 597, 1061, 290);
 
         ageField.setEditable(false);
-        ageField.setBackground(new java.awt.Color(179, 177, 178));
+        ageField.setBackground(new java.awt.Color(102, 102, 102));
         ageField.setForeground(new java.awt.Color(255, 255, 255));
         ageField.setText("age: ");
         ageField.setToolTipText("");
@@ -143,6 +143,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         getContentPane().add(monthAvg);
         monthAvg.setBounds(280, 280, 160, 60);
 
+        addScoreButton.setBackground(new java.awt.Color(102, 102, 102));
+        addScoreButton.setForeground(new java.awt.Color(255, 255, 255));
         addScoreButton.setText("Add Score");
         addScoreButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,6 +171,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         jTextField1.setBounds(320, 360, 320, 30);
 
         allScBut.setBackground(new java.awt.Color(102, 102, 102));
+        allScBut.setForeground(new java.awt.Color(255, 255, 255));
         allScBut.setText("All Scores");
         allScBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -188,6 +191,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         getContentPane().add(allScBut);
         allScBut.setBounds(460, 400, 121, 32);
 
+        scAnalyze.setBackground(new java.awt.Color(102, 102, 102));
+        scAnalyze.setForeground(new java.awt.Color(255, 255, 255));
         scAnalyze.setText("Score Analysis");
         scAnalyze.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,12 +222,15 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         scoreField.setBounds(280, 140, 160, 60);
 
         goalField.setEditable(false);
-        goalField.setBackground(new java.awt.Color(238, 238, 238));
+        goalField.setBackground(new java.awt.Color(102, 102, 102));
+        goalField.setForeground(new java.awt.Color(255, 255, 255));
         goalField.setText("goal: ");
         goalField.setToolTipText("");
         getContentPane().add(goalField);
-        goalField.setBounds(560, 70, 82, 24);
+        goalField.setBounds(560, 70, 82, 30);
 
+        logoutKey.setBackground(new java.awt.Color(102, 102, 102));
+        logoutKey.setForeground(new java.awt.Color(255, 255, 255));
         logoutKey.setText("Logout");
         logoutKey.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

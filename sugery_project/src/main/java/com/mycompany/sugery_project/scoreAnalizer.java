@@ -230,7 +230,6 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
     @Override
     public void mouseEntered(MouseEvent e) {
         Point loc = e.getLocationOnScreen();
-        System.out.println("loc value: " + loc);
         
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -246,7 +245,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
   
