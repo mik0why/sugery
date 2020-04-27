@@ -203,9 +203,19 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
             if(c.contains(e.getX(), e.getY())){
                 if(lastDisplayedCircle != c || date.getTime() - recentDisplayTime > 2000){
                     idx = graphCircles.indexOf(c);
+                    //TODO modify the location of the message
+                    
+                    JOptionPane pane = new JOptionPane("Value " + scores.get(idx) + " registered at: "
+                             + dates.get(idx)); 
+                    JDialog d = pane.createDialog((JFrame)null, "Score Details");
+                    d.setLocation((int) e.getPoint().getX() - d.getWidth(), (int) e.getPoint().getY()); // - d.getHeight()); //, idx);
+                    d.setBackground(Color.BLACK);
+
+                    d.setVisible(true);
+                    /*
                     JOptionPane.showMessageDialog(new JFrame("Score"), 
-                    "Value " + scores.get(idx) +
-                    " registered at: " + dates.get(idx)); // (e.getIndex)
+                    "Value " + scores.get(idx) + " registered at: " + dates.get(idx)); // (e.getIndex)
+                    */
                     lastDisplayedCircle = c; 
                     recentDisplayTime = date.getTime();
                     }
@@ -229,7 +239,6 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        Point loc = e.getLocationOnScreen();
         
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
