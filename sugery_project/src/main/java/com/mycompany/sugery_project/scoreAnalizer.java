@@ -252,19 +252,24 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
 
     public void mouseMoved(MouseEvent e){
         int idx; 
+        Graphics g = this.getGraphics(); 
         for(Circle c : graphCircles){ // efficiency?
             if(c.contains(e.getX(), e.getY())){
+                System.out.println("Before: " + g.getColor());
                 idx = graphCircles.indexOf(c); 
-                this.getParent().getGraphics().fillOval((int) graphPoints.get(idx).x,
-                        (int) graphPoints.get(idx).y ,12, 12); //, WIDTH, WIDTH, HEIGHT);
+//                this.getParent().getGraphics().setColor(Color.BLUE);
+                g.setColor(Color.RED);
+                g.fillOval((int) graphPoints.get(idx).x - 12,
+                        (int) graphPoints.get(idx).y  - 12 ,20, 20); //TODO ok for not
                 lastX = graphPoints.get(idx).x;
                 lastY = graphPoints.get(idx).y; 
                 
 
                 }
             else{
-                if(lastX != 0 && lastY != 0){
-                    this.getParent().getGraphics().clearRect(lastX, lastY, 12, 12); //, HEIGHT);
+                if(lastX != 0 && lastY != 0){ // clear oval
+                    
+                    //this.getParent().getGraphics().clearRect(lastX, lastY, 12, 12); //, HEIGHT);
                     }
                 }
                 
