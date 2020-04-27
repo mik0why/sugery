@@ -53,8 +53,9 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
    private List<Circle> graphCircles; 
    private Circle lastDisplayedCircle = new Circle(); 
    private long recentDisplayTime; //TODO initialize
-   private Graphics2D graph; //TODO idk if necessary
    private JFrame frame = new JFrame("Score Graph"); 
+   private int lastX =0 ; 
+   private int lastY =0 ;
 
    
    public scoreAnalizer(User usr) { //TODO modify the score
@@ -80,7 +81,6 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
        //parent : contentPane
        super.paintComponent(g);
       Graphics2D g2 = (Graphics2D)g;
-      this.graph = g2; 
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       g2.setColor(Color.white);
       double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (scores.size() - 1);
@@ -178,14 +178,13 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
                          
                     
       
-      mainPanel.setBackground(Color.BLACK);
-      //JFrame frame = new JFrame("Score Graph"); // make this a parameter?
-      this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      this.frame.getContentPane().add(mainPanel);
-      this.frame.pack();
-      this.frame.setLocationByPlatform(true);
-      this.frame.setVisible(true);
-      this.frame.addKeyListener(new KeyAdapter() {
+//      mainPanel.setBackground(Color.BLACK);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.getContentPane().add(mainPanel);
+      frame.pack();
+      frame.setLocationByPlatform(true);
+      frame.setVisible(true);
+      frame.addKeyListener(new KeyAdapter() {
         public void keyPressed(KeyEvent ke) {  // handler
             if(ke.getKeyCode() == ke.VK_ESCAPE) {
                 frame.setVisible(false);
@@ -203,8 +202,11 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
             if(c.contains(e.getX(), e.getY())){
                 if(lastDisplayedCircle != c || date.getTime() - recentDisplayTime > 2000){
                     idx = graphCircles.indexOf(c);
-                    //TODO modify the location of the message
-                    
+                    System.out.println("graphics: " + this.getParent().getGraphics());
+/*
+                    this.getParent().getGraphics().setColor(Color.PINK);
+                    this.getParent().getGraphics().fillRect(10, 10, 100, 100); 
+ */
                     JOptionPane pane = new JOptionPane("Value " + scores.get(idx) + " registered at: "
                              + dates.get(idx)); 
                     JDialog d = pane.createDialog((JFrame)null, "Score Details");
@@ -249,7 +251,26 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
     }
 
     public void mouseMoved(MouseEvent e){
+        int idx; 
+        for(Circle c : graphCircles){ // efficiency?
+            if(c.contains(e.getX(), e.getY())){
+                idx = graphCircles.indexOf(c); 
+                this.getParent().getGraphics().fillOval((int) graphPoints.get(idx).x,
+                        (int) graphPoints.get(idx).y ,12, 12); //, WIDTH, WIDTH, HEIGHT);
+                lastX = graphPoints.get(idx).x;
+                lastY = graphPoints.get(idx).y; 
+                
 
+                }
+            else{
+                if(lastX != 0 && lastY != 0){
+                    this.getParent().getGraphics().clearRect(lastX, lastY, 12, 12); //, HEIGHT);
+                    }
+                }
+                
+        //g.clearRect(0, 0, getWidth(), getHeight() );
+    
+        }
         }
 
     @Override
