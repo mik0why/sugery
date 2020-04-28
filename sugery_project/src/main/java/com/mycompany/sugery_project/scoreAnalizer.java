@@ -56,6 +56,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
    private JFrame frame = new JFrame("Score Graph"); 
    private int lastX =0 ; 
    private int lastY =0 ;
+   private boolean previousCirlcleReset = false; 
 
    
    public scoreAnalizer(User usr) { //TODO modify the score
@@ -246,11 +247,15 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
     }
 
     public void mouseMoved(MouseEvent e){
-        int idx, lastX = 0, lastY = 0;
+        int idx; 
         boolean previousCircleReset; 
         Graphics g = this.getGraphics(); 
         for(Circle c : graphCircles){ // efficiency?
             if(c.contains(e.getX(), e.getY())){
+                if(lastX != 0 && lastY != 0)
+                {
+                    System.out.println("prev not 0");
+                }
                 idx = graphCircles.indexOf(c); 
 //                this.getParent().getGraphics().setColor(Color.BLUE);
                 g.setColor(Color.RED);
@@ -262,6 +267,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
                 }else{ // current point outside the circle
                     //TODO: check if the previous background black
                     
+                    System.out.println("Herr, X : " + lastX + " y : " + lastY); 
                     if(lastX != 0 && lastY != 0){ // there has been a previous point highlighted
                                     System.out.println("last X: " + lastX + " last y: " + lastY);
 
@@ -269,6 +275,8 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
                         g.fillOval(lastX, lastY, 12, 12); //, idx, WIDTH, HEIGHT);
                         g.setColor(GRAPH_POINT_COLOR);
                         g.fillOval(lastX, lastY, 12, 12); //, idx, WIDTH, HEIGHT);
+                        lastX = 0;
+                        lastY = 0;
                       
                     }
                    }
