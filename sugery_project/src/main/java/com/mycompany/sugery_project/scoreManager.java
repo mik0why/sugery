@@ -15,10 +15,10 @@ import java.sql.Statement;
  *
  * @author mikowhy
  */
-public class entryTable {
+public class scoreManager {
     
     private Statement st; 
-    public entryTable(){
+    public scoreManager(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
             String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
@@ -41,6 +41,14 @@ public class entryTable {
         return st.executeQuery(query);
 
         
+    }
+    
+    public int getLastScore(User user){
+        return user.getHM().lastEntry().getValue(); 
+    }
+    
+    public String getMostRecentDate(User user){
+        return user.getHM().lastKey(); 
     }
     
     private void removeEntry(){};

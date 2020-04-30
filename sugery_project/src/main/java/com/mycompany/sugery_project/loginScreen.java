@@ -26,7 +26,7 @@ public class loginScreen extends javax.swing.JFrame {
     /**
      * Creates new form loginScreen
      */
-    private entryTable dataTable = new entryTable();
+    private scoreManager dataTable = new scoreManager();
     mainFrame mf; // TODO needs to be fixed (what exactly?)
     configJFrame jf = new configJFrame(); 
    

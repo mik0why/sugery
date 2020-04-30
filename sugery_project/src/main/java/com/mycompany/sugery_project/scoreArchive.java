@@ -42,7 +42,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
      * Creates new form scoreArchive
      */
     private User user;
-    private entryTable dataTable = new entryTable();
+    private scoreManager dataTable = new scoreManager();
     private scoreScreen scoreScreen; // TODO may have to be initialized
     /**
      *

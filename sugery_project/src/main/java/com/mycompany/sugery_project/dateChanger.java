@@ -26,12 +26,13 @@ public class dateChanger extends javax.swing.JFrame {
     private String oldDate; 
     private String newDate; 
     private User user; 
-    private entryTable entryTable = new entryTable();
+    private scoreManager entryTable = new scoreManager();
    
     public dateChanger(User user, String date) {
         this.oldDate = date; 
         this.user = user; 
         initComponents();
+        prefilFields(); 
     }
 
     private void modifyDate() throws ParseException{
@@ -71,6 +72,12 @@ public class dateChanger extends javax.swing.JFrame {
         
            return userDate; 
     }
+    
+    private void prefilFields(){
+      //  TextPrompt year = new TextPrompt("2020", yearField);
+        
+    }
+    
     private boolean fieldsCheck(){
         //TODO check each of the fields
         int year, month, day;

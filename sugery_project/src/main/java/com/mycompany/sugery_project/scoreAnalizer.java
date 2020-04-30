@@ -48,7 +48,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
    private ArrayList<Integer> scores = new ArrayList<Integer>();  //TODO: not necessary
    private ArrayList<String> dates = new ArrayList<String>(); 
    private User user; 
-   private entryTable dataTable = new entryTable();
+   private scoreManager dataTable = new scoreManager();
    private List<Point> graphPoints;
    private List<Circle> graphCircles; 
    private Circle lastDisplayedCircle = new Circle(); 

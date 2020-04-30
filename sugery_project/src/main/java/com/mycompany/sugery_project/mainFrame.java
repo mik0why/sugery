@@ -33,7 +33,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
      */
     
     User user;
-    entryTable table = new entryTable();
+    scoreManager table = new scoreManager();
     private scoreOperations scOp= new scoreOperations();
     private ArrayList<JTextField> fields = new ArrayList<JTextField>();
     //private ArrayList<Integer> scoreAverages = new ArrayList<Integer>();
@@ -490,9 +490,9 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         ageField.setText("age : " + this.user.getAge());
         goalField.setText("goal : " + this.user.getGoal()); 
         
-           if(!this.user.getHM().isEmpty()){
-                scoreField.setText(this.user.getHM().lastEntry().getValue().toString()); // make sure it's still the same score
-                jTextField1.setText(jTextField1.getText() + this.user.getHM().lastEntry().getKey().toString());
+           if(!this.user.getHM().isEmpty()){ // should be changed
+               scoreField.setText(Integer.toString(table.getLastScore(this.user))); //TODO or just user?
+                jTextField1.setText(table.getMostRecentDate(this.user)); //jTextField1.getText() + this.user.getHM().lastEntry().getKey().toString());
                 weekAvg.setText(this.user.displayAnalysis("week").get(1));
                 monthAvg.setText(this.user.displayAnalysis("month").get(1));
                 evaluateScore(this.user.getGoal());

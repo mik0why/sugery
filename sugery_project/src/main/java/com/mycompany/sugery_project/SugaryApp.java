@@ -67,7 +67,7 @@ class User extends Observable implements Serializable{
     private Stack<String> mostRecentEntries = new Stack<String>(); 
     private ArrayList<Score> usArr = new ArrayList<Score>();
     private NavigableMap<String, Integer> scoreMap = new TreeMap<String, Integer>(); //= new HashMap<String,Integer>();
-    private entryTable dataTable = new entryTable();
+    private scoreManager dataTable = new scoreManager();
     private Stack <String> lastUsed = new Stack <String>(); 
     
     public User(String name, int age, int goal){
@@ -171,6 +171,7 @@ class User extends Observable implements Serializable{
         return rs; 
     }
     
+    // move to scoreManager
         public ArrayList<String> displayAnalysis(String range ) throws ParseException{
             int dateRange = 0; 
             int sum = 0, counter = 0; 
