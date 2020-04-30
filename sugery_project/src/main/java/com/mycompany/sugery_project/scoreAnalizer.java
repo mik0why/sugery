@@ -59,7 +59,8 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
    private boolean previousCirlcleReset = false; 
 
    
-   public scoreAnalizer(User usr) { //TODO modify the score
+   public scoreAnalizer(User usr) { 
+       //TODO labels not drawn to scale
        this.user = usr;
        for(Map.Entry e : this.user.getHM().entrySet()){
            scores.add((Integer)e.getValue());

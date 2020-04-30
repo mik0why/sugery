@@ -131,6 +131,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         edSc = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 0, 0));
 
         jButton1.setText("Close");
         jButton1.setToolTipText("");

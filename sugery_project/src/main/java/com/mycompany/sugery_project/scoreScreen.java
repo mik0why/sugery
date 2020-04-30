@@ -156,7 +156,11 @@ public class scoreScreen extends javax.swing.JFrame  { //
             }
         });
 
-        dateField.setText("jTextField2");
+        dateField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateFieldActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Custom Date");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -199,7 +203,6 @@ public class scoreScreen extends javax.swing.JFrame  { //
                 .addComponent(scoreField, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -285,6 +288,10 @@ public class scoreScreen extends javax.swing.JFrame  { //
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dateChanger.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void dateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dateFieldActionPerformed
 
     /**
      * @param args the command line arguments
