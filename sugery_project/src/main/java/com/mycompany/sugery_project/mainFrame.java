@@ -32,8 +32,9 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
      * Creates new form mainFrame
      */
     
-    User user;
-    scoreManager table = new scoreManager();
+    private User user;
+    private userUtils table = new userUtils();
+    
     private scoreOperations scOp= new scoreOperations();
     private ArrayList<JTextField> fields = new ArrayList<JTextField>();
     //private ArrayList<Integer> scoreAverages = new ArrayList<Integer>();
@@ -46,6 +47,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         this.user = usr;
         addFields(); 
  
+        
+        
     }
 
     /**

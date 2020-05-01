@@ -26,7 +26,7 @@ public class dateChanger extends javax.swing.JFrame {
     private String oldDate; 
     private String newDate; 
     private User user; 
-    private scoreManager entryTable = new scoreManager();
+    private userUtils entryTable = new userUtils();
    
     public dateChanger(User user, String date) {
         this.oldDate = date; 

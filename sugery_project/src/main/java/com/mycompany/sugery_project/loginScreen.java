@@ -26,7 +26,8 @@ public class loginScreen extends javax.swing.JFrame {
     /**
      * Creates new form loginScreen
      */
-    private scoreManager dataTable = new scoreManager();
+    private sqlManager dataTable = new sqlManager(); 
+    //private userUtils dataTable = new userUtils();
     mainFrame mf; // TODO needs to be fixed (what exactly?)
     configJFrame jf = new configJFrame(); 
    
@@ -84,6 +85,11 @@ public class loginScreen extends javax.swing.JFrame {
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 loginButtonMouseClicked(evt);
+            }
+        });
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
             }
         });
         loginButton.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -315,6 +321,10 @@ public class loginScreen extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_loginButtonMouseClicked
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
      * @param args the command line arguments

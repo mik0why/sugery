@@ -61,27 +61,53 @@ class User extends Observable implements Serializable{
     */
     
     
-    private String first;
+    private String name;
     private int age;
     private int goal;
-    private Stack<String> mostRecentEntries = new Stack<String>(); 
+    private userUtils utils ;
+
     private ArrayList<Score> usArr = new ArrayList<Score>();
     private NavigableMap<String, Integer> scoreMap = new TreeMap<String, Integer>(); //= new HashMap<String,Integer>();
-    private scoreManager dataTable = new scoreManager();
+
+    private Stack<String> mostRecentEntries = new Stack<String>(); 
     private Stack <String> lastUsed = new Stack <String>(); 
     
+
+    public User(){
+        
+    }
+    
     public User(String name, int age, int goal){
-        this.first = name;
+        this.name = name;
         this.age = age;
         this.goal = goal;
         
+        utils = new userUtils(); 
+        
+        System.out.println("utils : " + utils.getName());
         loadScores();
     }
     
+   
     //TODO: get rid of 'public', other minor changes
     //TODO getters and setters for user
-    String getName(){
-        return first;
+    
+
+    
+    public void setName(String name){
+        this.name = name; 
+    }
+    
+    public void setAge(int age){
+        this.age = age; 
+    }
+    
+    public void setGoal(int goal){
+        this.goal = goal ;
+    }
+    
+    public String getName(){
+        return name;
     }
     
     public int getAge(){
@@ -94,6 +120,9 @@ class User extends Observable implements Serializable{
     
     public TreeMap<String, Integer> getHM(){ // should this be one method?
         return (TreeMap<String, Integer>) scoreMap;
+        
+        
+        
     }
     
     public Stack<String> getEntryStack(){
@@ -201,13 +230,13 @@ class User extends Observable implements Serializable{
             return ret; 
     }
     
-    public void loadScores(){
+    private void loadScores(){
         String username;
         int score;
         String dt; 
             try{
             String sql = "SELECT username, score, date FROM Scores";
-            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
+            ResultSet rs = utils.selectEntries(sql); //st.executeQuery(sql);
             while(rs.next()){ // TODO shouldn't it be select from where?
                 username = rs.getString("username");
                 score = rs.getInt("score");

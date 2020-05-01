@@ -15,10 +15,11 @@ import java.sql.Statement;
  *
  * @author mikowhy
  */
-public class scoreManager {
+public class sqlManager {
     
     private Statement st; 
-    public scoreManager(){
+    public sqlManager(){
+        
         try{
             Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
             String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
@@ -27,33 +28,16 @@ public class scoreManager {
          }catch(Exception e){
              System.out.println("Exception: " + e);
         }        
+
     }
     
-
-    public void addRemoveEntry(String query) throws SQLException{        
-        
-        System.out.println(query);
-        st.executeUpdate(query);
-        
-    }; // add or remove based on the type
-
-    public ResultSet selectEntries(String query) throws SQLException{
-        return st.executeQuery(query);
+    
+    
+        public ResultSet selectEntries(String query) throws SQLException{
+            return st.executeQuery(query);
 
         
     }
-    
-    public int getLastScore(User user){
-        return user.getHM().lastEntry().getValue(); 
-    }
-    
-    public String getMostRecentDate(User user){
-        return user.getHM().lastKey(); 
-    }
-    
-    private void removeEntry(){};
-
-    private void loginAttempt(String username, char [] password){}; 
     
     
 }
