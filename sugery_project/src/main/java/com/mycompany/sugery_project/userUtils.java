@@ -10,6 +10,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
@@ -38,8 +45,7 @@ public class userUtils extends User {
         
     }
     
-
-
+ 
    
     
     public void getScoreMap() { //reeMap<String, Integer> getScoreHashMap(){
@@ -91,9 +97,53 @@ public class userUtils extends User {
         return user.getHM().lastEntry().getValue(); 
     }
     
-    public String getMostRecentDate(User user){
+    public String userLastDate(User user){
         return user.getHM().lastKey(); 
     }
+    
+    public int userMaxScore(User user){
+        int max = Integer.MIN_VALUE; 
+        for(Map.Entry <String, Integer> e : this.getHM().entrySet()){
+            if (e.getValue() > max) max = e.getValue();
+            }
+        return max; 
+    }
+    
+    public String computeAverageScore(String range, String mode) throws ParseException{
+        //TODO change return type 
+            int dateRange = 0; 
+            int sum = 0, counter = 0; 
+            
+            if(range.equals("week")) dateRange = 7;
+            if(range.equals("month")) dateRange = 30;
+            
+            LocalDate Ldate = LocalDate.now();
+            java.sql.Date d2 = java.sql.Date.valueOf(Ldate.minusDays(dateRange)); 
+            ArrayList<String> ret = new ArrayList<String>(); 
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = (range.equals("all"))? 
+                    dateFormat.parse("0000-01-01 00:00:00") : d2; 
+
+            
+ 
+            for(Map.Entry<String, Integer> e : this.getHM().entrySet()){
+                if(dateFormat.parse(e.getKey()).compareTo(date) > 0 ){
+                    sum+=e.getValue();
+                    counter++;
+                }
+            }
+            // not adding null - remember to clear the output field first
+            ret.add(counter + " scores registered");
+            boolean zero = ((counter != 0) ? (ret.add(Integer.toString(sum / counter))) : (ret.add("no score")));
+            if (mode == "avg") return ret.get(1);
+            return ret.get(0);
+    }
+        
+        
+        
+ 
+
+    
     
     private void removeEntry(){};
 

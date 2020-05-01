@@ -46,17 +46,8 @@ class User extends Observable implements Serializable{
     
     /*
     
-    Database Usages: 
-    
-    SELECT: retrieve a particular user from the database
-            no need to use it for getters? once the user is retrieved
-                can simply operate on the getters
-    UPDATE: ? change in users data (idk as now of when would that be)
-                eg modifying goal/age (next stage)
-    INSERT: new user added
-            new score added (unlike getters this should be inserted into SQL)
-    DELETE: delete particular score
-            delete particular user
+    //TODO: get rid of 'public', other minor changes
+    //TODO getters and setters for user
         
     */
     
@@ -87,13 +78,7 @@ class User extends Observable implements Serializable{
         System.out.println("utils : " + utils.getName());
         loadScores();
     }
-    
-   
-    //TODO: get rid of 'public', other minor changes
-    //TODO getters and setters for user
-    
-
-    
+     
     public void setName(String name){
         this.name = name; 
     }
@@ -118,7 +103,32 @@ class User extends Observable implements Serializable{
         return goal;
     }
     
-    public TreeMap<String, Integer> getHM(){ // should this be one method?
+    public int getMostRecentScore(){
+        return utils.getLastScore(this); 
+    }
+    
+    public String getdateOfLastUpdate(){
+        return utils.userLastDate(this); 
+    }
+    
+    public int getMaxScoreValue(){; 
+       return utils.userMaxScore(this);
+    }
+    
+    public boolean registeredAnyScore(){
+        return !scoreMap.isEmpty(); 
+    }
+    
+    public String getAverage(String period) throws ParseException{ //TODO needs to be int
+        return utils.computeAverageScore(period, "average"); // can also be "sum" to display the sum
+    }
+    
+
+    
+   //*****************
+    
+    
+    public TreeMap<String, Integer> getHM(){ // todo change to private
         return (TreeMap<String, Integer>) scoreMap;
         
         
@@ -129,13 +139,7 @@ class User extends Observable implements Serializable{
         return this.mostRecentEntries;  
     }
     
-    public int getMaxScoreValue(){
-        int max = Integer.MIN_VALUE; 
-        for(Entry <String, Integer> e : this.getHM().entrySet()){
-            if (e.getValue() > max) max = e.getValue();
-        }
-        return max; 
-    }
+ 
     
     public int getMinScoreValue(){
         int min = Integer.MAX_VALUE; 
@@ -229,6 +233,8 @@ class User extends Observable implements Serializable{
 
             return ret; 
     }
+        
+        
     
     private void loadScores(){
         String username;

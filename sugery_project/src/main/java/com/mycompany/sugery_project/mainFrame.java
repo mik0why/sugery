@@ -35,7 +35,6 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     private User user;
     private userUtils table = new userUtils();
     
-    private scoreOperations scOp= new scoreOperations();
     private ArrayList<JTextField> fields = new ArrayList<JTextField>();
     //private ArrayList<Integer> scoreAverages = new ArrayList<Integer>();
 // where to move this?
@@ -64,7 +63,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         ageField = new javax.swing.JTextField();
         monthAvg = new javax.swing.JTextField();
         addScoreButton = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        dateField = new javax.swing.JTextField();
         allScBut = new javax.swing.JButton();
         scAnalyze = new javax.swing.JButton();
         scoreField = new javax.swing.JTextField();
@@ -157,21 +156,21 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         getContentPane().add(addScoreButton);
         addScoreButton.setBounds(280, 400, 145, 32);
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(179, 177, 178));
-        jTextField1.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(51, 51, 0));
-        jTextField1.setText("Last score registered at ");
-        jTextField1.setToolTipText("");
-        jTextField1.setBorder(null);
-        jTextField1.setFocusable(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        dateField.setEditable(false);
+        dateField.setBackground(new java.awt.Color(179, 177, 178));
+        dateField.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        dateField.setForeground(new java.awt.Color(51, 51, 0));
+        dateField.setText("Last score registered at ");
+        dateField.setToolTipText("");
+        dateField.setBorder(null);
+        dateField.setFocusable(false);
+        dateField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                dateFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(320, 360, 320, 30);
+        getContentPane().add(dateField);
+        dateField.setBounds(320, 360, 320, 30);
 
         allScBut.setBackground(new java.awt.Color(102, 102, 102));
         allScBut.setForeground(new java.awt.Color(255, 255, 255));
@@ -355,9 +354,9 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void dateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_dateFieldActionPerformed
 
     private void feedbackFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_feedbackFieldActionPerformed
         // TODO add your handling code here:
@@ -488,17 +487,25 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     public void displayUserData(ArrayList<User> al, int idx) throws ClassNotFoundException, SQLException, ParseException{ //TODO change parameters
         //TODO display different stuff based on what time it is
         // when the program is closed (spot that moment)
-        this.user.addObserver(this); 
-        entryText.setText(this.user.getName() + ".\n"); 
-        ageField.setText("age : " + this.user.getAge());
-        goalField.setText("goal : " + this.user.getGoal()); 
         
-           if(!this.user.getHM().isEmpty()){ // should be changed
-               scoreField.setText(Integer.toString(table.getLastScore(this.user))); //TODO or just user?
-                jTextField1.setText(table.getMostRecentDate(this.user)); //jTextField1.getText() + this.user.getHM().lastEntry().getKey().toString());
+        this.user.addObserver(this); 
+        entryText.setText(user.getName() + ".\n"); 
+        ageField.setText("age : " + user.getAge());
+        goalField.setText("goal : " + user.getGoal()); 
+        
+        if(user.registeredAnyScore()){ 
+               scoreField.setText(Integer.toString(user.getMostRecentScore()));
+               dateField.setText(user.getdateOfLastUpdate());
+               weekAvg.setText(user.getAverage("week"));
+               monthAvg.setText(user.getAverage("month"));
+               evaluateScore(this.user.getGoal()); // todo replace with "setFonts"
+
+
+               
+               /*
                 weekAvg.setText(this.user.displayAnalysis("week").get(1));
                 monthAvg.setText(this.user.displayAnalysis("month").get(1));
-                evaluateScore(this.user.getGoal());
+                */
         }
 
 
@@ -511,6 +518,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton addScoreButton;
     private javax.swing.JTextField ageField;
     private javax.swing.JButton allScBut;
+    private javax.swing.JTextField dateField;
     private javax.swing.JTextField entryText;
     private javax.swing.JTextField entryText1;
     private javax.swing.JTextField feedbackField;
@@ -518,7 +526,6 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField lastScore;
     private javax.swing.JButton logoutKey;
     private javax.swing.JTextField monthAvg;
@@ -534,7 +541,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         if(o == this.user){ // checking if it's one from many im assuming
             int recentScore = this.user.getHM().lastEntry().getValue(); 
             scoreField.setText(this.user.getHM().lastEntry().getValue().toString());
-            jTextField1.setText("Last Score Registered At: "+ this.user.getHM().lastKey()); // or last entry
+            dateField.setText("Last Score Registered At: "+ this.user.getHM().lastKey()); // or last entry
             try {
                 weekAvg.setText(this.user.displayAnalysis("week").get(1));
                 monthAvg.setText(this.user.displayAnalysis("month").get(1));
