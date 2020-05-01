@@ -53,9 +53,8 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         this.user = usr; 
         initComponents();
         this.user.addObserver(this);
-//        this.user.getHM().addObserver(this);
         pullScores();
-        updateScores(user.displayAnalysis("all")); // all scores
+        updateScores(user.getScoreCount(), user.getAverage("all"));
 
     }
 
@@ -65,7 +64,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         };      
      
     
-    private void pullScores() throws SQLException, ParseException{
+    private void pullScores() throws SQLException, ParseException{ // TODO rename (fillTable()? )
         DefaultTableModel tableModel = (DefaultTableModel) scoreTable.getModel();      
         tableModel.setRowCount(0); // no initial rows
         scoreTable.getColumnModel().getColumn(0).setPreferredWidth(180);
@@ -90,28 +89,6 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     }
 
     
-    public void updateScores(ArrayList<String> summary){
-        commArea.setText(null);
-        commArea.append(summary.get(0) + " scores registered. \n");
-        commArea.append("Average Value: " + summary.get(1));
-    }
-    
-    
-    @Override
-    public void update(Observable o, Object arg){
-           if(o == this.user){
-                try {
-                    updateScores(user.displayAnalysis("all"));  // ok
-                    pullScores();
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ParseException ex) {
-                    Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-   
-        }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -276,7 +253,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
                 pullScores();
 
                 //TODO: idk why there's an exception here
-                updateScores(user.displayAnalysis("all")); 
+               //  updateScores(user.getAverage("all")); TODO idk if necessary
                 // need to do the same with adding to the array
                 scoreTable.requestFocus(); 
             } catch (ClassNotFoundException ex) {
@@ -330,5 +307,30 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     // End of variables declaration//GEN-END:variables
 
 
+    
+    
+    public void updateScores(int scoreCount, int average){
+        commArea.setText(null);
+        commArea.append(scoreCount + " scores registered. \n");
+        commArea.append("Average Value: " + average);
+    }
+    
+    
+    @Override
+    public void update(Observable o, Object arg){
+           if(o == this.user){
+                try {
+                  //  updateScores(user.displayAnalysis("all"));  // TODO idk if necessary
+                    pullScores();
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+   
+        }
+    
 
 }

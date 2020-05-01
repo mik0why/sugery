@@ -108,9 +108,13 @@ class User extends Observable implements Serializable{
     }
     
     public int getAverage(String period) throws ParseException{ //TODO needs to be int
-        System.out.println("hash map size : " + this.getHM().size());
         return utils.computeAverageScore(this, period, "average"); // can also be "sum" to display the sum
     }
+
+    public int getScoreCount(){
+        return scoreMap.size(); 
+    }
+
     
     public String getdateOfLastUpdate(){
         return utils.userLastDate(this); 
@@ -124,26 +128,17 @@ class User extends Observable implements Serializable{
         return !scoreMap.isEmpty(); 
     }
     
-
-    
-
-    
-   //*****************
-    
-    
-    public TreeMap<String, Integer> getHM(){ // todo change to private
-        return (TreeMap<String, Integer>) scoreMap;
-        
-        
-        
+    public TreeMap<String, Integer> getHM(){ //TODO should it be private?
+        return (TreeMap<String, Integer>) scoreMap;   
     }
-    
+        
+   //*****************
+     
     public Stack<String> getEntryStack(){
         return this.mostRecentEntries;  
     }
     
- 
-    
+
     public int getMinScoreValue(){
         int min = Integer.MAX_VALUE; 
         for(Entry <String, Integer> e : this.getHM().entrySet()){
@@ -152,8 +147,6 @@ class User extends Observable implements Serializable{
         return min; 
     }        
         
-        
-    
     
     public void HM_Insert(String date, int score){
         this.scoreMap.put(date, score);
@@ -207,35 +200,6 @@ class User extends Observable implements Serializable{
         return rs; 
     }
     
-    // move to scoreManager
-        public ArrayList<String> displayAnalysis(String range ) throws ParseException{
-            int dateRange = 0; 
-            int sum = 0, counter = 0; 
-            
-            if(range.equals("week")) dateRange = 7;
-            if(range.equals("month")) dateRange = 30;
-            
-            LocalDate Ldate = LocalDate.now();
-            java.sql.Date d2 = java.sql.Date.valueOf(Ldate.minusDays(dateRange)); 
-            ArrayList<String> ret = new ArrayList<String>(); 
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = (range.equals("all"))? 
-                    dateFormat.parse("0000-01-01 00:00:00") : d2; 
-
-            
- 
-            for(Map.Entry<String, Integer> e : this.getHM().entrySet()){
-                if(dateFormat.parse(e.getKey()).compareTo(date) > 0 ){
-                    sum+=e.getValue();
-                    counter++;
-                }
-            }
-            // not adding null - remember to clear the output field first
-            ret.add(counter + " scores registered");
-            boolean zero = ((counter != 0) ? (ret.add(Integer.toString(sum / counter))) : (ret.add("no score")));
-
-            return ret; 
-    }
         
         
     

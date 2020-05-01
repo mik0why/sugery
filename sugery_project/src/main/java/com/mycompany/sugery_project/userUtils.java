@@ -27,6 +27,7 @@ import java.util.TreeMap;
 public class userUtils extends User {
     
     private Statement st; 
+    private sqlManager sql = new sqlManager(); 
     
     public userUtils(){
         
@@ -108,8 +109,6 @@ public class userUtils extends User {
     }
     
     public int computeAverageScore(User user, String range, String mode) throws ParseException{
-        //TODO change return type 
-            System.out.println("inside utils, hm size: " + user.getHM().lastKey());
             int dateRange = 0; 
             int sum = 0, counter = 0; 
             
