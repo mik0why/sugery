@@ -107,6 +107,11 @@ class User extends Observable implements Serializable{
         return utils.getLastScore(this); 
     }
     
+    public int getAverage(String period) throws ParseException{ //TODO needs to be int
+        System.out.println("hash map size : " + this.getHM().size());
+        return utils.computeAverageScore(this, period, "average"); // can also be "sum" to display the sum
+    }
+    
     public String getdateOfLastUpdate(){
         return utils.userLastDate(this); 
     }
@@ -119,9 +124,7 @@ class User extends Observable implements Serializable{
         return !scoreMap.isEmpty(); 
     }
     
-    public String getAverage(String period) throws ParseException{ //TODO needs to be int
-        return utils.computeAverageScore(period, "average"); // can also be "sum" to display the sum
-    }
+
     
 
     
@@ -239,20 +242,22 @@ class User extends Observable implements Serializable{
     private void loadScores(){
         String username;
         int score;
-        String dt; 
+        String dt;
+        System.out.println("before : " + this.getHM().size());
             try{
-            String sql = "SELECT username, score, date FROM Scores";
-            ResultSet rs = utils.selectEntries(sql); //st.executeQuery(sql);
-            while(rs.next()){ // TODO shouldn't it be select from where?
-                username = rs.getString("username");
-                score = rs.getInt("score");
-                dt = rs.getString("date"); // convert to a different format?  // below check : && us_pass.equals(String.copyValueOf(password))){
-                if(username.equals(this.getName())){                    //TODO should check if the score isn't already in the usArr
-                    if(!this.getHM().containsKey(dt)){ // checks the date
-                        this.HM_Insert(dt, score);
+                String sql = "SELECT username, score, date FROM Scores";
+                ResultSet rs = utils.selectEntries(sql); //st.executeQuery(sql);
+                while(rs.next()){ // TODO shouldn't it be select from where?
+                    username = rs.getString("username");
+                    score = rs.getInt("score");
+                    dt = rs.getString("date"); // convert to a different format?  // below check : && us_pass.equals(String.copyValueOf(password))){
+                    if(username.equals(this.getName())){                    //TODO should check if the score isn't already in the usArr
+                        if(!this.getHM().containsKey(dt)){ // checks the date
+                            this.HM_Insert(dt, score);
+                            }
                         }
                     }
-                }
+                System.out.println("size of the result set: " + rs.getRow() +", " + this.getHM().size());
             }catch(Exception e){
                 System.out.println("Exception: " + e);
         }

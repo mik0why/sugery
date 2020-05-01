@@ -32,8 +32,6 @@ public class userUtils extends User {
         
         try{
             
-            System.out.println("name in utils : " + this.getName());
-            //user.setName = " ... " 
             
             Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
             String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
@@ -109,8 +107,9 @@ public class userUtils extends User {
         return max; 
     }
     
-    public String computeAverageScore(String range, String mode) throws ParseException{
+    public int computeAverageScore(User user, String range, String mode) throws ParseException{
         //TODO change return type 
+            System.out.println("inside utils, hm size: " + user.getHM().lastKey());
             int dateRange = 0; 
             int sum = 0, counter = 0; 
             
@@ -119,24 +118,29 @@ public class userUtils extends User {
             
             LocalDate Ldate = LocalDate.now();
             java.sql.Date d2 = java.sql.Date.valueOf(Ldate.minusDays(dateRange)); 
-            ArrayList<String> ret = new ArrayList<String>(); 
+            ArrayList<Integer> ret = new ArrayList<Integer>(); 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = (range.equals("all"))? 
                     dateFormat.parse("0000-01-01 00:00:00") : d2; 
 
             
- 
-            for(Map.Entry<String, Integer> e : this.getHM().entrySet()){
+            System.out.println("entry set: " + user.getHM().entrySet());
+            for(Map.Entry<String, Integer> e : user.getHM().entrySet()){
                 if(dateFormat.parse(e.getKey()).compareTo(date) > 0 ){
                     sum+=e.getValue();
                     counter++;
                 }
             }
-            // not adding null - remember to clear the output field first
-            ret.add(counter + " scores registered");
-            boolean zero = ((counter != 0) ? (ret.add(Integer.toString(sum / counter))) : (ret.add("no score")));
-            if (mode == "avg") return ret.get(1);
+            ret.add(counter);
+            
+            System.out.println("average computed : " + sum/counter);
+            boolean zero = ((counter != 0) ? (ret.add((sum / counter))) : (ret.add(-1))); // TODO: -1 when no score; change
+            if (mode == "average") return ret.get(1);
+            
+            
             return ret.get(0);
+                        // not adding null - remember to clear the output field first (idk what that means)
+
     }
         
         

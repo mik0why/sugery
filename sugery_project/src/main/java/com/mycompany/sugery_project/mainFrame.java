@@ -496,9 +496,9 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         if(user.registeredAnyScore()){ 
                scoreField.setText(Integer.toString(user.getMostRecentScore()));
                dateField.setText(user.getdateOfLastUpdate());
-               weekAvg.setText(user.getAverage("week"));
-               monthAvg.setText(user.getAverage("month"));
-               evaluateScore(this.user.getGoal()); // todo replace with "setFonts"
+               weekAvg.setText(Integer.toString(user.getAverage("week")));
+               monthAvg.setText(Integer.toString(user.getAverage("month")));
+               evaluateScore(user.getGoal()); // todo replace with "setFonts"
 
 
                
@@ -542,12 +542,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             int recentScore = this.user.getHM().lastEntry().getValue(); 
             scoreField.setText(this.user.getHM().lastEntry().getValue().toString());
             dateField.setText("Last Score Registered At: "+ this.user.getHM().lastKey()); // or last entry
-            try {
-                weekAvg.setText(this.user.displayAnalysis("week").get(1));
-                monthAvg.setText(this.user.displayAnalysis("month").get(1));
-            } catch (ParseException ex) {
-                Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           // weekAvg.setText(this.user.displayAnalysis("week").get(1));
+           // monthAvg.setText(this.user.displayAnalysis("month").get(1));
             evaluateScore(this.user.getGoal());
 
         }else{
