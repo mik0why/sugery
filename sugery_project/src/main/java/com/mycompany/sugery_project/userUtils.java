@@ -24,7 +24,8 @@ import java.util.TreeMap;
  *
  * @author mikowhy
  */
-public class userUtils extends User {
+public class userUtils {
+    //TODO im not 100% about extending the user
     
     private Statement st; 
     private sqlManager sql = new sqlManager(); 
@@ -102,7 +103,7 @@ public class userUtils extends User {
     
     public int userMaxScore(User user){
         int max = Integer.MIN_VALUE; 
-        for(Map.Entry <String, Integer> e : this.getHM().entrySet()){
+        for(Map.Entry <String, Integer> e : user.getHM().entrySet()){
             if (e.getValue() > max) max = e.getValue();
             }
         return max; 

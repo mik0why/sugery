@@ -75,7 +75,6 @@ class User extends Observable implements Serializable{
         
         utils = new userUtils(); 
         
-        System.out.println("utils : " + utils.getName());
         loadScores();
     }
      
