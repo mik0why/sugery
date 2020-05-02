@@ -39,7 +39,7 @@
                   <Group type="102" attributes="0">
                       <EmptySpace pref="15" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="remSc" alignment="1" min="-2" pref="146" max="-2" attributes="0"/>
+                          <Component id="removeScoreButton" alignment="1" min="-2" pref="146" max="-2" attributes="0"/>
                           <Component id="jButton1" alignment="1" min="-2" pref="146" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
@@ -75,7 +75,7 @@
                   <Group type="102" attributes="0">
                       <Component id="edSc" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="remSc" min="-2" max="-2" attributes="0"/>
+                      <Component id="removeScoreButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -137,13 +137,13 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="remSc">
+    <Component class="javax.swing.JButton" name="removeScoreButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Remove Score"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="remScActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeScoreButtonActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">

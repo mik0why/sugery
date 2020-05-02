@@ -438,7 +438,6 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
     private void scAnalyzeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scAnalyzeActionPerformed
         scoreAnalizer scAn = new scoreAnalizer(this.user); // changed score to scores
-        System.out.println(this.user.getUsArr());
         scAn.createAndShowGui();
         
         

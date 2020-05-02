@@ -5,26 +5,17 @@
  */
 package com.mycompany.sugery_project;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.TableColumn;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import java.lang.Object;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -70,7 +61,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         scoreTable.getColumnModel().getColumn(0).setPreferredWidth(180);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         String sql = "SELECT * FROM Scores WHERE `username` = " + "'" + 
-                this.user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
+            user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
         ResultSet sq =  dataTable.selectEntries(sql); // st.executeQuery(sql);
         while(sq.next()){ //TODO why does this show the wrong date? 2 months ahead
             tableModel.insertRow(0, new Object[]{sq.getString("date"), sq.getString("score")});
@@ -92,7 +83,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         scoreTable = new javax.swing.JTable();
-        remSc = new javax.swing.JButton();
+        removeScoreButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         commArea = new javax.swing.JTextArea();
         addSc = new javax.swing.JButton();
@@ -135,11 +126,11 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         });
         jScrollPane1.setViewportView(scoreTable);
 
-        remSc.setText("Remove Score");
-        remSc.setToolTipText("");
-        remSc.addActionListener(new java.awt.event.ActionListener() {
+        removeScoreButton.setText("Remove Score");
+        removeScoreButton.setToolTipText("");
+        removeScoreButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                remScActionPerformed(evt);
+                removeScoreButtonActionPerformed(evt);
             }
         });
 
@@ -181,7 +172,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(remSc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(removeScoreButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(64, 64, 64))
                     .addGroup(layout.createSequentialGroup()
@@ -207,7 +198,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(edSc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(remSc)
+                        .addComponent(removeScoreButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -231,20 +222,19 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
             this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void remScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remScActionPerformed
+    private void removeScoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeScoreButtonActionPerformed
         //TODO what if there are no scores loaded?
+        //TODO is there an exception here
+        //TODO highlight next row after deletion
+          // need to do the same with adding to the array - ??
         if(!scoreTable.getSelectionModel().isSelectionEmpty()){
             try {
                 //int score = scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1));
                 user.removeScore(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 0).toString(),  
                             Integer.parseInt(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1).toString()));
 
-                pullScores();
-
-                //TODO: idk why there's an exception here
-               //  updateScores(user.getAverage("all")); TODO idk if necessary
-                // need to do the same with adding to the array
-                scoreTable.requestFocus(); 
+                pullScores();              
+                removeScoreButton.requestFocus(); 
             } catch (SQLException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex) {
@@ -253,7 +243,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         }else{
             JOptionPane.showMessageDialog(new JFrame("No Selection"), "Select a row first, then click 'Delete'");
         }
-    }//GEN-LAST:event_remScActionPerformed
+    }//GEN-LAST:event_removeScoreButtonActionPerformed
 
     private void scoreTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreTableKeyPressed
         // TODO add your handling code here:
@@ -268,13 +258,13 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_scoreTableKeyPressed
 
     private void addScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addScActionPerformed
-        scoreScreen = new scoreScreen(this.user, false, null); // idk if that's the right val
+        scoreScreen = new scoreScreen(user, false, null); // idk if that's the right val
         scoreScreen.setVisible(true);
     }//GEN-LAST:event_addScActionPerformed
 
     private void edScActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edScActionPerformed
         //TODO check if there is a score selected first
-        new singleScoreDisplay(this.user, 
+        new singleScoreDisplay(user, 
         scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 0).toString(),  
         Integer.parseInt(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1).
                 toString())).setVisible(true);
@@ -289,7 +279,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JButton remSc;
+    private javax.swing.JButton removeScoreButton;
     private javax.swing.JTable scoreTable;
     // End of variables declaration//GEN-END:variables
 

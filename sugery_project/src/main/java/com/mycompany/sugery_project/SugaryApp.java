@@ -58,7 +58,6 @@ class User extends Observable implements Serializable{
     private int goal;
     private userUtils utils ;
 
-    private ArrayList<Score> usArr = new ArrayList<Score>();
     private NavigableMap<String, Integer> scoreMap = new TreeMap<String, Integer>(); //= new HashMap<String,Integer>();
 
     private Stack<String> mostRecentEntries = new Stack<String>(); 
@@ -191,9 +190,7 @@ class User extends Observable implements Serializable{
     
 
     
-    public ArrayList<Score> getUsArr(){
-        return this.usArr;
-    }
+ 
     
     public ResultSet sqlConnect(String date, int score, int mode){
         ResultSet rs = null ;
