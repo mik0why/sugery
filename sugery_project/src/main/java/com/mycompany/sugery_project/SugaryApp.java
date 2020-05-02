@@ -116,7 +116,7 @@ class User extends Observable implements Serializable{
     }
 
     
-    public String getdateOfLastUpdate(){
+    public String getMostRecentDate(){
         return utils.getLastDate(this); 
     }
     
