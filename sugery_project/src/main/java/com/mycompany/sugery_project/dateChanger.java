@@ -37,10 +37,11 @@ public class dateChanger extends javax.swing.JFrame {
 
     private void modifyDate() throws ParseException{
 
-              String date = composeDate(); 
-
+              String newDate = composeDate(); 
+              user.modifyEntryDate(oldDate, newDate); 
               
-              String sql = "UPDATE Scores SET date = '" + date
+              
+              String sql = "UPDATE Scores SET date = '" + newDate
               + "' where username = " + '\'' +  this.user.getName() + "' AND date = '"
                + this.oldDate + "';";
 
@@ -50,7 +51,7 @@ public class dateChanger extends javax.swing.JFrame {
                 Logger.getLogger(dateChanger.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-           this.user.modifyScoreDate(this.oldDate, date); // or befoer caling entryTable
+           this.user.modifyScoreDate(this.oldDate, newDate); // or befoer caling entryTable
            // this.user.HM_Replace(this.date, 
   //          Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
            

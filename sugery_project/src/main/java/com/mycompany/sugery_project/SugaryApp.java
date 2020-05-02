@@ -115,6 +115,11 @@ class User extends Observable implements Serializable{
         return scoreMap.size(); 
     }
 
+    public void modifyEntryDate(String oldDate, String newDate){
+        
+        
+    }
+    
     
     public String getMostRecentDate(){
         return utils.getLastDate(this); 
@@ -156,8 +161,15 @@ class User extends Observable implements Serializable{
         notifyObservers();
     }
     
+    public void removeScore(String date, int score) throws SQLException{
+        utils.addRemoveEntry(this, date, score, "remove");
+        setChanged();
+        notifyObservers();
+    }
+    
+    
     public void modifyScoreValue(String date, int score) throws SQLException{
-        utils.addRemoveEntry(this, date, score, "update");
+        utils.addRemoveEntry(this, date, score, "update score");
         setChanged();
         notifyObservers();
   
@@ -165,6 +177,7 @@ class User extends Observable implements Serializable{
     
 
    public void modifyScoreDate(String oldDate, String newDate){
+       
        int value = this.scoreMap.remove(oldDate);
        this.scoreMap.put(newDate, value);
        this.mostRecentEntries.remove(oldDate);
@@ -176,12 +189,7 @@ class User extends Observable implements Serializable{
 
    }
     
-    public void removeScore(String date){
-        this.scoreMap.remove(date); 
-        this.mostRecentEntries.remove(date);
-        setChanged();
-        notifyObservers();
-    }
+
     
     public ArrayList<Score> getUsArr(){
         return this.usArr;

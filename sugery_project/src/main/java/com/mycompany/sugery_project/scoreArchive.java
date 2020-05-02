@@ -83,8 +83,8 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     private void dbRemove(String date, String score) throws ClassNotFoundException, SQLException{
         String sql = "DELETE FROM Scores WHERE `username` = '" + this.user.getName()
                 + "' AND `score` = " + score + " AND `date` = '" + date  +  "';";
-        dataTable.oldAddRemoveEntry(sql);
-        this.user.removeScore(date);
+        //dataTable.oldAddRemoveEntry(sql);
+        user.removeScore(date, Integer.parseInt(score));
        // this.user.getHM().remove(date);
     }
 

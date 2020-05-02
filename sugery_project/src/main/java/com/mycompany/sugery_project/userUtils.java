@@ -49,29 +49,54 @@ public class userUtils {
     //SQL methods
        
     public void addRemoveEntry(User user, String date, int score, String mode) throws SQLException{
-        
-        String sql = "UPDATE Scores SET score = " + score
-        + " where username = " + '\'' +  user.getName() + "' AND date = '"
-        + date + "';";
+        //TODO sql separation  into two commands    
+        String sql = null ;
 
-        st.executeUpdate(sql);
+                sql =  "UPDATE Scores SET score = " + score
+                    + " where username = " + '\'' +  user.getName() + "' AND date = '"
+                    + date + "';";   
         
         switch(mode){
-            case "update": 
+            case "update score": 
+                
+             
                 user.getScoreMap().replace(date, score);
                 user.getEntryStack().remove(date);
                 user.getEntryStack().push(date);
                 break;
-            case "add":
+            case "add" :
+                //sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
+                //+ user.getName() + '\'' + "," + score
+                //+ ","+ '\'' +  date  +  "');" ; // as of now it's adding the same score twice
+                
                 user.getScoreMap().put(date, score);
                 user.getEntryStack().push(date);
                 break;
+
+                
+            case "remove" :
+                sql = "DELETE FROM Scores WHERE `username` = '" + user.getName()
+                + "' AND `score` = " + score + " AND `date` = '" + date  +  "';";
+                user.getScoreMap().remove(date);
+                user.getEntryStack().remove(date);
+                break;
+                
+            case "update date": 
+                
+                
+                
+                
+                
         }
+                st.executeUpdate(sql);
+
     }
+    
+   
     
     
     public void oldAddRemoveEntry(String query) throws SQLException{    
-        
+        //TODO: find where it is in code and make obsolete
         
         
         
@@ -84,6 +109,8 @@ public class userUtils {
         
     }; // add or remove based on the type
 
+   
+    
     public ResultSet selectEntries(String query) throws SQLException{
         System.out.println("query to execute: " + query);
         return st.executeQuery(query);
