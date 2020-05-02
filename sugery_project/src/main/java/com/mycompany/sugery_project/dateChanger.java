@@ -45,7 +45,7 @@ public class dateChanger extends javax.swing.JFrame {
                + this.oldDate + "';";
 
             try {
-                entryTable.addRemoveEntry(sql);
+                entryTable.oldAddRemoveEntry(sql);
             } catch (SQLException ex) {
                 Logger.getLogger(dateChanger.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -62,7 +62,7 @@ public class scoreAnalizer extends JPanel implements MouseListener, MouseMotionL
    public scoreAnalizer(User usr) { 
        //TODO labels not drawn to scale
        this.user = usr;
-       for(Map.Entry e : this.user.getHM().entrySet()){
+       for(Map.Entry e : this.user.getScoreMap().entrySet()){
            scores.add((Integer)e.getValue());
            dates.add((String)e.getKey()); 
        }

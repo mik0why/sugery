@@ -164,7 +164,7 @@ public class singleScoreDisplay extends javax.swing.JFrame implements Observer{
         
         if(o == this.user){
             scoreValueField.setText(Integer.toString(
-                    this.user.getHM().get(this.user.getEntryStack().peek())));
+                    this.user.getScoreMap().get(this.user.getEntryStack().peek())));
             dateField.setText(this.user.getEntryStack().peek());
             
         }

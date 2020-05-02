@@ -48,7 +48,36 @@ public class userUtils {
  
     //SQL methods
        
-    public void addRemoveEntry(String query) throws SQLException{        
+    public void addRemoveEntry(User user, String date, int score, String mode) throws SQLException{
+        
+        String sql = "UPDATE Scores SET score = " + score
+        + " where username = " + '\'' +  user.getName() + "' AND date = '"
+        + date + "';";
+
+        st.executeUpdate(sql);
+        
+        switch(mode){
+            case "update": 
+                user.getScoreMap().replace(date, score);
+                user.getEntryStack().remove(date);
+                user.getEntryStack().push(date);
+                break;
+            case "add":
+                user.getScoreMap().put(date, score);
+                user.getEntryStack().push(date);
+                break;
+        }
+    }
+    
+    
+    public void oldAddRemoveEntry(String query) throws SQLException{    
+        
+        
+        
+        
+        
+        
+        
         
         System.out.println(query);
         st.executeUpdate(query);
@@ -56,6 +85,7 @@ public class userUtils {
     }; // add or remove based on the type
 
     public ResultSet selectEntries(String query) throws SQLException{
+        System.out.println("query to execute: " + query);
         return st.executeQuery(query);
 
         
@@ -64,16 +94,16 @@ public class userUtils {
     ////
     
     public int getLastScore(User user){
-        return user.getHM().lastEntry().getValue(); 
+        return user.getScoreMap().lastEntry().getValue(); 
     }
     
     public String getLastDate(User user){
-        return user.getHM().lastKey(); 
+        return user.getScoreMap().lastKey(); 
     }
     
     public int averageScore(User user){
         int max = Integer.MIN_VALUE; 
-        for(Map.Entry <String, Integer> e : user.getHM().entrySet()){
+        for(Map.Entry <String, Integer> e : user.getScoreMap().entrySet()){
             if (e.getValue() > max) max = e.getValue();
             }
         return max; 
@@ -94,8 +124,8 @@ public class userUtils {
                     dateFormat.parse("0000-01-01 00:00:00") : d2; 
 
             
-            System.out.println("entry set: " + user.getHM().entrySet());
-            for(Map.Entry<String, Integer> e : user.getHM().entrySet()){
+            System.out.println("entry set: " + user.getScoreMap().entrySet());
+            for(Map.Entry<String, Integer> e : user.getScoreMap().entrySet()){
                 if(dateFormat.parse(e.getKey()).compareTo(date) > 0 ){
                     sum+=e.getValue();
                     counter++;

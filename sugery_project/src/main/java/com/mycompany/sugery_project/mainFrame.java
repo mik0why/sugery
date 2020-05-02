@@ -369,7 +369,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         
         if(!sc.isVisible()){
             //scoreField.setText(Integer.toString(sc.user.getUsArr().get(0).result));
-            scoreField.setText(this.user.getHM().lastKey());
+            scoreField.setText(this.user.getScoreMap().lastKey());
         }
       
         
@@ -539,9 +539,13 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) { //TODO fix (not sure if this or other method)
         if(o == this.user){ // checking if it's one from many im assuming
-            int recentScore = this.user.getHM().lastEntry().getValue(); 
-            scoreField.setText(this.user.getHM().lastEntry().getValue().toString());
-            dateField.setText("Last Score Registered At: "+ this.user.getHM().lastKey()); // or last entry
+            scoreField.setText(this.user.getScoreMap().lastEntry().getValue().toString());
+            dateField.setText("Last Score Registered At: "+ this.user.getScoreMap().lastKey()); // or last entry
+            
+            
+            
+            
+            
            // weekAvg.setText(this.user.displayAnalysis("week").get(1));
            // monthAvg.setText(this.user.displayAnalysis("month").get(1));
             evaluateScore(this.user.getGoal());

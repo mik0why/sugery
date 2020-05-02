@@ -330,7 +330,7 @@ public class scoreScreen extends javax.swing.JFrame  { //
               + " where username = " + '\'' +  this.user.getName() + "' AND date = '"
                + this.date + "';";
 
-            dataTable.addRemoveEntry(sql);
+            dataTable.oldAddRemoveEntry(sql); // should be within modifyScoreValue
 
             this.user.modifyScoreValue(this.date, 
                         Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
@@ -341,9 +341,9 @@ public class scoreScreen extends javax.swing.JFrame  { //
                     + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
             + ","+ '\'' +  dateFormat.format(curr_date)  +  "');" ;
             
-            dataTable.addRemoveEntry(sql);
+            dataTable.oldAddRemoveEntry(sql);
 
-            this.user.HM_Insert(dateFormat.format(curr_date).toString(), 
+            this.user.addScore(dateFormat.format(curr_date).toString(), 
                     Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
 
         }

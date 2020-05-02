@@ -128,7 +128,7 @@ class User extends Observable implements Serializable{
         return !scoreMap.isEmpty(); 
     }
     
-    public TreeMap<String, Integer> getHM(){ //TODO should it be private?
+    public TreeMap<String, Integer> getScoreMap(){ //TODO should it be private?
         return (TreeMap<String, Integer>) scoreMap;   
     }
         
@@ -141,27 +141,27 @@ class User extends Observable implements Serializable{
 
     public int getMinScoreValue(){
         int min = Integer.MAX_VALUE; 
-        for(Entry <String, Integer> e : this.getHM().entrySet()){
+        for(Entry <String, Integer> e : this.getScoreMap().entrySet()){
             if (e.getValue() < min) min = e.getValue();
         }
         return min; 
     }        
         
     
-    public void HM_Insert(String date, int score){
-        this.scoreMap.put(date, score);
-        this.mostRecentEntries.push(date);
+    
+    public void addScore(String date, int score) throws SQLException{
+        
+        utils.addRemoveEntry(this, date, score, "add");
         setChanged(); //TODO: what it do?
         notifyObservers();
     }
     
-    public void modifyScoreValue(String date, int score){
-        this.scoreMap.replace(date, score);
-        this.mostRecentEntries.remove(date);
-        this.mostRecentEntries.push(date);
+    public void modifyScoreValue(String date, int score) throws SQLException{
+        utils.addRemoveEntry(this, date, score, "update");
         setChanged();
         notifyObservers();
-    }
+  
+}
     
 
    public void modifyScoreDate(String oldDate, String newDate){
@@ -207,7 +207,7 @@ class User extends Observable implements Serializable{
         String username;
         int score;
         String dt;
-        System.out.println("before : " + this.getHM().size());
+        System.out.println("before : " + this.getScoreMap().size());
             try{
                 String sql = "SELECT username, score, date FROM Scores";
                 ResultSet rs = utils.selectEntries(sql); //st.executeQuery(sql);
@@ -215,13 +215,17 @@ class User extends Observable implements Serializable{
                     username = rs.getString("username");
                     score = rs.getInt("score");
                     dt = rs.getString("date"); // convert to a different format?  // below check : && us_pass.equals(String.copyValueOf(password))){
+                    System.out.println("username : " + username + " this name : " + this.getName());
                     if(username.equals(this.getName())){                    //TODO should check if the score isn't already in the usArr
-                        if(!this.getHM().containsKey(dt)){ // checks the date
-                            this.HM_Insert(dt, score);
-                            }
+                        if(!this.getScoreMap().containsKey(dt)){ // checks the date
+                            System.out.println("add score"); 
+                            //this.addScore(dt, score); //test : these 2 lines
+                            this.getScoreMap().put(dt, score);
+                            this.getEntryStack().push(dt);    
+                        }
                         }
                     }
-                System.out.println("size of the result set: " + rs.getRow() +", " + this.getHM().size());
+                System.out.println("size of the result set: " + rs.getRow() +", " + this.getScoreMap().size());
             }catch(Exception e){
                 System.out.println("Exception: " + e);
         }
