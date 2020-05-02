@@ -78,15 +78,6 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         
     }
     
-    
-    
-    private void dbRemove(String date, String score) throws ClassNotFoundException, SQLException{
-        String sql = "DELETE FROM Scores WHERE `username` = '" + this.user.getName()
-                + "' AND `score` = " + score + " AND `date` = '" + date  +  "';";
-        //dataTable.oldAddRemoveEntry(sql);
-        user.removeScore(date, Integer.parseInt(score));
-       // this.user.getHM().remove(date);
-    }
 
     
     /**
@@ -244,20 +235,16 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         //TODO what if there are no scores loaded?
         if(!scoreTable.getSelectionModel().isSelectionEmpty()){
             try {
-                dbRemove(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 0).toString(),  
-                        scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1).toString());
-                
-                
-                
-                //((DefaultTableModel)scoreTable.getModel()).removeRow(scoreTable.getSelectedRow());
+                //int score = scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1));
+                user.removeScore(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 0).toString(),  
+                            Integer.parseInt(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1).toString()));
+
                 pullScores();
 
                 //TODO: idk why there's an exception here
                //  updateScores(user.getAverage("all")); TODO idk if necessary
                 // need to do the same with adding to the array
                 scoreTable.requestFocus(); 
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(scoreArchive.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex) {
