@@ -46,40 +46,8 @@ public class userUtils {
     }
     
  
-   
-    
-    public void getScoreMap() { //reeMap<String, Integer> getScoreHashMap(){
-        NavigableMap<String, Integer> scoreMap = new TreeMap<String, Integer>(); //= new HashMap<String,Integer>();
-
-        /*
-        String username;
-        int score;
-        String dt; 
-            try{
-            String sql = "SELECT username, score, date FROM Scores";
-            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
-            while(rs.next()){ // TODO shouldn't it be select from where?
-                username = rs.getString("username");
-                score = rs.getInt("score");
-                dt = rs.getString("date"); // convert to a different format?  // below check : && us_pass.equals(String.copyValueOf(password))){
-                if(username.equals(this.getName())){                    //TODO should check if the score isn't already in the usArr
-                    if(!this.getHM().containsKey(dt)){ // checks the date
-                        this.HM_Insert(dt, score);
-                        }
-                    }
-                }
-            }catch(Exception e){
-                System.out.println("Exception: " + e);
-        }
-        
-        */
-        
-        
-        
-        
-    }
-    
-    
+    //SQL methods
+       
     public void addRemoveEntry(String query) throws SQLException{        
         
         System.out.println(query);
@@ -93,15 +61,17 @@ public class userUtils {
         
     }
     
+    ////
+    
     public int getLastScore(User user){
         return user.getHM().lastEntry().getValue(); 
     }
     
-    public String userLastDate(User user){
+    public String getLastDate(User user){
         return user.getHM().lastKey(); 
     }
     
-    public int userMaxScore(User user){
+    public int averageScore(User user){
         int max = Integer.MIN_VALUE; 
         for(Map.Entry <String, Integer> e : user.getHM().entrySet()){
             if (e.getValue() > max) max = e.getValue();

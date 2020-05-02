@@ -48,7 +48,8 @@ class User extends Observable implements Serializable{
     
     //TODO: get rid of 'public', other minor changes
     //TODO getters and setters for user
-        
+    //TODO should userUtils be private?
+    
     */
     
     
@@ -106,7 +107,7 @@ class User extends Observable implements Serializable{
         return utils.getLastScore(this); 
     }
     
-    public int getAverage(String period) throws ParseException{ //TODO needs to be int
+    public int getAverage(String period) throws ParseException{ 
         return utils.computeAverageScore(this, period, "average"); // can also be "sum" to display the sum
     }
 
@@ -116,14 +117,14 @@ class User extends Observable implements Serializable{
 
     
     public String getdateOfLastUpdate(){
-        return utils.userLastDate(this); 
+        return utils.getLastDate(this); 
     }
     
     public int getMaxScoreValue(){; 
-       return utils.userMaxScore(this);
+       return utils.averageScore(this);
     }
     
-    public boolean registeredAnyScore(){
+    public boolean isAnyScoreRegistered(){
         return !scoreMap.isEmpty(); 
     }
     
@@ -154,7 +155,7 @@ class User extends Observable implements Serializable{
         notifyObservers();
     }
     
-    public void HM_Replace(String date, int score){
+    public void modifyScoreValue(String date, int score){
         this.scoreMap.replace(date, score);
         this.mostRecentEntries.remove(date);
         this.mostRecentEntries.push(date);
@@ -163,7 +164,7 @@ class User extends Observable implements Serializable{
     }
     
 
-   public void HM_Replace_Key(String oldDate, String newDate){
+   public void modifyScoreDate(String oldDate, String newDate){
        int value = this.scoreMap.remove(oldDate);
        this.scoreMap.put(newDate, value);
        this.mostRecentEntries.remove(oldDate);

@@ -50,7 +50,7 @@ public class dateChanger extends javax.swing.JFrame {
                 Logger.getLogger(dateChanger.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-           this.user.HM_Replace_Key(this.oldDate, date); // or befoer caling entryTable
+           this.user.modifyScoreDate(this.oldDate, date); // or befoer caling entryTable
            // this.user.HM_Replace(this.date, 
   //          Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
            

@@ -493,7 +493,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         ageField.setText("age : " + user.getAge());
         goalField.setText("goal : " + user.getGoal()); 
         
-        if(user.registeredAnyScore()){ 
+        if(user.isAnyScoreRegistered()){ 
                scoreField.setText(Integer.toString(user.getMostRecentScore()));
                dateField.setText(user.getdateOfLastUpdate());
                weekAvg.setText(Integer.toString(user.getAverage("week")));

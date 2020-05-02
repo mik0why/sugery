@@ -332,7 +332,7 @@ public class scoreScreen extends javax.swing.JFrame  { //
 
             dataTable.addRemoveEntry(sql);
 
-            this.user.HM_Replace(this.date, 
+            this.user.modifyScoreValue(this.date, 
                         Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
             
         }else{
