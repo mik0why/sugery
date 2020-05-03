@@ -419,31 +419,13 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_scoreFieldPropertyChange
 
     private void allScButKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_allScButKeyPressed
-        /*
-        if(evt.getKeyCode() == 13){ // not working?
-                scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
-            sa.setVisible(true);
-            try {
-                sa.displayScores();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } */
-        // TODO add your handling code here:
+ 
     }//GEN-LAST:event_allScButKeyPressed
 
     private void scAnalyzeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scAnalyzeActionPerformed
         scoreAnalizer scAn = new scoreAnalizer(this.user); // changed score to scores
         scAn.createAndShowGui();
-        
-        
-        
-        
-        
+ 
     }//GEN-LAST:event_scAnalyzeActionPerformed
 
     private void logoutKeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutKeyActionPerformed
