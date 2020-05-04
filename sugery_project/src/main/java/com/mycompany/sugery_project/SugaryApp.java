@@ -141,7 +141,7 @@ class User extends Observable implements Serializable{
         
     public void addScore(String date, int score) throws SQLException{        
         utils.addRemoveEntry(this, date, score, "add");
-        setChanged(); //TODO: what it do?
+        setChanged();
         notifyObservers();
     }
     
@@ -203,37 +203,3 @@ class User extends Observable implements Serializable{
     
 }
 
-class Score extends Observable{ // necessary?
-    
-    int result;
-    Date date;
-    
-    
-        Score(int res, Date dt){
-            this.result = res;
-            this.date = dt;
-    }
-    
-        int getScoreValue(){
-            return result;
-    }
-    
-        Date getScoreDate(){
-            return date;
-    }
-    
-        void setScoreValue(int val){
-            this.result = val;
-
-    }
-    
-        void setDateAdd(Date dt){
-            this.date = dt;
-    }
-    
-        Integer toString(Score sc){
-            return sc.getScoreValue();
-    }
-    
-    
-}
