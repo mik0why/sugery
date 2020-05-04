@@ -74,7 +74,6 @@ class User extends Observable implements Serializable{
         this.goal = goal;
         
         utils = new userUtils(); 
-        
         loadScores();
     }
      
@@ -153,7 +152,7 @@ class User extends Observable implements Serializable{
     
     
     public void modifyScoreValue(String date, int score) throws SQLException{
-        utils.addRemoveEntry(this, date, score, "update score");
+        utils.addRemoveEntry(this, date, score, "update");
         setChanged();
         notifyObservers();
   

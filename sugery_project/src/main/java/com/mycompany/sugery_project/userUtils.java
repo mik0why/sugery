@@ -32,6 +32,7 @@ public class userUtils {
     
     public userUtils(){
         
+        
         try{
             
             
@@ -47,28 +48,32 @@ public class userUtils {
     
  
     //SQL methods
-       
+    private void loadScores(User user){
+        
+        
+    }
+    
+    
+    
     public void addRemoveEntry(User user, String date, int score, String mode) throws SQLException{
         //TODO sql separation  into two commands    
-        String sql = null ;
-
-                sql =  "UPDATE Scores SET score = " + score
+        String sql = "UPDATE Scores SET score = " + score
                     + " where username = " + '\'' +  user.getName() + "' AND date = '"
                     + date + "';";   
         
         switch(mode){
-            case "update score": 
+            case "update": 
                 
-             
+                st.executeUpdate(sql);
                 user.getScoreMap().replace(date, score);
                 user.getEntryStack().remove(date);
                 user.getEntryStack().push(date);
                 break;
-            case "add" :
+            case "add" : //TODO fix the sql
                 //sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
                 //+ user.getName() + '\'' + "," + score
                 //+ ","+ '\'' +  date  +  "');" ; // as of now it's adding the same score twice
-                
+                st.executeUpdate(sql);
                 user.getScoreMap().put(date, score);
                 user.getEntryStack().push(date);
                 break;
@@ -77,6 +82,7 @@ public class userUtils {
             case "remove" :
                 sql = "DELETE FROM Scores WHERE `username` = '" + user.getName()
                 + "' AND `score` = " + score + " AND `date` = '" + date  +  "';";
+                st.executeUpdate(sql);
                 user.getScoreMap().remove(date);
                 user.getEntryStack().remove(date);
                 break;
@@ -87,7 +93,6 @@ public class userUtils {
                 
                 
         }
-                st.executeUpdate(sql);
 
     }
     

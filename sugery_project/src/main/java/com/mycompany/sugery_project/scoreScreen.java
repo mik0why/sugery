@@ -38,6 +38,7 @@ public class scoreScreen extends javax.swing.JFrame  { //
     /**
      * Creates new form scoreScreen
      */
+    
     private User user;
     private boolean updateValue = false; 
     private String date;
@@ -326,30 +327,33 @@ public class scoreScreen extends javax.swing.JFrame  { //
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         if(this.updateValue){
-                sql = "UPDATE Scores SET score = " + scoreField.getText()
+            
+            /*
+               sql = "UPDATE Scores SET score = " + scoreField.getText()
               + " where username = " + '\'' +  this.user.getName() + "' AND date = '"
                + this.date + "';";
-
+             
             dataTable.oldAddRemoveEntry(sql); // should be within modifyScoreValue
-
+            */
             this.user.modifyScoreValue(this.date, 
                         Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
             
         }else{
             Date curr_date = new Date();
+            /*
+            
             sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
                     + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
             + ","+ '\'' +  dateFormat.format(curr_date)  +  "');" ;
             
             dataTable.oldAddRemoveEntry(sql);
-
+            */
+            
             this.user.addScore(dateFormat.format(curr_date).toString(), 
                     Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
 
         }
  
- //       dataTable.addRemoveEntry(sql);
-                
         
     }
 
