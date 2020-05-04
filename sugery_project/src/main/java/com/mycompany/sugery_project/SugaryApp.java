@@ -114,8 +114,9 @@ class User extends Observable implements Serializable{
         return scoreMap.size(); 
     }
 
-    
-//    public EntrySet TODO: method to get the entrySet
+      public Stack<String> getEntryStack(){
+        return this.mostRecentEntries;  
+    }
     
     
     public String getMostRecentDate(){
@@ -126,6 +127,10 @@ class User extends Observable implements Serializable{
        return utils.getMaxScore(this);
     }
     
+    public int getMinScoreValue(){
+        return utils.getMinScore(this);
+    }
+    
     public boolean isAnyScoreRegistered(){
         return !scoreMap.isEmpty(); 
     }
@@ -134,10 +139,7 @@ class User extends Observable implements Serializable{
         return (TreeMap<String, Integer>) scoreMap;   
     }
         
-    
-    
-      public void addScore(String date, int score) throws SQLException{
-        
+    public void addScore(String date, int score) throws SQLException{        
         utils.addRemoveEntry(this, date, score, "add");
         setChanged(); //TODO: what it do?
         notifyObservers();
@@ -159,31 +161,14 @@ class User extends Observable implements Serializable{
     
 
    public void modifyScoreDate(String oldDate, String newDate) throws SQLException{
-       
        utils.updateDate(this, oldDate, newDate);
        setChanged();
        notifyObservers();
-       
-
-
    }
    
    //*****************
      
-    public Stack<String> getEntryStack(){
-        return this.mostRecentEntries;  
-    }
-    
-
-    public int getMinScoreValue(){
-        int min = Integer.MAX_VALUE; 
-        for(Entry <String, Integer> e : this.getScoreMap().entrySet()){
-            if (e.getValue() < min) min = e.getValue();
-        }
-        return min; 
-    }        
-        
-    
+  
     
   
     
@@ -218,7 +203,7 @@ class User extends Observable implements Serializable{
     
 }
 
-class Score extends Observable{
+class Score extends Observable{ // necessary?
     
     int result;
     Date date;
