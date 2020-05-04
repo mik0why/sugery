@@ -35,29 +35,14 @@ public class dateChanger extends javax.swing.JFrame {
         prefilFields(); 
     }
 
-    private void modifyDate() throws ParseException{
+    private void modifyDate() throws ParseException, SQLException{
 
-              String newDate = composeDate(); 
-        //      user.modifyScoreDate(oldDate, newDate);
-              
-              String sql = "UPDATE Scores SET date = '" + newDate
-              + "' where username = " + '\'' +  this.user.getName() + "' AND date = '"
-               + this.oldDate + "';";
+       String newDate = composeDate(); 
+       user.modifyScoreDate(oldDate, newDate); // or before caling entryTable
 
-            try {
-                entryTable.oldAddRemoveEntry(sql);
-            } catch (SQLException ex) {
-                Logger.getLogger(dateChanger.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-           this.user.modifyScoreDate(this.oldDate, newDate); // or before caling entryTable
-           // this.user.HM_Replace(this.date, 
-  //          Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
-           
     }
     
     private String composeDate() throws ParseException{
-           //Date date = new Date();
            String userDate = new String();
            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
            try{
@@ -67,9 +52,6 @@ public class dateChanger extends javax.swing.JFrame {
            }catch(IllegalFormatException e){ //or ParseException?
                System.out.println("Illegal format!"); //TODO output in a jframe
            }
-        
-        
-        
            return userDate; 
     }
     
@@ -257,6 +239,8 @@ public class dateChanger extends javax.swing.JFrame {
             try {
                 modifyDate();
             } catch (ParseException ex) {
+                Logger.getLogger(dateChanger.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
                 Logger.getLogger(dateChanger.class.getName()).log(Level.SEVERE, null, ex);
             }
  

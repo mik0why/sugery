@@ -140,12 +140,20 @@ public class userUtils {
         return user.getScoreMap().lastKey(); 
     }
     
-    public int averageScore(User user){
+    public int getMaxScore(User user){
         int max = Integer.MIN_VALUE; 
         for(Map.Entry <String, Integer> e : user.getScoreMap().entrySet()){
             if (e.getValue() > max) max = e.getValue();
             }
         return max; 
+    }
+    
+    public int getMinScore(User user){
+        int min = Integer.MAX_VALUE; 
+        for(Map.Entry <String, Integer> e : user.getScoreMap().entrySet()){
+            if (e.getValue() < min) min = e.getValue();
+            }
+        return min; 
     }
     
     public int computeAverageScore(User user, String range, String mode) throws ParseException{

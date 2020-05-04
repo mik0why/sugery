@@ -123,7 +123,7 @@ class User extends Observable implements Serializable{
     }
     
     public int getMaxScoreValue(){; 
-       return utils.averageScore(this);
+       return utils.getMaxScore(this);
     }
     
     public boolean isAnyScoreRegistered(){
