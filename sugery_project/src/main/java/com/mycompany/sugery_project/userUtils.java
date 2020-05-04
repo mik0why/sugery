@@ -70,9 +70,9 @@ public class userUtils {
                 user.getEntryStack().push(date);
                 break;
             case "add" : //TODO fix the sql
-                //sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
-                //+ user.getName() + '\'' + "," + score
-                //+ ","+ '\'' +  date  +  "');" ; // as of now it's adding the same score twice
+                sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
+                + user.getName() + '\'' + "," + score
+                + ","+ '\'' +  date  +  "');" ; // as of now it's adding the same score twice
                 st.executeUpdate(sql);
                 user.getScoreMap().put(date, score);
                 user.getEntryStack().push(date);
