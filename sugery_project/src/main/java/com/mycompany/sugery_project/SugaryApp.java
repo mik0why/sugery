@@ -114,10 +114,6 @@ class User extends Observable implements Serializable{
         return scoreMap.size(); 
     }
 
-    public void modifyEntryDate(String oldDate, String newDate){
-        
-        
-    }
     
 //    public EntrySet TODO: method to get the entrySet
     
@@ -138,24 +134,9 @@ class User extends Observable implements Serializable{
         return (TreeMap<String, Integer>) scoreMap;   
     }
         
-   //*****************
-     
-    public Stack<String> getEntryStack(){
-        return this.mostRecentEntries;  
-    }
-    
-
-    public int getMinScoreValue(){
-        int min = Integer.MAX_VALUE; 
-        for(Entry <String, Integer> e : this.getScoreMap().entrySet()){
-            if (e.getValue() < min) min = e.getValue();
-        }
-        return min; 
-    }        
-        
     
     
-    public void addScore(String date, int score) throws SQLException{
+      public void addScore(String date, int score) throws SQLException{
         
         utils.addRemoveEntry(this, date, score, "add");
         setChanged(); //TODO: what it do?
@@ -177,44 +158,41 @@ class User extends Observable implements Serializable{
 }
     
 
-   public void modifyScoreDate(String oldDate, String newDate){
+   public void modifyScoreDate(String oldDate, String newDate) throws SQLException{
        
-       int value = this.scoreMap.remove(oldDate);
-       this.scoreMap.put(newDate, value);
-       this.mostRecentEntries.remove(oldDate);
-       this.mostRecentEntries.push(newDate);
+       utils.updateDate(this, oldDate, newDate);
        setChanged();
        notifyObservers();
        
 
 
    }
-    
-
-    
- 
-    
-    public ResultSet sqlConnect(String date, int score, int mode){
-        ResultSet rs = null ;
-        
-        //idk if the mode variable necessary since the SQL query itself determines the operation type
-        //i guess at the end bc we don't return anything at deletion?
-        if(mode == 0){ // deletion
-            return null; 
-        }
-        
-        
-        return rs; 
+   
+   //*****************
+     
+    public Stack<String> getEntryStack(){
+        return this.mostRecentEntries;  
     }
     
-        
+
+    public int getMinScoreValue(){
+        int min = Integer.MAX_VALUE; 
+        for(Entry <String, Integer> e : this.getScoreMap().entrySet()){
+            if (e.getValue() < min) min = e.getValue();
+        }
+        return min; 
+    }        
         
     
-    private void loadScores(){
+    
+  
+    
+    
+    private void loadScores(){ 
+        //TODO needs to be replaced (move to sql class)
         String username;
         int score;
         String dt;
-        System.out.println("before : " + this.getScoreMap().size());
             try{
                 String sql = "SELECT username, score, date FROM Scores";
                 ResultSet rs = utils.selectEntries(sql); //st.executeQuery(sql);
@@ -225,14 +203,11 @@ class User extends Observable implements Serializable{
                     System.out.println("username : " + username + " this name : " + this.getName());
                     if(username.equals(this.getName())){                    //TODO should check if the score isn't already in the usArr
                         if(!this.getScoreMap().containsKey(dt)){ // checks the date
-                            System.out.println("add score"); 
-                            //this.addScore(dt, score); //test : these 2 lines
                             this.getScoreMap().put(dt, score);
                             this.getEntryStack().push(dt);    
                         }
                         }
                     }
-                System.out.println("size of the result set: " + rs.getRow() +", " + this.getScoreMap().size());
             }catch(Exception e){
                 System.out.println("Exception: " + e);
         }

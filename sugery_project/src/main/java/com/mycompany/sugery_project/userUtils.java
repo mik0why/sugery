@@ -81,8 +81,7 @@ public class userUtils {
                 user.getEntryStack().remove(date);
                 break;
                 
-            case "update date": 
-                
+
                 
                 
                 
@@ -93,7 +92,20 @@ public class userUtils {
     }
     
    
-    
+    public void updateDate(User user, String oldDate, String newDate) throws SQLException{
+            String sql = "UPDATE Scores SET date = '" + newDate
+           + "' where username = " + '\'' +  user.getName() + "' AND date = '"
+           + oldDate + "';";
+        
+            st.execute(sql);
+               
+            int value = user.getScoreMap().remove(oldDate);
+            user.getScoreMap().put(newDate, value);
+            user.getEntryStack().remove(oldDate);
+            user.getEntryStack().push(newDate);
+        
+        
+    }
     
     public void oldAddRemoveEntry(String query) throws SQLException{    
         //TODO: find where it is in code and make obsolete
