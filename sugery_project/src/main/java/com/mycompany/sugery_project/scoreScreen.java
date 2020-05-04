@@ -4,29 +4,19 @@
  * and open the template in the editor.
  */
 package com.mycompany.sugery_project;
-
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
-import java.lang.Object;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.lang.String;
-import javax.swing.JCheckBox;
 
 
+//TODO what if instead of adding & updating, first we would have an operation to see whether
+// there is a particular entry in the SQL table, and then operate on it?
+// but if modifying two values at once it would be hard to figure out what's being updated
 /**
  *
  * @author mikowhy
@@ -49,11 +39,11 @@ public class scoreScreen extends javax.swing.JFrame  { //
         super.setFocusTraversalKeysEnabled(focusTraversalKeysEnabled); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public scoreScreen(User usr, boolean updateValue, String date) { // change usr to string
+    public scoreScreen(User usr, boolean updateValue, String dateToUpdate) { //TODO remove updateValue
         initComponents();
         this.user = usr;
         this.updateValue = updateValue;
-        this.date= date; 
+        this.date= dateToUpdate; 
     }
 
     private void keyPressed(java.awt.event.KeyEvent e){
@@ -323,35 +313,14 @@ public class scoreScreen extends javax.swing.JFrame  { //
         TODO check if score not already in the HT (retrieve the lastElement)
         */
         
-        String sql = new String();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         if(this.updateValue){
-            
-            /*
-               sql = "UPDATE Scores SET score = " + scoreField.getText()
-              + " where username = " + '\'' +  this.user.getName() + "' AND date = '"
-               + this.date + "';";
-             
-            dataTable.oldAddRemoveEntry(sql); // should be within modifyScoreValue
-            */
             this.user.modifyScoreValue(this.date, 
                         Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
-            
         }else{
             Date curr_date = new Date();
-            /*
-            
-            sql = "INSERT INTO `Scores` (`username`, `score`, `date`) VALUES ('"
-                    + this.user.getName() + '\'' + "," + Integer.parseInt(scoreField.getText().replaceAll("\\s+","")) 
-            + ","+ '\'' +  dateFormat.format(curr_date)  +  "');" ;
-            
-            dataTable.oldAddRemoveEntry(sql);
-            */
-            
             this.user.addScore(dateFormat.format(curr_date).toString(), 
                     Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
-
         }
  
         

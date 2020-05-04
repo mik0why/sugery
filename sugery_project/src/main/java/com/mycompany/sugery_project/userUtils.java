@@ -56,14 +56,12 @@ public class userUtils {
     
     
     public void addRemoveEntry(User user, String date, int score, String mode) throws SQLException{
-        //TODO sql separation  into two commands    
         String sql = "UPDATE Scores SET score = " + score
                     + " where username = " + '\'' +  user.getName() + "' AND date = '"
                     + date + "';";   
         
         switch(mode){
             case "update": 
-                
                 st.executeUpdate(sql);
                 user.getScoreMap().replace(date, score);
                 user.getEntryStack().remove(date);
@@ -86,14 +84,8 @@ public class userUtils {
                 user.getScoreMap().remove(date);
                 user.getEntryStack().remove(date);
                 break;
-                
-
-                
-                
-                
-                
+      
         }
-
     }
     
    
@@ -112,21 +104,6 @@ public class userUtils {
         
     }
     
-    public void oldAddRemoveEntry(String query) throws SQLException{    
-        //TODO: find where it is in code and make obsolete
-        
-        
-        
-        
-        
-        
-        
-        System.out.println(query);
-        st.executeUpdate(query);
-        
-    }; // add or remove based on the type
-
-   
     
     public ResultSet selectEntries(String query) throws SQLException{
         System.out.println("query to execute: " + query);
