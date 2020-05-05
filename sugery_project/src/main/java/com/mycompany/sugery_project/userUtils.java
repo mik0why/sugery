@@ -53,6 +53,27 @@ public class userUtils {
         
     }
     
+    public User getUser(String username){
+        
+        String user = ""; 
+        int age = Integer.MIN_VALUE; 
+        int goal = Integer.MIN_VALUE;
+        try{
+            String sql = "SELECT * FROM UserData WHERE username = '" + username + "';";
+            ResultSet rs = st.executeQuery(sql); //st.executeQuery(sql);
+            rs.next(); // omitting the first one
+            user = rs.getString("username");
+            age = rs.getInt("age");
+            goal = rs.getInt("goal");
+            System.out.println("User-2 : " + user + " age: " + age + " goal : " + goal);
+            }catch(Exception e){
+                System.out.println("Exception: " + e);
+        }
+        return new User(user, age, goal); // TODO change
+        
+        
+    
+    }
     
     
     public void addRemoveEntry(User user, String date, int score, String mode) throws SQLException{

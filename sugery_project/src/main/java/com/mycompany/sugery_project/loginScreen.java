@@ -27,12 +27,12 @@ public class loginScreen extends javax.swing.JFrame {
      * Creates new form loginScreen
      */
     private sqlManager dataTable = new sqlManager(); 
-    //private userUtils dataTable = new userUtils();
     mainFrame mf; // TODO needs to be fixed (what exactly?)
     configJFrame jf = new configJFrame(); 
    
     ArrayList<User> usData = new ArrayList<User>(); // TODO: remove
-    
+    sqlManager sq = new sqlManager(); 
+    userUtils utils = new userUtils(); 
 
     boolean focusTraversalKeysEnabled = false;
     @Override
@@ -380,41 +380,15 @@ public class loginScreen extends javax.swing.JFrame {
                 System.out.println("Exception: " + e);
         }
         if(usrFound){ 
-            mf = new mainFrame(fetchUser(userField.getText())); // instead of user; TODO change the method definition; old: get user from db (TODO change which one)
+            mf = new mainFrame(utils.getUser(userField.getText())); 
             this.setVisible(false);
             mf.setVisible(true);
-            //TODO change here
             mf.displayUserData(usData, usrIdx); // replace with proper arguments (TODO change the parameter)
-           /* usData.add(new User(login, 22, 100)); // get rid of
-            mf = new mainFrame(usData.get(usrIdx)); //TODO change the method definition; old: get user from db (TODO change which one)
-            mf.setVisible(true);
-            mf.displayUserData(usData, usrIdx); // replace with proper arguments (TODO change the parameter)
-            this.setVisible(false); */
         }else{ // no user found in the database
                 logErrorField.setText("Incorrect username or password :(");
         }
     }
-    
-    public User fetchUser(String username){ // Connect to the Database.  Fetch the details relevant to the user
-     String user = ""; 
-     int age = Integer.MIN_VALUE; 
-     int goal = Integer.MIN_VALUE;
-        try{
-            String sql = "SELECT * FROM UserData WHERE username = '" + username + "';";
-            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
-            rs.next(); // omitting the first one
-            user = rs.getString("username");
-            age = rs.getInt("age");
-            goal = rs.getInt("goal");
-            System.out.println("User-2 : " + user + " age: " + age + " goal : " + goal);
-            //update_ht(); 
-            }catch(Exception e){
-                System.out.println("Exception: " + e);
-        }
-        return new User(user, age, goal); // TODO change
-    }
-    
-    
+        
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -436,18 +410,3 @@ public class loginScreen extends javax.swing.JFrame {
     private javax.swing.JTextField userField;
     // End of variables declaration//GEN-END:variables
 }
-            
-            
-            
-            // find the user in the al 
-            /* TODO: commented for now, might be used
-            for (User us : usData){ // need to always access the same al
-                System.out.println(us.first);
-                if(login.equals(us.first)){ //todo one user with one name
-                    usrIdx = usData.indexOf(login); 
-                    System.out.println(usrIdx); 
-                    // check if name already exists
-                }
-                // find the corresponding user
-                
-            }*/

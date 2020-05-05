@@ -31,6 +31,7 @@ public class sqlManager {
 
     }
     
+        
     
     
         public ResultSet selectEntries(String query) throws SQLException{
