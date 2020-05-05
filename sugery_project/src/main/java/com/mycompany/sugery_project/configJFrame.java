@@ -287,7 +287,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         //TODO text area displays out of bounds
 //        if(userCreate()){ // TODO use "try" instead?
           if(validEntriesCheck()){
-              if(!utils.usernameExists(username)){
+//              if(!utils.usernameExists(username)){ // bug here
                 try{
                   username = nameArea1.getText().replaceAll("\\s+", "");
                   age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
@@ -300,24 +300,23 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
                 }catch(Exception e){ // list the exceptions here
 
                 }
-              }else{
+//              }else{
                    JOptionPane.showMessageDialog(new JFrame("Username Exists!"), "The username already exists.");
-              }
-            }else{
+  //            }
+          }else{
                   //throw an exception here: different JOption based on the exception; check the HT (what for?)
-                 System.out.println(tests.entrySet());
+                  
+                  /*
                  for (Entry ent : tests.entrySet()){
-                     System.out.println("entry: " + ent);
-                     System.out.println("value: " + ent.getValue());
                       if(!(Boolean)ent.getValue()){ // == false){
                         JOptionPane.showMessageDialog(new JFrame("Problem"), 
                                 ent.getKey() + " incorrectly specified. Please review");
                         }
              
                     }
-    } 
-    
-    }
+                  */
+            } 
+        }
     private void createUsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUsrButtonActionPerformed
         try {
             tryCreatingUser(); // not entirely sure this is correct
@@ -423,9 +422,10 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         inputs.add(goalArea.getText().replaceAll("\\s+",""));
         inputs.add(passField.getPassword().toString());
         
-        verifier.checkConfigData(inputs); //TODO this should be returned
+        return verifier.checkConfigData(inputs); //TODO this should be returned
         
-    //setValFalse; 
+    //setValFalse;
+    /*
         for (Entry e: tests.entrySet()) e.setValue(false); // redundant?
 
 
@@ -454,7 +454,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
                   //JOptionPane.showMessageDialog(new JFrame("Problem"), "Password field empty");
             }
                 return (tests.get("Name") && tests.get("Age") && tests.get("Goal") && tests.get("Password"));
-
+    */
             }
     
     
