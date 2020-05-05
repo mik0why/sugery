@@ -57,6 +57,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     private int goal = -1;
     private ArrayList<User> usArr = new ArrayList<User>(); // idt it should be new
     mainFrame mf ;
+    private userUtils utils = new userUtils(); 
     
     public configJFrame() {
         initComponents();
@@ -281,19 +282,26 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     private void tryCreatingUser() throws ClassNotFoundException, SQLException, ParseException{
             
         //TODO text area displays out of bounds
-        if(userCreate()){
-            //if(userCreate()){ // successful creation (or just without try?)
-            //userCreate();
-            username = nameArea1.getText().replaceAll("\\s+", "");
-            age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
-            goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));        
-                mf = new mainFrame(new User(username, age, goal)); // TODO should there be a new user statement?
-                mf.setVisible(true);
-                this.setVisible(false);
-                mf.displayUserData(usArr, usArr.size()-1); // the most recent one
+//        if(userCreate()){ // TODO use "try" instead?
+          if(validEntriesCheck()){
+              if(!utils.usernameExists(username)){
+                try{
+                  username = nameArea1.getText().replaceAll("\\s+", "");
+                  age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
+                  goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));
+                  utils.addUser(username, age, goal, passField.getPassword());
+                  mf = new mainFrame(new User(username, age, goal)); // TODO should there be a new user statement?
+                  mf.setVisible(true);
+                  this.setVisible(false);
+                  mf.displayUserData(); // the most recent one  
+                }catch(Exception e){ // list the exceptions here
+
+                }
+              }else{
+                   JOptionPane.showMessageDialog(new JFrame("Username Exists!"), "The username already exists.");
+              }
             }else{
-                  //throw an exception here
-                  // check the HT
+                  //throw an exception here: different JOption based on the exception; check the HT (what for?)
                  System.out.println(tests.entrySet());
                  for (Entry ent : tests.entrySet()){
                      System.out.println("entry: " + ent);
@@ -304,23 +312,19 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
                         }
              
                     }
-    } /*catch (ClassNotFoundException ex) {
-        Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (SQLException ex) {
-        Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
-    } */
+    } 
     
     }
     private void createUsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUsrButtonActionPerformed
-    try {
-        tryCreatingUser(); // not entirely sure this is correct
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (SQLException ex) {
-        Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (ParseException ex) {
-        Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            tryCreatingUser(); // not entirely sure this is correct
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_createUsrButtonActionPerformed
 
@@ -337,13 +341,9 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void ageAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageAreaKeyPressed
-        // TODO add your handling code here:
         if (evt.getKeyCode()==9){
             goalArea.requestFocus();
         }
-        
-        //if(evt.getKeyChar()== evt.VK_)
-        //TODO: for shift + tab
     }//GEN-LAST:event_ageAreaKeyPressed
 
     private void goalFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_goalFieldKeyPressed
@@ -403,62 +403,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField9ActionPerformed
 
-    
-    boolean userCreate(){ //usr, age, goal are global (?)
-        boolean success = false;
-        //adding new entries to two tables: LoginData & UserData
-        //TODO: re-do tables(id not necessary?)
-        if(validEntriesCheck()){
-            
-            
-            try{
-            Class.forName("com.mysql.cj.jdbc.Driver"); // may not be necessary?
-            String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
-            Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
-                if(!checkEntries(conn, username)){ // check if the username already exists
-                    usCr(conn, username, passField, age, goal); // add user to login & data tables
-                    success = true; 
-                }else{
-                    //TODO: need to display both connectivity error OR username taken error
-
-                    new JFrame(); 
-                    //errorArea.append("The username already exists!");
-                }
-            }catch(Exception e){
-                System.out.println("Exception: " + e);
-            }
-        }
-        return success;
-    }
-    boolean checkEntries(Connection conn, String user) throws SQLException{
-        //TODO Password Encryption?
-        Statement st = conn.createStatement();
-        String sql = "SELECT username, password FROM LoginData";
-        ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
-            if(rs.getString("username").equals(user)){
-                return true; 
-            }
-        }
-        return false; 
-    }
-    
-    void usCr(Connection conn, String user, JPasswordField passField, int age, int goal) throws SQLException{
-        Statement st = conn.createStatement();
-        char[] password = passField.getPassword();
-        String sql = "INSERT INTO `LoginData` (`username`, `password`) VALUES ('" + user
-               + '\'' + "," + '\'' + String.valueOf(password) + "');" ;
-        String sql_2 = "INSERT INTO `UserData` (`username`, `age`,`goal`) VALUES ('" + user
-                + '\'' + ","  + age + ',' + goal + ");";
-        try{
-            st.executeUpdate(sql); 
-            st.executeUpdate(sql_2); 
-            System.out.println("Succesful insert"); 
-        }catch(SQLException e){
-            System.out.println("Insert unsucessful: " + e);
-        }
-    }
-    
+   
     boolean validEntriesCheck(){
     //TODO: throw an exception, but don't stop the execution    
         
@@ -469,34 +414,34 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     //setValFalse; 
         for (Entry e: tests.entrySet()) e.setValue(false);
 
- 
-    try{
-        username = nameArea1.getText().replaceAll("\\s+", "");
-        if(!username.equals("")) tests.replace("Name", true); //, goalOk
-    }catch(Exception e){
-        //JOptionPane.showMessageDialog(new JFrame("Problem"), "Username field empty");
-    }
-    try{
-        age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
-        if(age > -1) tests.replace("Age", true);
-    }catch(Exception e){
-            //JOptionPane.showMessageDialog(new JFrame("Problem"), "Age field empty?");
-    }
-    try{
-        goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+","")); 
-        if(goal > 0) tests.replace("Goal", true); // or display the other error here?
-    }catch(Exception e){
-          //JOptionPane.showMessageDialog(new JFrame("Problem"), "Goal field empty");
-    }    
-    try{
-        char[] pass= passField.getPassword();
-        if(pass.length > 0) tests.replace("Password", true);
-    }catch(Exception e){
-          //JOptionPane.showMessageDialog(new JFrame("Problem"), "Password field empty");
-    }
-        return (tests.get("Name") && tests.get("Age") && tests.get("Goal") && tests.get("Password"));
-        
-    }
+
+            try{
+                username = nameArea1.getText().replaceAll("\\s+", "");
+                if(!username.equals("")) tests.replace("Name", true); //, goalOk
+            }catch(Exception e){
+                //JOptionPane.showMessageDialog(new JFrame("Problem"), "Username field empty");
+            }
+            try{
+                age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
+                if(age > -1) tests.replace("Age", true);
+            }catch(Exception e){
+                    //JOptionPane.showMessageDialog(new JFrame("Problem"), "Age field empty?");
+            }
+            try{
+                goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+","")); 
+                if(goal > 0) tests.replace("Goal", true); // or display the other error here?
+            }catch(Exception e){
+                  //JOptionPane.showMessageDialog(new JFrame("Problem"), "Goal field empty");
+            }    
+            try{
+                char[] pass= passField.getPassword();
+                if(pass.length > 0) tests.replace("Password", true);
+            }catch(Exception e){
+                  //JOptionPane.showMessageDialog(new JFrame("Problem"), "Password field empty");
+            }
+                return (tests.get("Name") && tests.get("Age") && tests.get("Goal") && tests.get("Password"));
+
+            }
     
     
     /**

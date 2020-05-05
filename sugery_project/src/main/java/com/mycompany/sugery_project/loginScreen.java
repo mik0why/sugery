@@ -383,7 +383,7 @@ public class loginScreen extends javax.swing.JFrame {
             mf = new mainFrame(utils.getUser(userField.getText())); 
             this.setVisible(false);
             mf.setVisible(true);
-            mf.displayUserData(usData, usrIdx); // replace with proper arguments (TODO change the parameter)
+            mf.displayUserData(); // replace with proper arguments (TODO change the parameter)
         }else{ // no user found in the database
                 logErrorField.setText("Incorrect username or password :(");
         }

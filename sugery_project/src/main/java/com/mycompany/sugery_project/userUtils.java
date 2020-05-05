@@ -53,6 +53,21 @@ public class userUtils {
         
     }
     
+    public void addUser(String username, int age, int goal, char[] password) {
+        String sql = "INSERT INTO `LoginData` (`username`, `password`) VALUES ('" + username
+           + '\'' + "," + '\'' + String.valueOf(password) + "');" ;
+        String sql_2 = "INSERT INTO `UserData` (`username`, `age`,`goal`) VALUES ('" + username
+            + '\'' + ","  + age + ',' + goal + ");";
+        try{
+            st.executeUpdate(sql); 
+            st.executeUpdate(sql_2); 
+            System.out.println("Succesful insert"); 
+        }catch(SQLException e){
+            System.out.println("Insert unsucessful: " + e);
+        }
+    }; 
+    
+    
     public User getUser(String username){
         
         String user = ""; 
@@ -73,6 +88,21 @@ public class userUtils {
         
         
     
+    }
+    
+    
+    public boolean usernameExists(String username) throws SQLException{
+        String sql = "SELECT username, password FROM LoginData";
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            if(rs.getString("username").equals(username)){
+                return true; 
+            }
+        }
+        return false; 
+        
+        
+        
     }
     
     

@@ -465,7 +465,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
      */
 
 
-    public void displayUserData(ArrayList<User> al, int idx) throws ClassNotFoundException, SQLException, ParseException{ //TODO change parameters
+    public void displayUserData() throws ClassNotFoundException, SQLException, ParseException{ //TODO change parameters
         //TODO display different stuff based on what time it is
         // when the program is closed (spot that moment)
         
