@@ -30,7 +30,7 @@ public class valueVerifier {
     
     public boolean checkConfigData(ArrayList<String> inputs) throws SQLException{
         
-        //TODO catching exceptions
+        //TODO more precise tests
        String username;
        int age, goal;
        char[] password; 

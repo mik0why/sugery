@@ -33,13 +33,9 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
      */
     
     private User user;
-    private userUtils table = new userUtils();
-    
+    private userUtils table = new userUtils();    
     private ArrayList<JTextField> fields = new ArrayList<JTextField>();
-    //private ArrayList<Integer> scoreAverages = new ArrayList<Integer>();
-// where to move this?
-//    scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
-// TODO usArr seems kinda tedious
+
 
     public mainFrame(User usr) {
         initComponents();
@@ -48,6 +44,21 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
  
         
         
+    }
+    
+    private void addFields(){
+        fields.add(scoreField);   
+        fields.add(weekAvg);
+        fields.add(monthAvg);        
+    }
+    
+    private ArrayList<Integer> getScores(){
+        ArrayList<Integer> scoreAverages = new ArrayList<Integer>();
+        scoreAverages.add(Integer.parseInt(scoreField.getText()));
+        scoreAverages.add(Integer.parseInt(weekAvg.getText()));
+        scoreAverages.add(Integer.parseInt(monthAvg.getText()));
+        return scoreAverages; 
+
     }
 
     /**
@@ -368,8 +379,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         sc.setVisible(true);
         
         if(!sc.isVisible()){
-            //scoreField.setText(Integer.toString(sc.user.getUsArr().get(0).result));
-            scoreField.setText(this.user.getScoreMap().lastKey());
+            scoreField.setText(Integer.toString(user.getMostRecentScore()));
         }
       
         
@@ -398,20 +408,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_allScButActionPerformed
 
     private void allScButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_allScButMouseClicked
-        // TODO add your handling code here:
-       /*
-        scoreArchive sa = new scoreArchive(this.user); // where should this be? it's just a new window
-        sa.setVisible(true);
-        try {
-            sa.displayScores();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
+
     }//GEN-LAST:event_allScButMouseClicked
 
     private void scoreFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_scoreFieldPropertyChange
@@ -465,26 +462,8 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
      */
 
 
-    public void displayUserData() throws ClassNotFoundException, SQLException, ParseException{ //TODO change parameters
-        //TODO display different stuff based on what time it is
-        // when the program is closed (spot that moment)
-        
-        this.user.addObserver(this); 
-        entryText.setText(user.getName() + ".\n"); 
-        ageField.setText("age : " + user.getAge());
-        goalField.setText("goal : " + user.getGoal()); 
-        
-        if(user.isAnyScoreRegistered()){ 
-            scoreField.setText(Integer.toString(user.getMostRecentScore()));
-            dateField.setText(user.getMostRecentDate());
-            weekAvg.setText(Integer.toString(user.getAverage("week")));
-            monthAvg.setText(Integer.toString(user.getAverage("month")));
-            evaluateScore(user.getGoal()); // todo replace with "setFonts"
-        }
 
 
-        }
-   // }
     
     
     
@@ -541,35 +520,25 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
     }
     
     
-    private void addFields(){
-        fields.add(scoreField);   
-        fields.add(weekAvg);
-        fields.add(monthAvg);        
-    }
+
     
-    private void weeklyScoreUpdate() throws SQLException{ // TODO idk what's that
-        ArrayList<String> displayEntries; 
-        LocalDate date = LocalDate.now();
-        int sum = 0, count = 0; 
-        String statement = "SELECT * FROM UserData WHERE username = " + this.user.getName()
-                + "AND date > " + date.minusDays(7);
-        ResultSet rs = table.selectEntries(statement);
-        rs.next(); // TODO check if necessary
-       // displayEntries = scOp.displayAnalysis();
-        // sprawdz jak to sie robi w screenArchive z calosca
-        
-        
-        
-        
-        
+    public void displayUserData() throws ClassNotFoundException, SQLException, ParseException{ //TODO change parameters
+    //TODO display different stuff based on what time it is
+    // when the program is closed (spot that moment)
+
+    this.user.addObserver(this); 
+    entryText.setText(user.getName() + ".\n"); 
+    ageField.setText("age : " + user.getAge());
+    goalField.setText("goal : " + user.getGoal()); 
+
+    if(user.isAnyScoreRegistered()){ 
+        scoreField.setText(Integer.toString(user.getMostRecentScore()));
+        dateField.setText(user.getMostRecentDate());
+        weekAvg.setText(Integer.toString(user.getAverage("week")));
+        monthAvg.setText(Integer.toString(user.getAverage("month")));
+        evaluateScore(user.getGoal()); // todo replace with "setFonts"
     }
-    
-    private ArrayList<Integer> getScores(){
-        ArrayList<Integer> scoreAverages = new ArrayList<Integer>();
-        scoreAverages.add(Integer.parseInt(scoreField.getText()));
-        scoreAverages.add(Integer.parseInt(weekAvg.getText()));
-        scoreAverages.add(Integer.parseInt(monthAvg.getText()));
-        return scoreAverages; 
+
 
     }
     
@@ -603,27 +572,6 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
 
             }
         }
-    }
-    private ResultSet getResults(int mode) throws ClassNotFoundException, SQLException{ //TODO change to ResultSet
-        ResultSet rs = null;
-        Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
-        String url = "jdbc:mysql://localhost/LOG?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; 
-        Connection conn = DriverManager.getConnection(url,"root","Pass123!!!"); 
-        try{
-            Statement st = conn.createStatement();
-            String sql = "SELECT * FROM Scores"; 
-            if(mode == 2){
-                sql = "SELECT * FROM Scores WHERE `username` = " + "'" + this.user.getName() + "' ORDER BY date DESC LIMIT  1;";
-            }
-                    rs =  st.executeQuery(sql);
-        }catch(Exception e){
-            //TODO resize the text
-            scoreField.setText("Connectivity error");
-        }
-
-        return rs; 
-    
-    
     }
     
 }

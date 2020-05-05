@@ -44,6 +44,8 @@ public class scoreScreen extends javax.swing.JFrame  { //
         this.user = usr;
         this.updateValue = updateValue;
         this.date= dateToUpdate; 
+        
+        
     }
 
     private void keyPressed(java.awt.event.KeyEvent e){

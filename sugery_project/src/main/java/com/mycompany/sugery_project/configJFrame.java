@@ -284,10 +284,8 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
 
     private void tryCreatingUser() throws ClassNotFoundException, SQLException, ParseException{
             
-        //TODO text area displays out of bounds
-//        if(userCreate()){ // TODO use "try" instead?
+
           if(validEntriesCheck()){
-//              if(!utils.usernameExists(username)){ // bug here
                 try{
                   username = nameArea1.getText().replaceAll("\\s+", "");
                   age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
@@ -296,7 +294,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
                   mf = new mainFrame(new User(username, age, goal)); // TODO should there be a new user statement?
                   mf.setVisible(true);
                   this.setVisible(false);
-                  mf.displayUserData(); // the most recent one  
+                  mf.displayUserData(); 
                 }catch(Exception e){ // list the exceptions here
 
                 }
@@ -392,55 +390,14 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
 
    
     boolean validEntriesCheck() throws SQLException{
-    //TODO: throw an exception, but don't stop the execution    
-        
-    //TODO invoke this with "while(!vec()) ?
-    //TODO: this check should be more precise (e.g. define the range for age)
-    //TODO why is it redefined here btw?      
-    
+    //TODO: encode the password 
         ArrayList<String> inputs = new ArrayList<String>(); 
-        
-        
-        //TODO need to encode that within the method
         inputs.add(nameArea1.getText().replaceAll("\\s+", ""));
         inputs.add(ageArea.getText().replaceAll("\\s+",""));
         inputs.add(goalArea.getText().replaceAll("\\s+",""));
-        inputs.add(passField.getPassword().toString());
-        
+        inputs.add(passField.getPassword().toString());        
         return verifier.checkConfigData(inputs); //TODO this should be returned
-        
-    //setValFalse;
-    /*
-        for (Entry e: tests.entrySet()) e.setValue(false); // redundant?
-
-
-            try{
-                username = nameArea1.getText().replaceAll("\\s+", "");
-                if(!username.equals("")) tests.replace("Name", true); //, goalOk
-            }catch(Exception e){
-                //JOptionPane.showMessageDialog(new JFrame("Problem"), "Username field empty");
-            }
-            try{
-                age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
-                if(age > -1) tests.replace("Age", true);
-            }catch(Exception e){
-                    //JOptionPane.showMessageDialog(new JFrame("Problem"), "Age field empty?");
-            }
-            try{
-                goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+","")); 
-                if(goal > 0) tests.replace("Goal", true); // or display the other error here?
-            }catch(Exception e){
-                  //JOptionPane.showMessageDialog(new JFrame("Problem"), "Goal field empty");
-            }    
-            try{
-                char[] pass= passField.getPassword();
-                if(pass.length > 0) tests.replace("Password", true);
-            }catch(Exception e){
-                  //JOptionPane.showMessageDialog(new JFrame("Problem"), "Password field empty");
-            }
-                return (tests.get("Name") && tests.get("Age") && tests.get("Goal") && tests.get("Password"));
-    */
-            }
+    }
     
     
     /**
