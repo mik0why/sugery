@@ -58,6 +58,9 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     private ArrayList<User> usArr = new ArrayList<User>(); // idt it should be new
     mainFrame mf ;
     private userUtils utils = new userUtils(); 
+    private valueVerifier verifier = new valueVerifier();
+    //TODO rethink whether this should be an association or composition
+    
     
     public configJFrame() {
         initComponents();
@@ -410,9 +413,20 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     //TODO invoke this with "while(!vec()) ?
     //TODO: this check should be more precise (e.g. define the range for age)
     //TODO why is it redefined here btw?      
-        System.out.println("welcome to entries check");
+    
+        ArrayList<String> inputs = new ArrayList<String>(); 
+        
+        
+        //TODO need to encode that within the method
+        inputs.add(nameArea1.getText().replaceAll("\\s+", ""));
+        inputs.add(ageArea.getText().replaceAll("\\s+",""));
+        inputs.add(goalArea.getText().replaceAll("\\s+",""));
+        inputs.add(passField.getPassword().toString());
+        
+        verifier.checkConfigData(inputs); //TODO this should be returned
+        
     //setValFalse; 
-        for (Entry e: tests.entrySet()) e.setValue(false);
+        for (Entry e: tests.entrySet()) e.setValue(false); // redundant?
 
 
             try{
