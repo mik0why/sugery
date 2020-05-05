@@ -300,22 +300,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
                 }catch(Exception e){ // list the exceptions here
 
                 }
-//              }else{
-                   JOptionPane.showMessageDialog(new JFrame("Username Exists!"), "The username already exists.");
-  //            }
-          }else{
-                  //throw an exception here: different JOption based on the exception; check the HT (what for?)
-                  
-                  /*
-                 for (Entry ent : tests.entrySet()){
-                      if(!(Boolean)ent.getValue()){ // == false){
-                        JOptionPane.showMessageDialog(new JFrame("Problem"), 
-                                ent.getKey() + " incorrectly specified. Please review");
-                        }
-             
-                    }
-                  */
-            } 
+          }
         }
     private void createUsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUsrButtonActionPerformed
         try {
@@ -406,7 +391,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     }//GEN-LAST:event_jTextField9ActionPerformed
 
    
-    boolean validEntriesCheck(){
+    boolean validEntriesCheck() throws SQLException{
     //TODO: throw an exception, but don't stop the execution    
         
     //TODO invoke this with "while(!vec()) ?

@@ -99,10 +99,7 @@ public class userUtils {
                 return true; 
             }
         }
-        return false; 
-        
-        
-        
+        return false;   
     }
     
     

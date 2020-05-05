@@ -5,6 +5,7 @@
  */
 package com.mycompany.sugery_project;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
@@ -18,7 +19,7 @@ import javax.swing.JOptionPane;
 public class valueVerifier {
     private validityTests verifications = new validityTests(); 
     private Hashtable<String, Boolean> tests;
-    private userUtils utils; 
+    private userUtils utils = new userUtils(); 
     
     public boolean checkInputData(){ return true; }
     
@@ -27,37 +28,27 @@ public class valueVerifier {
     
     
     
-    public boolean checkConfigData(ArrayList<String> inputs){
+    public boolean checkConfigData(ArrayList<String> inputs) throws SQLException{
         
         //TODO catching exceptions
        String username;
        int age, goal;
        char[] password; 
-       
        boolean invalidUsername = false; 
        
-        tests = verifications.getConfigTests();
+       tests = verifications.getConfigTests();
         
-        
-        //Actually this shouldn't be try catch? Just go through all of them and then display appropriate messages?
-        //Unless the format is incorrect - then throw an error right away
-        
-        try{
             username = inputs.get(0);
             if(!username.equals("")){
-                if(!utils.usernameExists(username)){
+                if(!utils.usernameExists(username)){ //npe,why?
                     tests.replace("Name", true);
                 }else{
-                   
+                    JOptionPane.showMessageDialog(new JFrame("Username Exists!"), 
+                        "The username already exists.");
+                    invalidUsername = true; 
                 }
             } //, goalOk
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(new JFrame("Username Exists!"), 
-                           "The username already exists.");
-            invalidUsername = true; 
-            
-            
-        }
+        
         try{
             age = Integer.parseInt(inputs.get(1));
             if(age > -1) tests.replace("Age", true);
@@ -71,12 +62,10 @@ public class valueVerifier {
                 
         
         } 
-        try{
+
             password = inputs.get(3).toCharArray(); //TODO idk if that will work
             if(password.length > 0) tests.replace("Password", true);
-            }catch(Exception e){
-                
-        }
+
         
         for (Map.Entry ent : tests.entrySet()){
             if(!(Boolean)ent.getValue()){ 

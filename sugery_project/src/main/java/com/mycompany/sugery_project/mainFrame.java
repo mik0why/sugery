@@ -475,18 +475,11 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
         goalField.setText("goal : " + user.getGoal()); 
         
         if(user.isAnyScoreRegistered()){ 
-               scoreField.setText(Integer.toString(user.getMostRecentScore()));
-               dateField.setText(user.getMostRecentDate());
-               weekAvg.setText(Integer.toString(user.getAverage("week")));
-               monthAvg.setText(Integer.toString(user.getAverage("month")));
-               evaluateScore(user.getGoal()); // todo replace with "setFonts"
-
-
-               
-               /*
-                weekAvg.setText(this.user.displayAnalysis("week").get(1));
-                monthAvg.setText(this.user.displayAnalysis("month").get(1));
-                */
+            scoreField.setText(Integer.toString(user.getMostRecentScore()));
+            dateField.setText(user.getMostRecentDate());
+            weekAvg.setText(Integer.toString(user.getAverage("week")));
+            monthAvg.setText(Integer.toString(user.getAverage("month")));
+            evaluateScore(user.getGoal()); // todo replace with "setFonts"
         }
 
 
