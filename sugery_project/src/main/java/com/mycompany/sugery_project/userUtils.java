@@ -102,6 +102,27 @@ public class userUtils {
         return false;   
     }
     
+    public boolean verifyCredentials(String username, char[] password) throws SQLException{
+        if (usernameExists(username)){
+            try{
+                String sql = "SELECT username, password FROM LoginData";
+                ResultSet rs = selectEntries(sql); //st.executeQuery(sql);
+                while(rs.next()){ // TODO shouldn't it be select from where?
+                    String login = rs.getString("username");
+                    String us_pass = rs.getString("password");
+                    if(login.equals(username) && us_pass.equals(String.copyValueOf(password))){
+                        return true;
+                        }
+                    }
+                }catch(Exception e){
+                    System.out.println("Exception: " + e);
+                }
+            }
+        return false;
+        
+    }
+    
+    
     
     public void addRemoveEntry(User user, String date, int score, String mode) throws SQLException{
         String sql = "UPDATE Scores SET score = " + score

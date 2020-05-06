@@ -361,31 +361,14 @@ public class loginScreen extends javax.swing.JFrame {
         });
     }
     private void loginAttempt(String login, char[] password) throws ClassNotFoundException, SQLException, ParseException{
-        boolean usrFound = false;
-        int usrIdx = 0; //TODO: 0 for now, might be changed 
-        // condition to check if login and password match entries in db
-        // validate - check if reasonable, verify - check if accurate
-        try{
-//                        Class.forName("com.mysql.cj.jdbc.Driver"); // is it necessary?
-            String sql = "SELECT username, password FROM LoginData";
-            ResultSet rs = dataTable.selectEntries(sql); //st.executeQuery(sql);
-            while(rs.next()){ // TODO shouldn't it be select from where?
-                String username = rs.getString("username");
-                String us_pass = rs.getString("password");
-                if(username.equals(login) && us_pass.equals(String.copyValueOf(password))){
-                    usrFound = true; 
-                    }
-                }
-            }catch(Exception e){
-                System.out.println("Exception: " + e);
-        }
+        boolean usrFound = utils.verifyCredentials(login, password);
         if(usrFound){ 
             mf = new mainFrame(utils.getUser(userField.getText())); 
             this.setVisible(false);
             mf.setVisible(true);
             mf.displayUserData(); // replace with proper arguments (TODO change the parameter)
         }else{ // no user found in the database
-                logErrorField.setText("Incorrect username or password :(");
+                logErrorField.setText("Incorrect username or password :("); //TODO Jframe instead
         }
     }
         
