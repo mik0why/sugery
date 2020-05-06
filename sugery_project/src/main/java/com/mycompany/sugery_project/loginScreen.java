@@ -16,6 +16,8 @@ import java.sql.*;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
  /*
  * @author mikowhy
@@ -291,6 +293,8 @@ public class loginScreen extends javax.swing.JFrame {
             logErrorField.setText("no login / password entered!"); // can extend to show which one
         }else{
             try {
+                System.out.println("evt keycode: " + evt.getKeyCode());
+                if(evt.getKeyCode() == 10 ) // enter
                 loginAttempt(userField.getText(), passField.getPassword());
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(loginScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -368,7 +372,7 @@ public class loginScreen extends javax.swing.JFrame {
             mf.setVisible(true);
             mf.displayUserData(); // replace with proper arguments (TODO change the parameter)
         }else{ // no user found in the database
-                logErrorField.setText("Incorrect username or password :("); //TODO Jframe instead
+                JOptionPane.showMessageDialog(new JFrame("invalid username"), "Username or password is invalid :(");
         }
     }
         
