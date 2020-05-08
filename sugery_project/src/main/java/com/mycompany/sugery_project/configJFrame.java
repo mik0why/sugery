@@ -8,29 +8,12 @@ package com.mycompany.sugery_project;
 //TODO set this as the main one?
 //TODO add login options
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import sun.security.util.Password;
-
-//how to invoke the other screen once all data gathered?
 
 /**
  *
@@ -43,21 +26,11 @@ public class configJFrame extends javax.swing.JFrame {
 //TODO Description of Methods
     //TODO change these to other values? e.g. Integer.MIN_VALUE (?)
 
-private boolean nameOk = false;
-private boolean ageOk = false;
-private boolean goalOk = false; 
-private boolean passOk = false; 
-private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
-//private List<boolean> checks = new ArrayList<boolean>();
+
 //TODO sql should be its' own class 
 //TODO replace TextArea with TextField (enable tabs)
 
 
-    BufferedWriter writer; 
-    String username = "";
-    private int age = -1;
-    private int goal = -1;
-    private ArrayList<User> usArr = new ArrayList<User>(); // idt it should be new
     mainFrame mf ;
     private userUtils utils = new userUtils(); 
     private valueVerifier verifier = new valueVerifier();
@@ -66,12 +39,8 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     
     public configJFrame() {
         initComponents();
-//        entryText.setBackground(null);
         newNameArea.requestFocus();
-        tests.put("Name", nameOk);
-        tests.put("Age", ageOk);
-        tests.put("Goal", goalOk);
-        tests.put("Password", passOk);
+
         
     }
 
@@ -285,26 +254,24 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tryCreatingUser() throws ClassNotFoundException, SQLException, ParseException{
-            
-
           if(validEntriesCheck()){
                 try{
-                  username = newNameArea.getText().replaceAll("\\s+", "");
-                  age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
-                  goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));
+                  String username = newNameArea.getText().replaceAll("\\s+", "");
+                  int age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
+                  int goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));
                   utils.addUser(username, age, goal, passField.getPassword());
                   mf = new mainFrame(new User(username, age, goal)); // TODO should there be a new user statement?
                   mf.setVisible(true);
                   this.setVisible(false);
                   mf.displayUserData(); 
-                }catch(Exception e){ // list the exceptions here
+                }catch(Exception e){ 
 
                 }
-          }
+            }
         }
     private void createUsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUsrButtonActionPerformed
         try {
-            tryCreatingUser(); // not entirely sure this is correct
+            tryCreatingUser(); // TODO test
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(configJFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -394,7 +361,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     }//GEN-LAST:event_jTextField9ActionPerformed
 
    
-    boolean validEntriesCheck() throws SQLException{
+    private boolean validEntriesCheck() throws SQLException{
     //TODO: encode the password 
         ArrayList<String> inputs = new ArrayList<String>(); 
         inputs.add(newNameArea.getText().replaceAll("\\s+", ""));
@@ -404,44 +371,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         return verifier.checkConfigData(inputs); //TODO this should be returned
     }
     
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(configJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(configJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(configJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(configJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //TODO add the main screen?
-                //TODO the login screen should be here?
-                new configJFrame().setVisible(true);
-            }
-        });
-    }
-
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea ageArea;
     private javax.swing.ButtonGroup buttonGroup1;
