@@ -508,10 +508,7 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
             } catch (ParseException ex) {
                 Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
-           // weekAvg.setText(this.user.displayAnalysis("week").get(1));
-           // monthAvg.setText(this.user.displayAnalysis("month").get(1));
+
             evaluateScore(this.user.getGoal());
 
         }else{
@@ -551,12 +548,10 @@ public class mainFrame extends javax.swing.JFrame implements Observer {
          ArrayList<Integer> scores = getScores();
         
             //TODO change font instead of text, removed feedback field
-        //for(JTextField textField: fields){
             
         for(int i = 0; i < 3; i++){    
             textField = fields.get(i);
             score = scores.get(i);
-        //    
             if(score <= goal){
                 textField.setForeground(new java.awt.Color(0,102,51));
             }else if(score > goal * 1.5){
