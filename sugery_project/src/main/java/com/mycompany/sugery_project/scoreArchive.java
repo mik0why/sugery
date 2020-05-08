@@ -229,7 +229,6 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
           // need to do the same with adding to the array - ??
         if(!scoreTable.getSelectionModel().isSelectionEmpty()){
             try {
-                //int score = scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1));
                 user.removeScore(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 0).toString(),  
                             Integer.parseInt(scoreTable.getModel().getValueAt(scoreTable.getSelectedRow(), 1).toString()));
 
@@ -297,7 +296,6 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     public void update(Observable o, Object arg){
            if(o == this.user){
                 try {
-                  //  updateScores(user.displayAnalysis("all"));  // TODO idk if necessary
                     pullScores();
 
                 } catch (SQLException ex) {

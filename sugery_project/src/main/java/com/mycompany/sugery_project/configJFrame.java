@@ -50,6 +50,8 @@ private boolean passOk = false;
 private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
 //private List<boolean> checks = new ArrayList<boolean>();
 //TODO sql should be its' own class 
+//TODO replace TextArea with TextField (enable tabs)
+
 
     BufferedWriter writer; 
     String username = "";
@@ -65,7 +67,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     public configJFrame() {
         initComponents();
 //        entryText.setBackground(null);
-        nameArea1.requestFocus();
+        newNameArea.requestFocus();
         tests.put("Name", nameOk);
         tests.put("Age", ageOk);
         tests.put("Goal", goalOk);
@@ -93,7 +95,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
         jTextField7 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
-        nameArea1 = new javax.swing.JTextArea();
+        newNameArea = new javax.swing.JTextArea();
         jTextField8 = new javax.swing.JTextField();
         passField = new javax.swing.JPasswordField();
         goBack = new javax.swing.JButton();
@@ -204,18 +206,18 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
 
         jScrollPane4.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
 
-        nameArea1.setBackground(new java.awt.Color(0, 0, 0));
-        nameArea1.setColumns(10);
-        nameArea1.setForeground(new java.awt.Color(255, 255, 255));
-        nameArea1.setRows(1);
-        nameArea1.setBorder(null);
-        nameArea1.setFocusTraversalPolicyProvider(true);
-        nameArea1.addKeyListener(new java.awt.event.KeyAdapter() {
+        newNameArea.setBackground(new java.awt.Color(0, 0, 0));
+        newNameArea.setColumns(10);
+        newNameArea.setForeground(new java.awt.Color(255, 255, 255));
+        newNameArea.setRows(1);
+        newNameArea.setBorder(null);
+        newNameArea.setFocusTraversalPolicyProvider(true);
+        newNameArea.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                nameArea1KeyPressed(evt);
+                newNameAreaKeyPressed(evt);
             }
         });
-        jScrollPane4.setViewportView(nameArea1);
+        jScrollPane4.setViewportView(newNameArea);
 
         getContentPane().add(jScrollPane4);
         jScrollPane4.setBounds(20, 220, 135, 36);
@@ -287,7 +289,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
 
           if(validEntriesCheck()){
                 try{
-                  username = nameArea1.getText().replaceAll("\\s+", "");
+                  username = newNameArea.getText().replaceAll("\\s+", "");
                   age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
                   goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));
                   utils.addUser(username, age, goal, passField.getPassword());
@@ -326,7 +328,9 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void ageAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageAreaKeyPressed
-        if (evt.getKeyCode()==9){
+        if(evt.isShiftDown() && evt.getKeyCode()== 9){ // doesn't seem to work
+            ageArea.requestFocus();
+        }else if (evt.getKeyCode()==9){
             goalArea.requestFocus();
         }
     }//GEN-LAST:event_ageAreaKeyPressed
@@ -352,17 +356,18 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
 
     private void goalAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_goalAreaKeyPressed
         // TODO add your handling code here:
+        if(evt.isActionKey())
                 if (evt.getKeyCode()==9){
                     passField.requestFocus();
         }
     }//GEN-LAST:event_goalAreaKeyPressed
 
-    private void nameArea1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameArea1KeyPressed
+    private void newNameAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_newNameAreaKeyPressed
             if (evt.getKeyCode()==9){
                    ageArea.requestFocus();
             }
 
-    }//GEN-LAST:event_nameArea1KeyPressed
+    }//GEN-LAST:event_newNameAreaKeyPressed
 
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
@@ -392,7 +397,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     boolean validEntriesCheck() throws SQLException{
     //TODO: encode the password 
         ArrayList<String> inputs = new ArrayList<String>(); 
-        inputs.add(nameArea1.getText().replaceAll("\\s+", ""));
+        inputs.add(newNameArea.getText().replaceAll("\\s+", ""));
         inputs.add(ageArea.getText().replaceAll("\\s+",""));
         inputs.add(goalArea.getText().replaceAll("\\s+",""));
         inputs.add(passField.getPassword().toString());        
@@ -453,7 +458,7 @@ private Hashtable<String, Boolean> tests = new Hashtable<String, Boolean>();
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
-    private javax.swing.JTextArea nameArea1;
+    private javax.swing.JTextArea newNameArea;
     private javax.swing.JPasswordField passField;
     // End of variables declaration//GEN-END:variables
 }
