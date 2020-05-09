@@ -5,7 +5,11 @@
  */
 package com.mycompany.sugery_project;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+//import org.apache.poi.xssf.usermodel.*;
+
 
 /**
  *
@@ -19,8 +23,11 @@ public class excelExporter {
         
     }
     
-    public void export(String query){
+    public void export(String query) throws SQLException{
         Statement st = utils.getSqlStatement(); 
+        ResultSet rs = st.executeQuery(query);
+        //XSSFWorkbook workbook = new XSSFWorkbook();
+        
         
         
         
