@@ -28,7 +28,6 @@ public class userUtils {
     //TODO im not 100% about extending the user
     
     private Statement st; 
-    private sqlManager sql = new sqlManager(); 
     
     public userUtils(){
         
@@ -47,10 +46,9 @@ public class userUtils {
     }
     
  
-    //SQL methods
-    private void loadScores(User user){
-        
-        
+    //SQL methods    
+    public Statement getSqlStatement(){
+        return st; 
     }
     
     public void addUser(String username, int age, int goal, char[] password) {

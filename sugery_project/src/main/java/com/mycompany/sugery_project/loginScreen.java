@@ -28,12 +28,10 @@ public class loginScreen extends javax.swing.JFrame {
     /**
      * Creates new form loginScreen
      */
-    private sqlManager dataTable = new sqlManager(); 
     mainFrame mf; // TODO needs to be fixed (what exactly?)
     configJFrame jf = new configJFrame(); 
    
     ArrayList<User> usData = new ArrayList<User>(); // TODO: remove
-    sqlManager sq = new sqlManager(); 
     userUtils utils = new userUtils(); 
 
     boolean focusTraversalKeysEnabled = false;

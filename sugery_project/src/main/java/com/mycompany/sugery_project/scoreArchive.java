@@ -35,6 +35,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
     private User user;
     private userUtils dataTable = new userUtils();
     private scoreScreen scoreScreen; // TODO may have to be initialized
+    private excelExporter exporter = new excelExporter(); 
     /**
      *
      * @param usr
@@ -88,6 +89,7 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
         commArea = new javax.swing.JTextArea();
         addSc = new javax.swing.JButton();
         edSc = new javax.swing.JButton();
+        excelExporter = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -157,6 +159,13 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
             }
         });
 
+        excelExporter.setText("Excel Export");
+        excelExporter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excelExporterActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,21 +186,23 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
                         .addGap(64, 64, 64))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(edSc, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addSc, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(edSc, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                            .addComponent(addSc, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                            .addComponent(excelExporter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(excelExporter)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addSc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -269,12 +280,20 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
                 toString())).setVisible(true);
     }//GEN-LAST:event_edScActionPerformed
 
+    private void excelExporterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excelExporterActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_excelExporterActionPerformed
+
     
       
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSc;
     private javax.swing.JTextArea commArea;
     private javax.swing.JButton edSc;
+    private javax.swing.JButton excelExporter;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
