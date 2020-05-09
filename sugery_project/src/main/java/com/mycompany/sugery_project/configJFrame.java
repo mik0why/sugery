@@ -23,12 +23,10 @@ import java.util.logging.Logger;
 
 
 public class configJFrame extends javax.swing.JFrame {
+//TODO test
+//TODO add text prompts
 //TODO Description of Methods
-    //TODO change these to other values? e.g. Integer.MIN_VALUE (?)
-
-
 //TODO sql should be its' own class 
-//TODO replace TextArea with TextField (enable tabs)
 
 
     mainFrame mf ;
@@ -39,7 +37,7 @@ public class configJFrame extends javax.swing.JFrame {
     
     public configJFrame() {
         initComponents();
-        newNameArea.requestFocus();
+        nameField.requestFocus();
 
         
     }
@@ -56,19 +54,16 @@ public class configJFrame extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         createUsrButton = new javax.swing.JButton();
-        goalField = new javax.swing.JScrollPane();
-        goalArea = new javax.swing.JTextArea();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        ageArea = new javax.swing.JTextArea();
         jTextField5 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        newNameArea = new javax.swing.JTextArea();
         jTextField8 = new javax.swing.JTextField();
         passField = new javax.swing.JPasswordField();
         goBack = new javax.swing.JButton();
+        setGoalField = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
+        nameField = new javax.swing.JTextField();
+        ageField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -92,43 +87,6 @@ public class configJFrame extends javax.swing.JFrame {
         getContentPane().add(createUsrButton);
         createUsrButton.setBounds(120, 330, 530, 50);
         createUsrButton.getAccessibleContext().setAccessibleName("apBut1");
-
-        goalField.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        goalField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                goalFieldKeyPressed(evt);
-            }
-        });
-
-        goalArea.setBackground(new java.awt.Color(0, 0, 0));
-        goalArea.setColumns(10);
-        goalArea.setForeground(new java.awt.Color(255, 255, 255));
-        goalArea.setRows(1);
-        goalArea.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                goalAreaKeyPressed(evt);
-            }
-        });
-        goalField.setViewportView(goalArea);
-
-        getContentPane().add(goalField);
-        goalField.setBounds(400, 220, 135, 36);
-
-        jScrollPane6.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-
-        ageArea.setBackground(new java.awt.Color(0, 0, 0));
-        ageArea.setColumns(10);
-        ageArea.setForeground(new java.awt.Color(255, 255, 255));
-        ageArea.setRows(1);
-        ageArea.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                ageAreaKeyPressed(evt);
-            }
-        });
-        jScrollPane6.setViewportView(ageArea);
-
-        getContentPane().add(jScrollPane6);
-        jScrollPane6.setBounds(200, 220, 135, 36);
 
         jTextField5.setEditable(false);
         jTextField5.setBackground(new java.awt.Color(0, 0, 0));
@@ -173,24 +131,6 @@ public class configJFrame extends javax.swing.JFrame {
         getContentPane().add(jTextField6);
         jTextField6.setBounds(60, 260, 50, 24);
 
-        jScrollPane4.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-
-        newNameArea.setBackground(new java.awt.Color(0, 0, 0));
-        newNameArea.setColumns(10);
-        newNameArea.setForeground(new java.awt.Color(255, 255, 255));
-        newNameArea.setRows(1);
-        newNameArea.setBorder(null);
-        newNameArea.setFocusTraversalPolicyProvider(true);
-        newNameArea.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                newNameAreaKeyPressed(evt);
-            }
-        });
-        jScrollPane4.setViewportView(newNameArea);
-
-        getContentPane().add(jScrollPane4);
-        jScrollPane4.setBounds(20, 220, 135, 36);
-
         jTextField8.setEditable(false);
         jTextField8.setBackground(new java.awt.Color(0, 0, 0));
         jTextField8.setForeground(new java.awt.Color(255, 255, 255));
@@ -219,7 +159,7 @@ public class configJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(passField);
-        passField.setBounds(590, 220, 135, 40);
+        passField.setBounds(590, 210, 135, 40);
 
         goBack.setBackground(new java.awt.Color(0, 0, 0));
         goBack.setForeground(new java.awt.Color(255, 255, 255));
@@ -231,6 +171,12 @@ public class configJFrame extends javax.swing.JFrame {
         });
         getContentPane().add(goBack);
         goBack.setBounds(570, 420, 150, 32);
+
+        setGoalField.setBackground(new java.awt.Color(0, 0, 0));
+        setGoalField.setForeground(new java.awt.Color(204, 204, 204));
+        setGoalField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        getContentPane().add(setGoalField);
+        setGoalField.setBounds(400, 210, 130, 40);
 
         jTextField9.setEditable(false);
         jTextField9.setBackground(new java.awt.Color(0, 0, 0));
@@ -246,6 +192,29 @@ public class configJFrame extends javax.swing.JFrame {
         getContentPane().add(jTextField9);
         jTextField9.setBounds(616, 260, 90, 24);
 
+        nameField.setBackground(new java.awt.Color(0, 0, 0));
+        nameField.setForeground(new java.awt.Color(204, 204, 204));
+        nameField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        nameField.setToolTipText("");
+        nameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameFieldActionPerformed(evt);
+            }
+        });
+        nameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nameFieldKeyPressed(evt);
+            }
+        });
+        getContentPane().add(nameField);
+        nameField.setBounds(20, 210, 130, 40);
+
+        ageField.setBackground(new java.awt.Color(0, 0, 0));
+        ageField.setForeground(new java.awt.Color(204, 204, 204));
+        ageField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        getContentPane().add(ageField);
+        ageField.setBounds(200, 210, 130, 40);
+
         jLabel1.setIcon(new javax.swing.ImageIcon("/Users/mikowhy/Documents/Informatyka/Side Projects/Java/Sugery/sugery/sugery_project/src/main/resources/config.jpg")); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 800, 600);
@@ -256,9 +225,9 @@ public class configJFrame extends javax.swing.JFrame {
     private void tryCreatingUser() throws ClassNotFoundException, SQLException, ParseException{
           if(validEntriesCheck()){
                 try{
-                  String username = newNameArea.getText().replaceAll("\\s+", "");
-                  int age = Integer.parseInt(ageArea.getText().replaceAll("\\s+",""));
-                  int goal = Integer.parseInt(goalArea.getText().replaceAll("\\s+",""));
+                  String username = nameField.getText().replaceAll("\\s+", "");
+                  int age = Integer.parseInt(ageField.getText().replaceAll("\\s+",""));
+                  int goal = Integer.parseInt(setGoalField.getText().replaceAll("\\s+",""));
                   utils.addUser(username, age, goal, passField.getPassword());
                   mf = new mainFrame(new User(username, age, goal)); // TODO should there be a new user statement?
                   mf.setVisible(true);
@@ -294,18 +263,6 @@ public class configJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
 
-    private void ageAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageAreaKeyPressed
-        if(evt.isShiftDown() && evt.getKeyCode()== 9){ // doesn't seem to work
-            ageArea.requestFocus();
-        }else if (evt.getKeyCode()==9){
-            goalArea.requestFocus();
-        }
-    }//GEN-LAST:event_ageAreaKeyPressed
-
-    private void goalFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_goalFieldKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_goalFieldKeyPressed
-
     private void createUsrButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_createUsrButtonKeyPressed
         // TODO add your handling code here:
         if (this.hasFocus() && evt.getKeyCode()==13){
@@ -320,21 +277,6 @@ public class configJFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_createUsrButtonKeyPressed
-
-    private void goalAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_goalAreaKeyPressed
-        // TODO add your handling code here:
-        if(evt.isActionKey())
-                if (evt.getKeyCode()==9){
-                    passField.requestFocus();
-        }
-    }//GEN-LAST:event_goalAreaKeyPressed
-
-    private void newNameAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_newNameAreaKeyPressed
-            if (evt.getKeyCode()==9){
-                   ageArea.requestFocus();
-            }
-
-    }//GEN-LAST:event_newNameAreaKeyPressed
 
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
@@ -360,35 +302,42 @@ public class configJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField9ActionPerformed
 
+    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameFieldActionPerformed
+
+    private void nameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameFieldKeyPressed
+        if (evt.getKeyCode()==9){
+            ageField.requestFocus();
+        }
+    }//GEN-LAST:event_nameFieldKeyPressed
+
    
     private boolean validEntriesCheck() throws SQLException{
     //TODO: encode the password 
         ArrayList<String> inputs = new ArrayList<String>(); 
-        inputs.add(newNameArea.getText().replaceAll("\\s+", ""));
-        inputs.add(ageArea.getText().replaceAll("\\s+",""));
-        inputs.add(goalArea.getText().replaceAll("\\s+",""));
+        inputs.add(nameField.getText().replaceAll("\\s+", ""));
+        inputs.add(ageField.getText().replaceAll("\\s+",""));
+        inputs.add(setGoalField.getText().replaceAll("\\s+",""));
         inputs.add(passField.getPassword().toString());        
         return verifier.checkConfigData(inputs); //TODO this should be returned
     }
     
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea ageArea;
+    private javax.swing.JTextField ageField;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton createUsrButton;
     private javax.swing.JButton goBack;
-    private javax.swing.JTextArea goalArea;
-    private javax.swing.JScrollPane goalField;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
-    private javax.swing.JTextArea newNameArea;
+    private javax.swing.JTextField nameField;
     private javax.swing.JPasswordField passField;
+    private javax.swing.JTextField setGoalField;
     // End of variables declaration//GEN-END:variables
 }
