@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package com.mycompany.sugery_project;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Date;
 import java.text.DateFormat;
@@ -56,13 +55,7 @@ public class scoreScreen extends javax.swing.JFrame  { //
         }
     }
     
-    public void modifyScore(){ // sql update (?)
-        
-    }
-    
-    public void deleteScore(){ // sql deletion
-        
-    }
+ 
     
     
     
@@ -209,22 +202,7 @@ public class scoreScreen extends javax.swing.JFrame  { //
 
     
     private void scoreFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreFieldKeyPressed
-            
-        //this is for enter and not working?
-        /*
-        if (evt.getKeyCode()== KeyEvent.VK_ENTER){ //this should be made a function bc used twice
-                try {
-                    addScore();
-                    
-                } catch (ClassNotFoundException ex) {
-                Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            }
-        */
+
     }//GEN-LAST:event_scoreFieldKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -250,7 +228,8 @@ public class scoreScreen extends javax.swing.JFrame  { //
         // TODO add your handling code here:
          try {
                 addScore(); //TODO make a change to the date
-                JOptionPane.showMessageDialog(new JFrame("Score Added"), "Score Added");
+                JOptionPane.showMessageDialog(new JFrame("Score Added"), scoreField.getText().toString()
+                        + " on " + date + " Added"); //TODO get date
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
