@@ -12,6 +12,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 //TODO what if instead of adding & updating, first we would have an operation to see whether
@@ -77,7 +79,6 @@ public class scoreScreen extends javax.swing.JFrame  { //
         scrollPane1 = new java.awt.ScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         textAr = new javax.swing.JTextArea();
-        jTextField1 = new javax.swing.JTextField();
         scoreSet = new javax.swing.JButton();
         scoreField = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
@@ -103,14 +104,6 @@ public class scoreScreen extends javax.swing.JFrame  { //
         textAr.setAutoscrolls(false);
         textAr.setBorder(null);
         jScrollPane2.setViewportView(textAr);
-
-        jTextField1.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField1.setFocusable(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
 
         scoreSet.setText("set");
         scoreSet.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -167,10 +160,6 @@ public class scoreScreen extends javax.swing.JFrame  { //
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextField1)
-                .addGap(195, 195, 195))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,27 +183,25 @@ public class scoreScreen extends javax.swing.JFrame  { //
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scoreField, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(scoreSet)
-                            .addComponent(jButton2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
+                        .addGap(80, 80, 80)
+                        .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(82, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jButton2))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(scoreSet)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void scoreSetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scoreSetMouseClicked
         //TODO: delete
@@ -224,9 +211,11 @@ public class scoreScreen extends javax.swing.JFrame  { //
     private void scoreFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreFieldKeyPressed
             
         //this is for enter and not working?
+        /*
         if (evt.getKeyCode()== KeyEvent.VK_ENTER){ //this should be made a function bc used twice
                 try {
                     addScore();
+                    
                 } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -234,9 +223,8 @@ public class scoreScreen extends javax.swing.JFrame  { //
             } catch (ParseException ex) {
                 Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
-                jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
             }
-        
+        */
     }//GEN-LAST:event_scoreFieldKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -262,8 +250,7 @@ public class scoreScreen extends javax.swing.JFrame  { //
         // TODO add your handling code here:
          try {
                 addScore(); //TODO make a change to the date
-                jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
-                //this.user.addScore(Integer.parseInt(scoreField.getText().replaceAll("\\s+","")));
+                JOptionPane.showMessageDialog(new JFrame("Score Added"), "Score Added");
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -271,7 +258,6 @@ public class scoreScreen extends javax.swing.JFrame  { //
             } catch (ParseException ex) {
                 Logger.getLogger(scoreScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
-            jTextField1.setText(scoreField.getText().replaceAll("\\s+","") + " set as the score");
 
         
         
@@ -297,7 +283,6 @@ public class scoreScreen extends javax.swing.JFrame  { //
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField scoreField;
     private javax.swing.JButton scoreSet;
     private java.awt.ScrollPane scrollPane1;
