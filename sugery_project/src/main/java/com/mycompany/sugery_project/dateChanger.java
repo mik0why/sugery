@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.IllegalFormatException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,7 +71,7 @@ public class dateChanger extends javax.swing.JFrame {
             month = Integer.parseInt(monthField.getText());
             day = Integer.parseInt(dayField.getText());
             
-            // set newDate
+            // TODO set newDate
         }catch(NumberFormatException e){
             //output the error
             System.out.println(e);
@@ -80,10 +79,7 @@ public class dateChanger extends javax.swing.JFrame {
             
         }
         
-        //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-              
-              
         
         return true; 
     }
@@ -246,8 +242,7 @@ public class dateChanger extends javax.swing.JFrame {
  
                     
         }
-        //String x = dateField.toString();
-        
+        //String x = dateField.toString();        
         // this shouldn't necessairly be a query, it's based on 
         // whether the goal is to update the date, or to set it
         // for the first time - sth to rethink
