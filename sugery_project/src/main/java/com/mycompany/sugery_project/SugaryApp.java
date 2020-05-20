@@ -165,11 +165,7 @@ class User extends Observable implements Serializable{
        notifyObservers();
    }
    
-   //*****************
-     
-  
-    
-  
+
     
     
     private void loadScores(){ 
