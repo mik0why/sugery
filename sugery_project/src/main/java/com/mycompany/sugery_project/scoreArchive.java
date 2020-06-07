@@ -55,12 +55,11 @@ public class scoreArchive extends javax.swing.JFrame implements Observer{
                 return false;               
         };      
      
-    
+    //TODO redesign (sql query)
     private void pullScores() throws SQLException, ParseException{ // TODO rename (fillTable()? )
         DefaultTableModel tableModel = (DefaultTableModel) scoreTable.getModel();      
         tableModel.setRowCount(0); // no initial rows
         scoreTable.getColumnModel().getColumn(0).setPreferredWidth(180);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         String sql = "SELECT * FROM Scores WHERE `username` = " + "'" + 
             user.getName() + "' ORDER BY date ASC;"; // DESC LIMIT  1
         ResultSet sq =  dataTable.selectEntries(sql); // st.executeQuery(sql);
