@@ -64,6 +64,7 @@ class User extends Observable implements Serializable{
     private Stack <String> lastUsed = new Stack <String>(); 
     
 
+    //TODO singletons for most objects?
     public User(){
         
     }
@@ -75,6 +76,7 @@ class User extends Observable implements Serializable{
         
         utils = new userUtils(); 
         loadScores();
+        //TODO replace
     }
      
     public void setName(String name){
