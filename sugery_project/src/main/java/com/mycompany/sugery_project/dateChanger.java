@@ -36,8 +36,9 @@ public class dateChanger extends javax.swing.JFrame {
 
     private void modifyDate() throws ParseException, SQLException{
 
+       //TODO move modifyScore before caling entryTable
        String newDate = composeDate(); 
-       user.modifyScoreDate(oldDate, newDate); // or before caling entryTable
+       user.modifyScoreDate(oldDate, newDate); 
 
     }
     
@@ -48,19 +49,19 @@ public class dateChanger extends javax.swing.JFrame {
                 userDate = yearField.getText() + "-" + monthField.getText() + "-" + dayField.getText()
                         + " " + timeField.getText(); 
                 dateFormat.parse(userDate); 
-           }catch(IllegalFormatException e){ //or ParseException?
+           }catch(IllegalFormatException e){ //throw ParseException?
                System.out.println("Illegal format!"); //TODO output in a jframe
            }
            return userDate; 
     }
     
     private void prefilFields(){
-      //  TextPrompt year = new TextPrompt("2020", yearField);
+      //  TODO not sure if necessary
         
     }
     
     private boolean fieldsCheck(){
-        //TODO check each of the fields
+        //TODO add checking each of the fields
         int year, month, day;
         String time; 
         //timeFormat
